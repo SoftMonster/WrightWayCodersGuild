@@ -1,0 +1,1 @@
+Test 5 is an interesting case. It requires line intersection and Y-Wing Techniques, which are quite advanced logic.
