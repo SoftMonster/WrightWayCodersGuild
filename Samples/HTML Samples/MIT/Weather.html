@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Sample: Local Weather with API Key</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5a623, #f76b1c);
+            color: white;
+            display: flex;
+            justify-content: flex-start; /* Align content to the top */
+            align-items: center;
+            height: 100%;
+            text-align: center;
+            flex-direction: column;
+            padding-top: 20px; /* Add margin at the top */
+            overflow-y: auto; /* Allow scrolling if needed */
+        }
+        .container {
+            max-width: 400px;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+        }
+        h1 {
+            margin-bottom: 1rem;
+        }
+        p {
+            margin: 0.5rem 0;
+        }
+        input, button {
+            padding: 0.5rem;
+            font-size: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            border: none;
+        }
+        button {
+            background-color: #4caf50;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        a {
+            color: #4caf50;
+            text-decoration: none;
+            margin-top: 1rem;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .security-summary {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #f1f1f1;
+            text-align: left;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        /* Hide the spoiler section initially */
+        #spoilerSection {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌤 Your Local Weather</h1>
+        <p id="weather">Waiting for user...</p>
+        <div id="apiKeyForm">
+            <input type="text" id="apiKeyInput" placeholder="Enter API Key">
+            <button onclick="requestWeather()">Request Weather</button>
+        </div>
+        <!-- Link to get the API Key -->
+        <a href="https://home.openweathermap.org/api_keys" target="_blank">Get your free API key from OpenWeathermap.org to develop software that can interface with scientific weather data. Test it using this page.</a>
+    </div>
+
+    <div class="security-summary">
+        <p><strong>Security:</strong> Your API key is entered privately and is not hard coded into the page, reducing exposure. HTTPS ensures your key is securely transmitted over the network, but be aware that anyone with access to your browser's developer tools can still view the key during use. For example, if debugging the source code in a public demo.</p>
+        <p><strong>Ethics:</strong> Your location is needed to provide local weather data. I respect your privacy, and your data is used only to request the local weather from openweathermap.org. You have control over your API key and account on openweathermap.org, and I encourage securing them to prevent misuse. I am in no way affiliated with openweathermap.org or liable for the response they send back to this page, which is presented to you in a very simple form.</p>
+        <p><strong>Best Practice:</strong> For security reasons, API keys are handled server-side. This is a simple HTML page example, so you remain in control of your data and account on openweathermap.org and can use the OpenWeathermap.org service from this page without sharing personal information with me. Everything is transparent in that this is a simple piece of html containing some example Javascript. You can easily save this HTML to your local computer after inspecting it and it will run perfectly fine provided it can access the API at openweathermap.org</p>
+        <p><strong>Copyright limitation:</strong> This HTML page uses an API call to someone else's server. I have no rights over the server what-so-ever.</p>
+        <p><strong>Copyright of this HTML source:</strong><a href="https://home.openweathermap.org/api_keys" target="_blank">MIT License</a></p>
+    </div>
+
+    <!-- Spoiler Button to reveal weather search -->
+    <div class="container">
+        <button onclick="toggleSpoiler()">Show\hide Spoiler</button>
+    </div>
+
+    <!-- Spoiler Section: Initially Hidden -->
+    <div id="spoilerSection" class="container">
+        <h3>You never needed an API key just to search local weather! When developers subscribe to APIs for business reasons, they have a way to make money back out of it, whether by advertising, enhancing a particular service or integrating it into an enirely new technology. For personal use, you could just enter your location below. Have a go!</h3>
+        <h1>Search Weather by Location</h1>
+        <input type="text" id="locationInput" placeholder="Enter location">
+        <br>
+        <button onclick="searchLocation()">Search</button>
+    </div>
+
+    <script>
+        // Request weather data using the entered API key
+        function requestWeather() {
+            const apiKey = document.getElementById("apiKeyInput").value;
+            if (!apiKey) {
+                alert("Please enter a valid API key.");
+                return;
+            }
+
+            // Use Geolocation API to get user's location
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const { latitude, longitude } = position.coords;
+                    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+
+                    fetch(apiUrl)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error("Invalid response from the weather API.");
+                            }
+                            return response.json();
+                        })
+                        .then(data => displayWeather(data))
+                        .catch(error => {
+                            document.getElementById("weather").textContent = "Failed to fetch weather data. Please check your API key.";
+                            console.error(error);
+                        });
+                }, () => {
+                    document.getElementById("weather").textContent = "Unable to retrieve your location.";
+                });
+            } else {
+                document.getElementById("weather").textContent = "Geolocation is not supported by your browser.";
+            }
+        }
+
+        // Display the weather data on the page
+        function displayWeather(data) {
+            const temperature = data.main.temp;
+            const description = data.weather[0].description;
+            const city = data.name;
+            document.getElementById("weather").textContent = 
+                `Current temperature in ${city} is ${temperature}°C with ${description}.`;
+        }
+
+        // Function to toggle visibility of the spoiler section
+        function toggleSpoiler() {
+            const spoilerSection = document.getElementById("spoilerSection");
+            if (spoilerSection.style.display === "none") {
+                spoilerSection.style.display = "block";
+            } else {
+                spoilerSection.style.display = "none";
+            }
+        }
+
+        // Search location function
+        function searchLocation() {
+            const location = document.getElementById('locationInput').value.trim();
+            if (location) {
+                const url = `https://openweathermap.org/find?utf8=%E2%9C%93&q=${encodeURIComponent(location)}`;
+                window.open(url, '_blank');
+            } else {
+                alert('Please enter a location.');
+            }
+        }
+    </script>
+</body>
+</html>

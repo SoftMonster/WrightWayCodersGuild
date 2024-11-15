@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Speech Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        label {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Text to Speech Converter</h1>
+    <textarea id="text" placeholder="Enter your text here..."></textarea><br>
+    
+    <label for="voiceSelect">Select Voice:</label>
+    <select id="voiceSelect"></select><br><br>
+
+    <label for="loopCheck">Loop:</label>
+    <input type="checkbox" id="loopCheck"><br><br>
+
+    <button id="speakBtn">Convert to Speech</button>
+    <audio id="audio" controls style="display:none;"></audio>
+
+    <script>
+        const speakBtn = document.getElementById('speakBtn');
+        const textInput = document.getElementById('text');
+        const audioElement = document.getElementById('audio');
+        const voiceSelect = document.getElementById('voiceSelect');
+        const loopCheck = document.getElementById('loopCheck');
+        
+        let currentUtterance; // To keep track of the current utterance
+
+        // Load available voices
+        function loadVoices() {
+            const voices = speechSynthesis.getVoices();
+            voices.forEach(voice => {
+                const option = document.createElement('option');
+                option.value = voice.name;
+                option.textContent = `${voice.name} (${voice.lang})`;
+                voiceSelect.appendChild(option);
+            });
+        }
+
+        // Function to speak text
+        function speakText(text) {
+            // Check if the browser supports speech synthesis
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                const selectedVoice = voiceSelect.value;
+                const voices = speechSynthesis.getVoices();
+                utterance.voice = voices.find(voice => voice.name === selectedVoice);
+                
+                utterance.onend = function () {
+                    if (loopCheck.checked) {
+                        speakText(text); // Speak again if loop is checked
+                    } else {
+                        audioElement.style.display = 'none'; // Hide audio controls if not looping
+                    }
+                };
+
+                speechSynthesis.speak(utterance);
+                audioElement.style.display = 'block'; // Show audio controls when speaking starts
+                currentUtterance = utterance; // Keep track of the current utterance
+            } else {
+                alert('Sorry, your browser does not support speech synthesis.');
+            }
+        }
+
+        // Handle speak button click
+        speakBtn.addEventListener('click', () => {
+            const text = textInput.value;
+            speakText(text); // Speak the entered text
+        });
+
+        // Load voices when the page is loaded
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+    </script>
+</body>
+</html>
