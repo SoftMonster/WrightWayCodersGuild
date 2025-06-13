@@ -77,14 +77,14 @@
 
     .assistant-container {
       width: 1024px;
-      height: 800px;
+      height: 600px;
       flex-shrink: 0;
       overflow: hidden;
     }
 
     iframe.assistant-frame {
       width: 1024px;
-      height: 800px;
+      height: 600px;
       border: none;
     }
 
@@ -164,7 +164,7 @@
                 margin: 0;
                 padding: 1rem;
                 width: 1024px;
-                height: 800px;
+                height: 600px;
                 font-family: sans-serif;
                 overflow: hidden;
               }
@@ -191,7 +191,7 @@
       if (!messages.find(m => m.role === "system")) {
         messages.unshift({
           role: "system",
-          content: "Respond with HTML content to be embedded in an iframe. Do not explain anything outside the iframe content. Do not use markdown. Use inline styles. The HTML should be exactly 1024x800 with no scrollbars or blank space."
+          content: "Respond with HTML content to be embedded in an iframe. Do not explain anything outside the iframe content. Do not use markdown. Use inline styles. The HTML should be exactly 1024x600 with no scrollbars or blank space but resized to fit those dimensions beautifully, however resize fonts and controls rather than painting the space a block of color. Use emojis in your responses when helpful for the web design and make the web content beautiful, don't pad the lines too much, increase font size to fit. Make sure it all fits wonderfully within 1024x600. Make the content open in a new web page when double clicked."
         });
       }
 
