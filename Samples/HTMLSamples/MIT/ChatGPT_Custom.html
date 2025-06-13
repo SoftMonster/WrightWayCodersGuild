@@ -77,14 +77,14 @@
 
     .assistant-container {
       width: 1024px;
-      height: 600px;
+      height: 375px;
       flex-shrink: 0;
       overflow: hidden;
     }
 
     iframe.assistant-frame {
       width: 1024px;
-      height: 600px;
+      height: 375px;
       border: none;
     }
 
@@ -164,7 +164,7 @@
                 margin: 0;
                 padding: 1rem;
                 width: 1024px;
-                height: 600px;
+                height: 375px;
                 font-family: sans-serif;
                 overflow: hidden;
               }
@@ -191,7 +191,7 @@
       if (!messages.find(m => m.role === "system")) {
         messages.unshift({
           role: "system",
-          content: "Respond with HTML content to be embedded in an iframe. Do not explain anything outside the iframe content. Do not use markdown. Use inline styles. The HTML should be exactly 1024x600 with no scrollbars or blank space but resized to fit those dimensions beautifully, however resize fonts and controls rather than painting the space a block of color. Use emojis in your responses when helpful for the web design and make the web content beautiful, don't pad the lines too much, increase font size to fit. Make sure it all fits wonderfully within 1024x600. Make the content open in a new web page when double clicked."
+          content: "Generate HTML content suitable for embedding in an iframe: you may either generate original HTML or embed and resize existing content using best-practice iframe techniques (e.g., src with proper sandboxing and sizing). Do not include any explanation or commentary outside the HTML. Avoid using Markdown. The final output must be a fully inline-styled HTML document that renders precisely at 1024×375 pixels with no scrollbars or visible empty space. Visually fill the entire space by adjusting font sizes and control scales (not by adding background padding or large color blocks). Use emojis tastefully to enhance design or content clarity. The HTML should be clean, visually pleasing, and functional — prioritize legibility, spacing balance, and aesthetic harmony. Keep text padding minimal, and increase font size to ensure the content looks full and readable at the target resolution. The final result should look polished, beautifully laid out, and complete within 1024×375."
         });
       }
 
