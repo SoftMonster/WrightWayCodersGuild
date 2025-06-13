@@ -3,74 +3,76 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ChatGPT Client with Iframes</title>
+  <title>ChatGPT Client</title>
   <style>
-    body {
-      display: flex;
-      flex-direction: column;
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: sans-serif;
+      overflow: hidden;
     }
+
     header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
       background: #4f46e5;
       color: white;
-      padding: 1rem 2rem;
+      padding: 1rem;
       font-size: 1.5rem;
-      font-weight: 700;
       text-align: center;
-      box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
+      font-weight: bold;
+      z-index: 1000;
     }
-    #apiKeyContainer, #apiKeyHelp {
-      padding: 0 1rem;
-      max-width: 720px;
-      margin: 0.5rem auto;
-    }
-    #apiKeyContainer {
+
+    #apiControls {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      background: #ffffff;
       display: flex;
-      gap: 0.75rem;
       align-items: center;
+      padding: 0.5rem 1rem;
+      gap: 0.5rem;
+      z-index: 1000;
+      border-bottom: 1px solid #ccc;
     }
-    #apiKey {
+
+    #apiControls input {
       flex: 1;
       padding: 0.5rem 1rem;
-      font-size: 1rem;
-      border: 1.5px solid #d1d5db;
+      border: 1px solid #ccc;
       border-radius: 8px;
     }
-    label[for="apiKey"] {
-      font-weight: 600;
-      color: #374151;
-      white-space: nowrap;
-    }
-    #apiKeyHelp {
-      font-size: 0.9rem;
-      color: #4f46e5;
+
+    #apiHelp {
+      position: fixed;
+      top: 110px;
+      left: 0;
+      right: 0;
       text-align: center;
+      font-size: 0.9rem;
+      background: #eef;
+      padding: 0.5rem;
+      z-index: 1000;
     }
-    #apiKeyHelp a {
+
+    #apiHelp a {
       color: #4f46e5;
       text-decoration: underline;
     }
-    #apiKeyHelp a:hover {
-      color: #4338ca;
-    }
-
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      max-width: 720px;
-      width: 100%;
-      margin: 0 auto;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 14px rgb(0 0 0 / 0.1);
-    }
 
     #chat {
-      flex: 1;
+      position: absolute;
+      top: 150px;
+      bottom: 70px;
+      left: 0;
+      right: 0;
       overflow-y: auto;
-      padding: 1rem 1.5rem;
-      border-bottom: 1px solid #e2e8f0;
-      scroll-behavior: smooth;
+      padding: 1rem;
       display: flex;
       flex-direction: column;
       gap: 1rem;
@@ -78,14 +80,10 @@
 
     p.user {
       margin: 0;
-      padding: 0.5rem 1rem;
-      border-radius: 12px;
-      background: #4f46e5;
-      color: white;
+      padding: 0;
+      color: #111827;
       align-self: flex-end;
-      border-bottom-right-radius: 2px;
-      max-width: 80%;
-      line-height: 1.4;
+      max-width: 100%;
       white-space: pre-wrap;
       word-wrap: break-word;
     }
@@ -93,57 +91,43 @@
     iframe.assistant-frame {
       border: none;
       width: 100%;
-      border-radius: 8px;
-      box-shadow: 0 0 0 1px #e5e7eb;
-      height: auto; /* Remove fixed or min height */
-      display: block;
+      height: auto;
+      max-height: 50vh;
     }
 
-    form {
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      padding: 1rem;
       display: flex;
-      padding: 1rem 1.5rem;
-      background: #fafafa;
+      gap: 1rem;
+      border-top: 1px solid #ccc;
+      z-index: 1000;
     }
 
     #userInput {
       flex: 1;
       padding: 0.75rem 1rem;
-      font-size: 1rem;
-      border: 1.5px solid #d1d5db;
       border-radius: 9999px;
+      border: 1px solid #ccc;
     }
 
-    #userInput:focus {
-      border-color: #4f46e5;
-      outline-offset: 2px;
-    }
-
-    button#sendBtn {
-      margin-left: 1rem;
+    #sendBtn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
       background: #4f46e5;
-      border: none;
       color: white;
-      font-weight: 600;
-      padding: 0 1.5rem;
-      border-radius: 9999px;
+      border: none;
       cursor: pointer;
+      font-weight: bold;
     }
 
-    button#sendBtn:hover:not(:disabled) {
-      background: #4338ca;
-    }
-
-    button#sendBtn:disabled {
+    #sendBtn:disabled {
       background: #a5b4fc;
       cursor: not-allowed;
-    }
-
-    #chat::-webkit-scrollbar {
-      width: 8px;
-    }
-    #chat::-webkit-scrollbar-thumb {
-      background-color: #cbd5e1;
-      border-radius: 4px;
     }
   </style>
 </head>
@@ -151,22 +135,21 @@
 
 <header>ChatGPT Client</header>
 
-<div id="apiKeyContainer">
-  <label for="apiKey">OpenAI API Key:</label>
-  <input type="password" id="apiKey" placeholder="Enter your API key here" autocomplete="off" />
-</div>
-<div id="apiKeyHelp">
-  Don't have an API key? Get one from <a href="https://platform.openai.com/account/api-keys" target="_blank" rel="noopener noreferrer">OpenAI API Keys</a>.
+<div id="apiControls">
+  <label for="apiKey">API Key:</label>
+  <input type="password" id="apiKey" placeholder="Enter your API key" autocomplete="off" />
 </div>
 
-<main>
-  <div id="chat" role="log" aria-live="polite" aria-relevant="additions"></div>
+<div id="apiHelp">
+  Don’t have an API key? <a href="https://platform.openai.com/account/api-keys" target="_blank">Get one here</a>.
+</div>
 
-  <form id="chatForm" onsubmit="event.preventDefault(); sendMessage();">
-    <input type="text" id="userInput" placeholder="Type your message..." required />
-    <button type="submit" id="sendBtn">Send</button>
-  </form>
-</main>
+<div id="chat"></div>
+
+<footer>
+  <input type="text" id="userInput" placeholder="Type your message..." />
+  <button id="sendBtn" onclick="sendMessage()">Send</button>
+</footer>
 
 <script>
   let messages = [];
@@ -177,7 +160,7 @@
       '<': '&lt;',
       '>': '&gt;',
       '"': '&quot;',
-      "'": '&#39;'
+      "'": '&#39;',
     })[m]);
   }
 
@@ -186,16 +169,16 @@
       <html>
         <head>
           <style>
-            html, body {
+            body {
               margin: 0;
               padding: 1rem;
-              font-family: system-ui, sans-serif;
-              background: white;
+              font-family: sans-serif;
             }
           </style>
           <script>
             function sendHeight() {
-              const height = document.body.scrollHeight;
+              const maxHeight = window.parent.innerHeight * 0.5;
+              const height = Math.min(document.body.scrollHeight, maxHeight);
               parent.postMessage({ iframeId: "${iframeId}", height }, "*");
             }
             window.addEventListener("load", sendHeight);
@@ -206,7 +189,7 @@
         <body>${content}</body>
       </html>
     `;
-    return 'data:text/html;charset=utf-8,' + encodeURIComponent(html);
+    return "data:text/html;charset=utf-8," + encodeURIComponent(html);
   }
 
   window.addEventListener("message", (event) => {
@@ -226,14 +209,14 @@
     if (!apiKey || !userMessage) return;
 
     messages.push({ role: "user", content: userMessage });
-    chat.innerHTML += `<p class="user"><strong>You:</strong> ${escapeHtml(userMessage)}</p>`;
+    chat.innerHTML += `<p class="user">${escapeHtml(userMessage)}</p>`;
     input.value = "";
     input.disabled = true;
 
     if (!messages.find(m => m.role === "system")) {
       messages.unshift({
         role: "system",
-        content: "Respond with HTML content to be embedded in an iframe. Do not explain anything outside the iframe content. Do not use markdown. Use inline styles for layout and embed java script into the iframe if needed."
+        content: "Respond with HTML content to be embedded in an iframe. Do not explain anything outside the iframe content. Do not use markdown. Use inline styles for layout and embed JavaScript into the iframe if needed. Aim to eliminate all blank space in your html. The html response should not be taller than a quarter of the screen height for a below average resolution. Do not pre-fix your response with ```html or end it with ```"
       });
     }
 
