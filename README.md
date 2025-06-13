@@ -6,6 +6,6 @@ Here are some URLs:
 
 https://softmonster.github.io/WrightWayCodersGuild/
 https://softmonster.github.io/WrightWayCodersGuild/README.md
-https://softmonster.github.io/WrightWayCodersGuild/Samples/MIT/HTMLSamples/ChatGPT_Custom
+https://softmonster.github.io/WrightWayCodersGuild/Samples/HTMLSamples/MIT/ChatGPT_Custom
 
 
