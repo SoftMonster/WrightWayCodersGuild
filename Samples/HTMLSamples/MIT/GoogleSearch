@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔍 Google Search Bar</title>
+<style>
+  body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
+  .search-container { 
+    width: 100%; 
+    height: 100%; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    background-color: #f0f0f0; 
+    flex-direction: column;
+  }
+  .search-bar { 
+    padding: 10px; 
+    font-size: 1.5em; 
+    border: 2px solid #333; 
+    border-radius: 5px; 
+    width: 70%; 
+    max-width: 500px; 
+    margin-bottom: 10px;
+  }
+  .search-button { 
+    padding: 10px 20px; 
+    font-size: 1.5em; 
+    background-color: #333; 
+    color: #f0f0f0; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+  }
+</style>
+</head>
+<body>
+<div class="search-container">
+  <input type="text" class="search-bar" placeholder="Search Google..." id="searchInput">
+  <button class="search-button" onclick="searchGoogle()">Search</button>
+</div>
+<script>
+  function searchGoogle() {
+    const searchTerm = document.getElementById("searchInput").value;
+    const url = `https://www.google.com/search?q=${searchTerm}`;
+    window.open(url, "_blank");
+  }
+</script>
+</body>
+</html>
