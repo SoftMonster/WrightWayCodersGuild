@@ -5,13 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ChatGPT Client with Iframes</title>
   <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f7f9fc;
-      color: #333;
-    }
+v
     body {
       display: flex;
       flex-direction: column;
@@ -207,7 +201,7 @@
     if (!messages.find(m => m.role === "system")) {
       messages.unshift({
         role: "system",
-        content: "Respond with HTML content to be embedded in an iframe. Do not explain anything. Do not use markdown. Use minimal inline styles for layout if needed."
+        content: "Respond with HTML content to be embedded in an iframe. Do not explain anything outside the iframe content. Do not use markdown. Use minimal inline styles for layout if needed."
       });
     }
 
