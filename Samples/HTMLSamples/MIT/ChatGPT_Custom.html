@@ -201,7 +201,7 @@ v
     if (!messages.find(m => m.role === "system")) {
       messages.unshift({
         role: "system",
-        content: "Respond with HTML content to be embedded in an iframe. Do not explain anything outside the iframe content. Do not use markdown. Use minimal inline styles for layout if needed."
+        content: "Respond with HTML content to be embedded in an iframe. Do not explain anything outside the iframe content. Do not use markdown. Use inline styles for layout and embed java script into the iframe if needed."
       });
     }
 
