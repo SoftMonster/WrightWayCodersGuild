@@ -210,20 +210,25 @@
         });
 
         const data = await response.json();
-        const reply = data.choices?.[0]?.message?.content || "";
-        messages.push({ role: "assistant", content: reply });
 
-        const container = document.createElement("div");
-        container.className = "assistant-container";
+        if (data.error) {
+          // Display error message instead of iframe
+          chat.innerHTML += `<p class="user"><strong>Error:</strong> ${escapeHtml(data.error.message)}</p>`;
+        } else {
+          const reply = data.choices?.[0]?.message?.content || "";
+          messages.push({ role: "assistant", content: reply });
 
-        const iframe = document.createElement("iframe");
-        iframe.className = "assistant-frame";
-        iframe.src = encodeToIframe(reply);
+          const container = document.createElement("div");
+          container.className = "assistant-container";
 
-        container.appendChild(iframe);
-        chat.appendChild(container);
-        chat.scrollTop = chat.scrollHeight;
+          const iframe = document.createElement("iframe");
+          iframe.className = "assistant-frame";
+          iframe.src = encodeToIframe(reply);
 
+          container.appendChild(iframe);
+          chat.appendChild(container);
+          chat.scrollTop = chat.scrollHeight;
+        }
       } catch (err) {
         chat.innerHTML += `<p class="user"><strong>Error:</strong> ${escapeHtml(err.message)}</p>`;
       } finally {
