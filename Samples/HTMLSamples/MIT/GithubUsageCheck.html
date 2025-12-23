@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>GitHub API Rate Limit Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0d1117;
+      color: #c9d1d9;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    h1 {
+      color: #58a6ff;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .card {
+      background: #161b22;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 0 1px #30363d;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: 6px;
+      border: 1px solid #30363d;
+      background: #0d1117;
+      color: #c9d1d9;
+    }
+
+    button {
+      margin-top: 1rem;
+      padding: 0.6rem 1rem;
+      background: #238636;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #2ea043;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    th, td {
+      padding: 0.75rem;
+      border-bottom: 1px solid #30363d;
+      text-align: left;
+    }
+
+    th {
+      color: #8b949e;
+      font-weight: 600;
+    }
+
+    .good { color: #3fb950; }
+    .warn { color: #d29922; }
+    .bad  { color: #f85149; }
+
+    .small {
+      color: #8b949e;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>GitHub API Usage Dashboard</h1>
+
+    <div class="card">
+      <label for="token">GitHub Personal Access Token (optional)</label>
+      <input
+        id="token"
+        type="password"
+        placeholder="ghp_XXXXXXXXXXXXXXXXXXXX"
+      />
+      <button onclick="loadRateLimit()">Check Usage</button>
+      <p class="small">
+        Tip: Using a token dramatically increases rate limits.
+      </p>
+    </div>
+
+    <div class="card" id="status">
+      Loading…
+    </div>
+  </div>
+
+  <script>
+    async function loadRateLimit() {
+      const token = document.getElementById("token").value.trim();
+      const statusDiv = document.getElementById("status");
+
+      statusDiv.textContent = "Fetching GitHub API rate limits…";
+
+      const headers = token
+        ? { Authorization: `token ${token}` }
+        : {};
+
+      try {
+        const res = await fetch("https://api.github.com/rate_limit", {
+          headers
+        });
+
+        if (!res.ok) {
+          throw new Error(`GitHub API error: ${res.status}`);
+        }
+
+        const data = await res.json();
+        renderTable(data);
+      } catch (err) {
+        statusDiv.innerHTML = `<span class="bad">${err.message}</span>`;
+      }
+    }
+
+    function renderTable(data) {
+      const resources = data.resources;
+      const now = Math.floor(Date.now() / 1000);
+
+      let html = `
+        <h2>Rate Limit Status</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>API</th>
+              <th>Used</th>
+              <th>Remaining</th>
+              <th>Limit</th>
+              <th>Resets In</th>
+              <th>Reset Time</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      for (const [name, r] of Object.entries(resources)) {
+        const used = r.limit - r.remaining;
+        const seconds = r.reset - now;
+        const resetDate = new Date(r.reset * 1000).toLocaleTimeString();
+
+        const remainingClass =
+          r.remaining < r.limit * 0.1 ? "bad" :
+          r.remaining < r.limit * 0.3 ? "warn" : "good";
+
+        html += `
+          <tr>
+            <td>${name}</td>
+            <td>${used}</td>
+            <td class="${remainingClass}">${r.remaining}</td>
+            <td>${r.limit}</td>
+            <td>${formatDuration(seconds)}</td>
+            <td>${resetDate}</td>
+          </tr>
+        `;
+      }
+
+      html += "</tbody></table>";
+
+      document.getElementById("status").innerHTML = html;
+    }
+
+    function formatDuration(seconds) {
+      if (seconds <= 0) return "Now";
+
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      return `${m}m ${s}s`;
+    }
+
+    // Auto-load on page open (unauthenticated)
+    loadRateLimit();
+  </script>
+</body>
+</html>
