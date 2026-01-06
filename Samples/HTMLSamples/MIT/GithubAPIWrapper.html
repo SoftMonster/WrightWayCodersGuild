@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>GitHub API Explorer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #0d1117;
+      color: #c9d1d9;
+    }
+    header {
+      padding: 16px 24px;
+      background: #161b22;
+      border-bottom: 1px solid #30363d;
+    }
+    h1 {
+      margin: 0;
+      font-size: 20px;
+    }
+    main {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      height: calc(100vh - 64px);
+    }
+    .panel {
+      padding: 16px;
+      border-right: 1px solid #30363d;
+      overflow-y: auto;
+    }
+    .panel:last-child {
+      border-right: none;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      margin-top: 12px;
+      margin-bottom: 4px;
+      color: #8b949e;
+    }
+    input, select, textarea, button {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #30363d;
+      background: #0d1117;
+      color: #c9d1d9;
+      font-family: inherit;
+      font-size: 13px;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    button {
+      margin-top: 16px;
+      background: #238636;
+      border: 1px solid #2ea043;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button:hover {
+      background: #2ea043;
+    }
+    .response {
+      white-space: pre;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      background: #010409;
+      padding: 16px;
+      border-radius: 6px;
+      border: 1px solid #30363d;
+      overflow: auto;
+      height: 100%;
+    }
+    .status {
+      font-size: 12px;
+      margin-bottom: 8px;
+      color: #8b949e;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>GitHub API Explorer (Full REST Access)</h1>
+  </header>
+
+  <main>
+    <div class="panel">
+      <label>GitHub API Base URL</label>
+      <input id="baseUrl" value="https://api.github.com" />
+
+      <label>HTTP Method</label>
+      <select id="method">
+        <option>GET</option>
+        <option>POST</option>
+        <option>PUT</option>
+        <option>PATCH</option>
+        <option>DELETE</option>
+      </select>
+
+      <label>Endpoint Path</label>
+      <input id="endpoint" placeholder="/repos/{owner}/{repo}/issues" />
+
+      <label>Query Parameters (JSON)</label>
+      <textarea id="query" placeholder='{ "state": "open", "per_page": 10 }'></textarea>
+
+      <label>Request Body (JSON)</label>
+      <textarea id="body" placeholder='{ "title": "New issue", "body": "Description" }'></textarea>
+
+      <label>Personal Access Token (optional)</label>
+      <input id="token" type="password" placeholder="ghp_..." />
+
+      <label>Custom Headers (JSON)</label>
+      <textarea id="headers" placeholder='{ "Accept": "application/vnd.github+json" }'></textarea>
+
+      <button onclick="sendRequest()">Send Request</button>
+    </div>
+
+    <div class="panel">
+      <div class="status" id="status">Idle</div>
+      <div class="response" id="response"></div>
+    </div>
+  </main>
+
+  <script>
+    async function sendRequest() {
+      const baseUrl = document.getElementById('baseUrl').value.trim();
+      const endpoint = document.getElementById('endpoint').value.trim();
+      const method = document.getElementById('method').value;
+      const token = document.getElementById('token').value.trim();
+
+      let query = {};
+      let body = null;
+      let headers = {};
+
+      try {
+        query = document.getElementById('query').value
+          ? JSON.parse(document.getElementById('query').value)
+          : {};
+      } catch (e) {
+        alert('Invalid JSON in query parameters');
+        return;
+      }
+
+      try {
+        body = document.getElementById('body').value
+          ? JSON.parse(document.getElementById('body').value)
+          : null;
+      } catch (e) {
+        alert('Invalid JSON in request body');
+        return;
+      }
+
+      try {
+        headers = document.getElementById('headers').value
+          ? JSON.parse(document.getElementById('headers').value)
+          : {};
+      } catch (e) {
+        alert('Invalid JSON in headers');
+        return;
+      }
+
+      const url = new URL(baseUrl + endpoint);
+      Object.entries(query).forEach(([key, value]) => {
+        url.searchParams.append(key, value);
+      });
+
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      headers['Accept'] = headers['Accept'] || 'application/vnd.github+json';
+
+      const options = {
+        method,
+        headers
+      };
+
+      if (body && method !== 'GET') {
+        options.body = JSON.stringify(body);
+      }
+
+      document.getElementById('status').textContent = 'Loading...';
+      document.getElementById('response').textContent = '';
+
+      try {
+        const res = await fetch(url.toString(), options);
+        const text = await res.text();
+        document.getElementById('status').textContent = `Status: ${res.status} ${res.statusText}`;
+
+        try {
+          const json = JSON.parse(text);
+          document.getElementById('response').textContent = JSON.stringify(json, null, 2);
+        } catch {
+          document.getElementById('response').textContent = text;
+        }
+      } catch (err) {
+        document.getElementById('status').textContent = 'Request failed';
+        document.getElementById('response').textContent = err.toString();
+      }
+    }
+  </script>
+</body>
+</html>
