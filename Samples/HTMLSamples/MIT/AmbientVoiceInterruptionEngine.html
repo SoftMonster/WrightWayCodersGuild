@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ambient Voice Interruption Engine</title>
+  <title>Ambient Voice Interruption Engine — Enhanced</title>
   <style>
     :root {
       --bg: #0f1115;
@@ -15,14 +15,16 @@
       --accent-2: #a78bfa;
       --danger: #f87171;
       --good: #34d399;
+      --warn: #fbbf24;
       --border: #2a3140;
       --shadow: 0 10px 30px rgba(0,0,0,.35);
       --radius: 18px;
+      --glow: 0 0 0 rgba(0,0,0,0);
     }
 
     * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
     body {
-      margin: 0;
       font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       background:
         radial-gradient(circle at top left, rgba(125,211,252,.08), transparent 20%),
@@ -34,10 +36,10 @@
     }
 
     .wrap {
-      max-width: 1280px;
+      max-width: 1400px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1.1fr .9fr;
+      grid-template-columns: 1.15fr .95fr;
       gap: 20px;
     }
 
@@ -54,7 +56,16 @@
       display: flex;
       flex-direction: column;
       gap: 18px;
-      min-height: 540px;
+      min-height: 640px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero.interrupt {
+      box-shadow:
+        0 0 0 2px rgba(125,211,252,.15),
+        0 0 50px rgba(125,211,252,.15),
+        var(--shadow);
     }
 
     h1, h2, h3 {
@@ -69,13 +80,10 @@
     }
 
     h2 {
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       color: var(--muted);
       font-weight: 600;
-    }
-
-    p, label, small, textarea, input, select, button {
-      font-size: 0.97rem;
+      margin-top: 6px;
     }
 
     .muted { color: var(--muted); }
@@ -105,6 +113,11 @@
       box-shadow: 0 0 14px rgba(52,211,153,.7);
     }
 
+    .dot.paused {
+      background: var(--warn);
+      box-shadow: 0 0 14px rgba(251,191,36,.7);
+    }
+
     .big-prompt {
       margin-top: 8px;
       flex: 1;
@@ -117,8 +130,22 @@
         linear-gradient(180deg, rgba(125,211,252,.06), rgba(167,139,250,.04)),
         rgba(255,255,255,.02);
       border: 1px solid rgba(255,255,255,.06);
-      min-height: 280px;
+      min-height: 320px;
+      position: relative;
+      overflow: hidden;
     }
+
+    .big-prompt::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(255,255,255,.06), transparent 45%);
+      opacity: 0;
+      transition: opacity .25s ease;
+      pointer-events: none;
+    }
+
+    .big-prompt.flash::after { opacity: 1; }
 
     .big-prompt-text {
       font-size: clamp(2rem, 5vw, 4rem);
@@ -126,6 +153,24 @@
       font-weight: 800;
       max-width: 16ch;
       letter-spacing: -.03em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .category-badge {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      z-index: 2;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      font-weight: 700;
+      font-size: .85rem;
+      letter-spacing: .02em;
+      text-transform: capitalize;
     }
 
     .subgrid {
@@ -167,8 +212,13 @@
       border-color: rgba(248,113,113,.35);
     }
 
+    button.warn {
+      border-color: rgba(251,191,36,.35);
+    }
+
     input[type="number"],
     input[type="text"],
+    input[type="time"],
     select,
     textarea,
     input[type="range"] {
@@ -220,7 +270,7 @@
 
     .meta {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
+      grid-template-columns: repeat(4, minmax(0,1fr));
       gap: 12px;
     }
 
@@ -241,12 +291,13 @@
     }
 
     .stat .v {
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       font-weight: 800;
+      word-break: break-word;
     }
 
     .log {
-      max-height: 220px;
+      max-height: 240px;
       overflow: auto;
       border-radius: 14px;
       border: 1px solid var(--border);
@@ -263,24 +314,133 @@
       color: var(--muted);
     }
 
-    @media (max-width: 980px) {
-      .wrap {
-        grid-template-columns: 1fr;
-      }
-      .subgrid, .meta {
-        grid-template-columns: 1fr;
-      }
+    .analytics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .analytics-card {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.025);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .bar-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 110px 1fr 42px;
+      gap: 10px;
+      align-items: center;
+      font-size: .92rem;
+    }
+
+    .bar {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      overflow: hidden;
+    }
+
+    .bar > span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, rgba(125,211,252,.9), rgba(167,139,250,.9));
+      width: 0%;
+      transition: width .25s ease;
+    }
+
+    .hotkeys {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .key {
+      border: 1px solid var(--border);
+      border-bottom-width: 3px;
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-weight: 800;
+      background: rgba(255,255,255,.03);
+      font-size: .85rem;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      background: rgba(4,7,12,.72);
+      backdrop-filter: blur(4px);
+      z-index: 9999;
+      padding: 30px;
+    }
+
+    .overlay.show { display: grid; }
+
+    .overlay-card {
+      width: min(1000px, 100%);
+      min-height: 48vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        linear-gradient(180deg, rgba(125,211,252,.08), rgba(167,139,250,.06)),
+        rgba(18,22,30,.92);
+      box-shadow: 0 30px 80px rgba(0,0,0,.45);
+      padding: 40px;
+      position: relative;
+    }
+
+    .overlay-text {
+      font-size: clamp(2.2rem, 6vw, 5rem);
+      line-height: 1.04;
+      font-weight: 900;
+      letter-spacing: -.04em;
+      max-width: 15ch;
+    }
+
+    .overlay-hint {
+      position: absolute;
+      bottom: 18px;
+      right: 20px;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    @media (max-width: 1100px) {
+      .wrap { grid-template-columns: 1fr; }
+      .subgrid, .meta, .analytics { grid-template-columns: 1fr; }
       .hero { min-height: auto; }
     }
   </style>
 </head>
 <body>
+  <div class="overlay" id="interruptOverlay" aria-hidden="true">
+    <div class="overlay-card">
+      <div class="overlay-text" id="overlayText">Ready.</div>
+      <div class="overlay-hint">Press Esc or click anywhere to dismiss</div>
+    </div>
+  </div>
+
   <div class="wrap">
-    <section class="card hero">
+    <section class="card hero" id="heroCard">
       <div style="display:flex; justify-content:space-between; gap:16px; align-items:flex-start; flex-wrap:wrap;">
         <div>
           <h1>Ambient Voice Interruption Engine</h1>
-          <h2>Random spoken prompts at irregular intervals</h2>
+          <h2>Random spoken prompts • irregular intervals • controlled weirdness</h2>
         </div>
         <div class="status" id="statusBadge">
           <span class="dot" id="statusDot"></span>
@@ -292,6 +452,8 @@
         <button class="primary" id="launchBtn">Launch</button>
         <button id="speakNowBtn">Speak Now</button>
         <button id="skipBtn">Skip / Reschedule</button>
+        <button class="warn" id="snoozeBtn">Snooze 10m</button>
+        <button class="warn" id="muteBtn">Mute 30m</button>
         <button class="danger" id="stopBtn">Stop</button>
       </div>
 
@@ -299,6 +461,10 @@
         <div class="stat">
           <div class="k">Next Prompt</div>
           <div class="v" id="nextPromptTime">—</div>
+        </div>
+        <div class="stat">
+          <div class="k">Approx Delay</div>
+          <div class="v" id="nextDelayText">—</div>
         </div>
         <div class="stat">
           <div class="k">Last Category</div>
@@ -310,8 +476,31 @@
         </div>
       </div>
 
-      <div class="big-prompt">
+      <div class="big-prompt" id="bigPrompt">
+        <div class="category-badge" id="categoryBadge">system</div>
         <div class="big-prompt-text" id="bigPromptText">Ready.</div>
+      </div>
+
+      <div class="analytics">
+        <div class="analytics-card">
+          <h3>Category Analytics</h3>
+          <div class="bar-list" id="categoryBars"></div>
+        </div>
+        <div class="analytics-card">
+          <h3>Quick Keys</h3>
+          <div class="hotkeys">
+            <div class="key">Space = Speak</div>
+            <div class="key">S = Snooze</div>
+            <div class="key">M = Mute</div>
+            <div class="key">R = Reschedule</div>
+            <div class="key">P = Pause/Resume</div>
+            <div class="key">Esc = Close Overlay</div>
+          </div>
+          <div style="margin-top:16px;">
+            <div class="tiny">Current mute-until:</div>
+            <div id="muteUntilText" style="font-weight:800; margin-top:4px;">—</div>
+          </div>
+        </div>
       </div>
 
       <div>
@@ -337,7 +526,7 @@
         </div>
 
         <div class="field">
-          <label for="voiceSelect">Voice</label>
+          <label for="voiceSelect">Primary Voice (used if random voices OFF)</label>
           <select id="voiceSelect"></select>
         </div>
 
@@ -352,23 +541,79 @@
         </div>
 
         <div class="field">
-          <label for="volume">Volume</label>
+          <label for="volume">Base volume</label>
           <input id="volume" type="range" min="0" max="1" step="0.01" value="1" />
         </div>
 
         <div class="field">
-          <label for="rate">Rate</label>
+          <label for="rate">Base rate</label>
           <input id="rate" type="range" min="0.6" max="1.5" step="0.01" value="1" />
         </div>
 
         <div class="field">
-          <label for="pitch">Pitch</label>
+          <label for="pitch">Base pitch</label>
           <input id="pitch" type="range" min="0.5" max="1.7" step="0.01" value="1" />
         </div>
 
         <div class="field">
           <label for="repeatCount">Repeat each prompt</label>
           <input id="repeatCount" type="number" min="1" max="5" step="1" value="1" />
+        </div>
+
+        <div class="field">
+          <label for="cooldownMinutes">Prompt cooldown (minutes)</label>
+          <input id="cooldownMinutes" type="number" min="0" max="1440" step="1" value="120" />
+        </div>
+
+        <div class="field">
+          <label for="preChimeVolume">Pre-chime volume</label>
+          <input id="preChimeVolume" type="range" min="0" max="1" step="0.01" value="0.18" />
+        </div>
+
+        <div class="field">
+          <label for="snoozeMinutes">Default snooze (minutes)</label>
+          <input id="snoozeMinutes" type="number" min="1" max="180" step="1" value="10" />
+        </div>
+
+        <div class="field">
+          <label for="muteMinutes">Default mute (minutes)</label>
+          <input id="muteMinutes" type="number" min="1" max="720" step="1" value="30" />
+        </div>
+
+        <div class="field">
+          <label for="activeStart">Active start</label>
+          <input id="activeStart" type="time" value="09:00" />
+        </div>
+
+        <div class="field">
+          <label for="activeEnd">Active end</label>
+          <input id="activeEnd" type="time" value="23:00" />
+        </div>
+
+        <div class="field">
+          <label for="voiceVarPercent">Voice variation % (pitch / volume / rate ±)</label>
+          <input id="voiceVarPercent" type="number" min="0" max="80" step="1" value="12" />
+        </div>
+
+        <div class="field">
+          <label for="randomVoicePoolMode">Random voice pool</label>
+          <select id="randomVoicePoolMode">
+            <option value="all" selected>All available voices</option>
+            <option value="english">English voices only</option>
+            <option value="same-lang">Same language family as primary</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-top:18px;" class="field">
+        <label>Behaviour toggles</label>
+        <div class="pill-group">
+          <label class="pill"><input type="checkbox" id="randomVoiceEnabled" checked /> 🎭 Random voice each prompt</label>
+          <label class="pill"><input type="checkbox" id="showOverlay" checked /> 🪟 Fullscreen interruption overlay</label>
+          <label class="pill"><input type="checkbox" id="showNotification" checked /> 📢 Browser notifications</label>
+          <label class="pill"><input type="checkbox" id="preChimeEnabled" checked /> 🔔 Pre-chime</label>
+          <label class="pill"><input type="checkbox" id="avoidRecentPrompts" checked /> 🔁 Anti-repeat cooldown</label>
+          <label class="pill"><input type="checkbox" id="hideUsedUntilCycle" checked /> 🧹 Cycle through before repeats</label>
         </div>
       </div>
 
@@ -387,15 +632,16 @@
       <div style="margin-top:18px;" class="field">
         <label for="promptsBox">Prompt library (format: <code>category | prompt</code>, one per line)</label>
         <textarea id="promptsBox"></textarea>
-        <div class="tiny">
-          Example: <code>executive | Name the task.</code>
-        </div>
+        <div class="tiny">Example: <code>executive | Name the task.</code></div>
       </div>
 
       <div class="control-row" style="margin-top:16px;">
         <button id="saveBtn">Save Settings</button>
         <button id="resetBtn">Reset Defaults</button>
         <button id="testVoiceBtn">Test Voice</button>
+        <button id="exportBtn">Export JSON</button>
+        <button id="importBtn">Import JSON</button>
+        <input id="importFile" type="file" accept=".json" style="display:none;" />
       </div>
     </section>
   </div>
@@ -407,54 +653,78 @@
       "grounding | Feel your feet.",
       "grounding | Drop your shoulders.",
       "grounding | Relax your jaw.",
+      "grounding | Notice your breathing without changing it.",
 
       "executive | Name the task.",
       "executive | One tab. One task.",
       "executive | Finish before switching.",
       "executive | What are you actually doing?",
       "executive | Is this movement or avoidance?",
+      "executive | Reduce the next step.",
 
       "reflective | What are you postponing?",
       "reflective | What narrative is running right now?",
       "reflective | What would clean action look like?",
       "reflective | What are you feeding?",
       "reflective | If this vanished, what would still matter?",
+      "reflective | What loop is active?",
 
       "physical | Drink water.",
       "physical | Stand up.",
       "physical | Eyes far distance. Ten seconds.",
       "physical | Stretch your neck.",
       "physical | Uncurl your hands.",
+      "physical | Reset your posture.",
 
       "absurd | Your attention has escaped the enclosure.",
       "absurd | This is your legally mandated goblin reset.",
       "absurd | You are piloting meat in an electricity storm.",
       "absurd | The seventh tab is not a strategy.",
       "absurd | Reality check: are you in command?",
+      "absurd | The simulation requests less browser archaeology.",
 
       "behaviour | Do the smallest meaningful thing now.",
       "behaviour | Delete friction.",
       "behaviour | Open less. Complete more.",
       "behaviour | Two minutes. Start now.",
-      "behaviour | Reduce the next step."
+      "behaviour | Reduce the next step.",
+      "behaviour | Move one thing to done."
     ];
 
+    const CATEGORY_ORDER = ["grounding","executive","reflective","physical","absurd","behaviour","system"];
+    const STORAGE_KEY = "ambientPrompterEnhancedSettings";
+    const STATS_KEY = "ambientPrompterEnhancedStats";
+
     const els = {
+      heroCard: document.getElementById("heroCard"),
       launchBtn: document.getElementById("launchBtn"),
       stopBtn: document.getElementById("stopBtn"),
       speakNowBtn: document.getElementById("speakNowBtn"),
       skipBtn: document.getElementById("skipBtn"),
+      snoozeBtn: document.getElementById("snoozeBtn"),
+      muteBtn: document.getElementById("muteBtn"),
       saveBtn: document.getElementById("saveBtn"),
       resetBtn: document.getElementById("resetBtn"),
       testVoiceBtn: document.getElementById("testVoiceBtn"),
+      exportBtn: document.getElementById("exportBtn"),
+      importBtn: document.getElementById("importBtn"),
+      importFile: document.getElementById("importFile"),
 
       statusDot: document.getElementById("statusDot"),
       statusText: document.getElementById("statusText"),
       nextPromptTime: document.getElementById("nextPromptTime"),
+      nextDelayText: document.getElementById("nextDelayText"),
       lastCategory: document.getElementById("lastCategory"),
       spokenCount: document.getElementById("spokenCount"),
+      bigPrompt: document.getElementById("bigPrompt"),
       bigPromptText: document.getElementById("bigPromptText"),
+      categoryBadge: document.getElementById("categoryBadge"),
       logBox: document.getElementById("logBox"),
+      categoryBars: document.getElementById("categoryBars"),
+      muteUntilText: document.getElementById("muteUntilText"),
+
+      interruptOverlay: document.getElementById("interruptOverlay"),
+      overlayText: document.getElementById("overlayText"),
 
       mode: document.getElementById("mode"),
       voiceSelect: document.getElementById("voiceSelect"),
@@ -464,18 +734,64 @@
       rate: document.getElementById("rate"),
       pitch: document.getElementById("pitch"),
       repeatCount: document.getElementById("repeatCount"),
+      cooldownMinutes: document.getElementById("cooldownMinutes"),
+      preChimeVolume: document.getElementById("preChimeVolume"),
+      snoozeMinutes: document.getElementById("snoozeMinutes"),
+      muteMinutes: document.getElementById("muteMinutes"),
+      activeStart: document.getElementById("activeStart"),
+      activeEnd: document.getElementById("activeEnd"),
+      voiceVarPercent: document.getElementById("voiceVarPercent"),
+      randomVoicePoolMode: document.getElementById("randomVoicePoolMode"),
+
+      randomVoiceEnabled: document.getElementById("randomVoiceEnabled"),
+      showOverlay: document.getElementById("showOverlay"),
+      showNotification: document.getElementById("showNotification"),
+      preChimeEnabled: document.getElementById("preChimeEnabled"),
+      avoidRecentPrompts: document.getElementById("avoidRecentPrompts"),
+      hideUsedUntilCycle: document.getElementById("hideUsedUntilCycle"),
+
       promptsBox: document.getElementById("promptsBox"),
       catToggles: () => [...document.querySelectorAll(".catToggle")]
     };
 
     let voices = [];
     let running = false;
+    let paused = false;
     let timeoutId = null;
     let nextAt = null;
+    let muteUntil = null;
     let spokenCount = 0;
     let lastPrompt = "";
     let lastCategory = "";
     let lastPromptTime = 0;
+    let categoryCounts = {};
+    let recentPromptMap = {};
+    let cycleUsed = new Set();
+
+    function initStats() {
+      const raw = localStorage.getItem(STATS_KEY);
+      if (raw) {
+        try {
+          const s = JSON.parse(raw);
+          spokenCount = s.spokenCount || 0;
+          categoryCounts = s.categoryCounts || {};
+          recentPromptMap = s.recentPromptMap || {};
+          cycleUsed = new Set(s.cycleUsed || []);
+        } catch {}
+      }
+      CATEGORY_ORDER.forEach(c => { if (!(c in categoryCounts)) categoryCounts[c] = 0; });
+      els.spokenCount.textContent = spokenCount;
+      renderAnalytics();
+    }
+
+    function saveStats() {
+      localStorage.setItem(STATS_KEY, JSON.stringify({
+        spokenCount,
+        categoryCounts,
+        recentPromptMap,
+        cycleUsed: [...cycleUsed]
+      }));
+    }
 
     function log(msg) {
       const stamp = new Date().toLocaleTimeString();
@@ -492,15 +808,29 @@
         rate: els.rate.value,
         pitch: els.pitch.value,
         repeatCount: els.repeatCount.value,
+        cooldownMinutes: els.cooldownMinutes.value,
+        preChimeVolume: els.preChimeVolume.value,
+        snoozeMinutes: els.snoozeMinutes.value,
+        muteMinutes: els.muteMinutes.value,
+        activeStart: els.activeStart.value,
+        activeEnd: els.activeEnd.value,
+        voiceVarPercent: els.voiceVarPercent.value,
+        randomVoicePoolMode: els.randomVoicePoolMode.value,
+        randomVoiceEnabled: els.randomVoiceEnabled.checked,
+        showOverlay: els.showOverlay.checked,
+        showNotification: els.showNotification.checked,
+        preChimeEnabled: els.preChimeEnabled.checked,
+        avoidRecentPrompts: els.avoidRecentPrompts.checked,
+        hideUsedUntilCycle: els.hideUsedUntilCycle.checked,
         prompts: els.promptsBox.value,
         categories: els.catToggles().filter(c => c.checked).map(c => c.value)
       };
-      localStorage.setItem("ambientPrompterSettings", JSON.stringify(settings));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
       log("Settings saved.");
     }
 
     function loadSettings() {
-      const raw = localStorage.getItem("ambientPrompterSettings");
+      const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) {
         els.promptsBox.value = DEFAULT_PROMPTS.join("\n");
         return;
@@ -510,10 +840,26 @@
         els.mode.value = s.mode || "normal";
         els.minMinutes.value = s.minMinutes || 8;
         els.maxMinutes.value = s.maxMinutes || 45;
-        els.volume.value = s.volume || 1;
-        els.rate.value = s.rate || 1;
-        els.pitch.value = s.pitch || 1;
+        els.volume.value = s.volume ?? 1;
+        els.rate.value = s.rate ?? 1;
+        els.pitch.value = s.pitch ?? 1;
         els.repeatCount.value = s.repeatCount || 1;
+        els.cooldownMinutes.value = s.cooldownMinutes || 120;
+        els.preChimeVolume.value = s.preChimeVolume ?? 0.18;
+        els.snoozeMinutes.value = s.snoozeMinutes || 10;
+        els.muteMinutes.value = s.muteMinutes || 30;
+        els.activeStart.value = s.activeStart || "09:00";
+        els.activeEnd.value = s.activeEnd || "23:00";
+        els.voiceVarPercent.value = s.voiceVarPercent || 12;
+        els.randomVoicePoolMode.value = s.randomVoicePoolMode || "all";
+
+        els.randomVoiceEnabled.checked = s.randomVoiceEnabled ?? true;
+        els.showOverlay.checked = s.showOverlay ?? true;
+        els.showNotification.checked = s.showNotification ?? true;
+        els.preChimeEnabled.checked = s.preChimeEnabled ?? true;
+        els.avoidRecentPrompts.checked = s.avoidRecentPrompts ?? true;
+        els.hideUsedUntilCycle.checked = s.hideUsedUntilCycle ?? true;
+
         els.promptsBox.value = s.prompts || DEFAULT_PROMPTS.join("\n");
 
         const enabled = new Set(s.categories || ["grounding","executive","reflective","physical","absurd","behaviour"]);
@@ -528,7 +874,7 @@
     }
 
     function resetDefaults() {
-      localStorage.removeItem("ambientPrompterSettings");
+      localStorage.removeItem(STORAGE_KEY);
       els.mode.value = "normal";
       els.minMinutes.value = 8;
       els.maxMinutes.value = 45;
@@ -536,6 +882,22 @@
       els.rate.value = 1;
       els.pitch.value = 1;
       els.repeatCount.value = 1;
+      els.cooldownMinutes.value = 120;
+      els.preChimeVolume.value = 0.18;
+      els.snoozeMinutes.value = 10;
+      els.muteMinutes.value = 30;
+      els.activeStart.value = "09:00";
+      els.activeEnd.value = "23:00";
+      els.voiceVarPercent.value = 12;
+      els.randomVoicePoolMode.value = "all";
+
+      els.randomVoiceEnabled.checked = true;
+      els.showOverlay.checked = true;
+      els.showNotification.checked = true;
+      els.preChimeEnabled.checked = true;
+      els.avoidRecentPrompts.checked = true;
+      els.hideUsedUntilCycle.checked = true;
+
       els.promptsBox.value = DEFAULT_PROMPTS.join("\n");
       els.catToggles().forEach(c => c.checked = true);
       log("Defaults restored.");
@@ -551,7 +913,7 @@
         els.voiceSelect.appendChild(opt);
       });
 
-      const saved = JSON.parse(localStorage.getItem("ambientPrompterSettings") || "{}");
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
       if (saved.voiceURI) {
         els.voiceSelect.value = saved.voiceURI;
       } else {
@@ -562,7 +924,6 @@
         if (preferred) els.voiceSelect.value = preferred.voiceURI;
       }
     }
-
     speechSynthesis.onvoiceschanged = loadVoices;
 
     function parsePrompts() {
@@ -588,15 +949,9 @@
     function weightedCategoryPick(categories) {
       const mode = els.mode.value;
       const weights = {
-        gentle: {
-          grounding: 5, physical: 4, executive: 3, behaviour: 2, reflective: 2, absurd: 1
-        },
-        normal: {
-          grounding: 3, physical: 3, executive: 4, behaviour: 4, reflective: 3, absurd: 2
-        },
-        chaos: {
-          grounding: 2, physical: 2, executive: 4, behaviour: 4, reflective: 4, absurd: 5
-        }
+        gentle: { grounding: 5, physical: 4, executive: 3, behaviour: 2, reflective: 2, absurd: 1 },
+        normal: { grounding: 3, physical: 3, executive: 4, behaviour: 4, reflective: 3, absurd: 2 },
+        chaos:  { grounding: 2, physical: 2, executive: 4, behaviour: 4, reflective: 4, absurd: 5 }
       }[mode];
 
       const bag = [];
@@ -607,62 +962,54 @@
       return bag[Math.floor(Math.random() * bag.length)];
     }
 
-    function pickPrompt() {
-      const prompts = parsePrompts();
-      const enabled = getEnabledCategories();
+    function withinActiveHours(date = new Date()) {
+      const start = els.activeStart.value || "09:00";
+      const end = els.activeEnd.value || "23:00";
+      const [sh, sm] = start.split(":").map(Number);
+      const [eh, em] = end.split(":").map(Number);
 
-      const filtered = prompts.filter(p => enabled.has(p.category));
-      if (!filtered.length) {
-        return { category: "system", text: "No enabled prompts available." };
+      const nowMins = date.getHours() * 60 + date.getMinutes();
+      const startMins = sh * 60 + sm;
+      const endMins = eh * 60 + em;
+
+      if (startMins === endMins) return true; // 24h
+      if (startMins < endMins) {
+        return nowMins >= startMins && nowMins < endMins;
+      } else {
+        // overnight window
+        return nowMins >= startMins || nowMins < endMins;
       }
+    }
 
-      const categories = [...new Set(filtered.map(p => p.category))];
-      const chosenCategory = weightedCategoryPick(categories);
-
-      let candidates = filtered.filter(p => p.category === chosenCategory);
-
-      // avoid immediate repetition if possible
-      let nonRepeat = candidates.filter(p => p.text !== lastPrompt);
-      if (nonRepeat.length) candidates = nonRepeat;
-
-      const chosen = candidates[Math.floor(Math.random() * candidates.length)];
-      return chosen;
+    function msUntilActiveWindow(date = new Date()) {
+      if (withinActiveHours(date)) return 0;
+      const start = els.activeStart.value || "09:00";
+      const [sh, sm] = start.split(":").map(Number);
+      const next = new Date(date);
+      next.setHours(sh, sm, 0, 0);
+      if (next <= date) next.setDate(next.getDate() + 1);
+      return next - date;
     }
 
     function randomDelayMs() {
       let min = Math.max(1, Number(els.minMinutes.value || 8));
       let max = Math.max(min, Number(els.maxMinutes.value || 45));
-
       const mode = els.mode.value;
-
-      // textured randomness rather than flat uniform
       const r = Math.random();
       let minutes;
 
       if (mode === "gentle") {
-        if (r < 0.75) {
-          minutes = min + Math.random() * (max - min) * 0.65;
-        } else {
-          minutes = min + Math.random() * (max - min);
-        }
+        if (r < 0.75) minutes = min + Math.random() * (max - min) * 0.65;
+        else minutes = min + Math.random() * (max - min);
       } else if (mode === "chaos") {
-        if (r < 0.15) {
-          minutes = min + Math.random() * Math.min(6, max - min); // surprise short hit
-        } else if (r < 0.85) {
-          minutes = min + Math.random() * (max - min) * 0.7;
-        } else {
-          minutes = min + Math.random() * (max - min);
-        }
+        if (r < 0.15) minutes = min + Math.random() * Math.min(6, Math.max(0, max - min));
+        else if (r < 0.85) minutes = min + Math.random() * (max - min) * 0.7;
+        else minutes = min + Math.random() * (max - min);
       } else {
-        if (r < 0.1) {
-          minutes = min + Math.random() * Math.min(5, max - min);
-        } else if (r < 0.8) {
-          minutes = min + Math.random() * (max - min) * 0.7;
-        } else {
-          minutes = min + Math.random() * (max - min);
-        }
+        if (r < 0.1) minutes = min + Math.random() * Math.min(5, Math.max(0, max - min));
+        else if (r < 0.8) minutes = min + Math.random() * (max - min) * 0.7;
+        else minutes = min + Math.random() * (max - min);
       }
-
       return Math.round(minutes * 60 * 1000);
     }
 
@@ -670,40 +1017,218 @@
       return new Date(ts).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
     }
 
-    function updateRunningUI(isRunning) {
-      running = isRunning;
-      els.statusText.textContent = isRunning ? "Running" : "Stopped";
-      els.statusDot.classList.toggle("live", isRunning);
+    function formatRelative(ms) {
+      if (ms <= 0) return "now";
+      const mins = Math.round(ms / 60000);
+      if (mins < 1) return "<1 min";
+      if (mins < 60) return `~${mins} min`;
+      const h = Math.floor(mins / 60);
+      const m = mins % 60;
+      return `~${h}h ${m}m`;
+    }
+
+    function updateRunningUI(state = "stopped") {
+      running = state === "running";
+      paused = state === "paused";
+
+      els.statusDot.classList.remove("live", "paused");
+      if (state === "running") {
+        els.statusText.textContent = "Running";
+        els.statusDot.classList.add("live");
+      } else if (state === "paused") {
+        els.statusText.textContent = "Paused";
+        els.statusDot.classList.add("paused");
+      } else {
+        els.statusText.textContent = "Stopped";
+      }
+    }
+
+    function renderAnalytics() {
+      const total = Math.max(1, Object.values(categoryCounts).reduce((a,b) => a+b, 0));
+      els.categoryBars.innerHTML = "";
+      CATEGORY_ORDER.filter(c => c !== "system").forEach(cat => {
+        const count = categoryCounts[cat] || 0;
+        const pct = Math.round((count / total) * 100);
+        const row = document.createElement("div");
+        row.className = "bar-row";
+        row.innerHTML = `
+          <div style="text-transform:capitalize;">${cat}</div>
+          <div class="bar"><span style="width:${pct}%"></span></div>
+          <div style="text-align:right;">${count}</div>
+        `;
+        els.categoryBars.appendChild(row);
+      });
     }
 
     function selectedVoice() {
-      return voices.find(v => v.voiceURI === els.voiceSelect.value) || null;
+      return voices.find(v => v.voiceURI === els.voiceSelect.value) || voices[0] || null;
+    }
+
+    function randomFrom(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function getRandomVoice() {
+      const primary = selectedVoice();
+      if (!els.randomVoiceEnabled.checked || !voices.length) return primary;
+
+      let pool = voices.slice();
+      const mode = els.randomVoicePoolMode.value;
+
+      if (mode === "english") {
+        const en = voices.filter(v => /^en/i.test(v.lang));
+        if (en.length) pool = en;
+      } else if (mode === "same-lang" && primary) {
+        const prefix = (primary.lang || "").split("-")[0];
+        const same = voices.filter(v => (v.lang || "").startsWith(prefix));
+        if (same.length) pool = same;
+      }
+
+      return randomFrom(pool) || primary;
+    }
+
+    function varyValue(base, pct, min, max) {
+      const delta = base * (pct / 100);
+      const out = base + ((Math.random() * 2 - 1) * delta);
+      return Math.min(max, Math.max(min, out));
+    }
+
+    function pickPrompt() {
+      const prompts = parsePrompts();
+      const enabled = getEnabledCategories();
+      let filtered = prompts.filter(p => enabled.has(p.category));
+
+      if (!filtered.length) {
+        return { category: "system", text: "No enabled prompts available." };
+      }
+
+      const cooldownMs = Math.max(0, Number(els.cooldownMinutes.value || 0)) * 60 * 1000;
+      const now = Date.now();
+
+      if (els.avoidRecentPrompts.checked && cooldownMs > 0) {
+        const cooled = filtered.filter(p => {
+          const last = recentPromptMap[p.text] || 0;
+          return (now - last) >= cooldownMs;
+        });
+        if (cooled.length) filtered = cooled;
+      }
+
+      if (els.hideUsedUntilCycle.checked) {
+        const cycleFiltered = filtered.filter(p => !cycleUsed.has(p.text));
+        if (cycleFiltered.length) {
+          filtered = cycleFiltered;
+        } else {
+          cycleUsed.clear();
+          filtered = prompts.filter(p => enabled.has(p.category));
+        }
+      }
+
+      const categories = [...new Set(filtered.map(p => p.category))];
+      const chosenCategory = weightedCategoryPick(categories);
+      let candidates = filtered.filter(p => p.category === chosenCategory);
+
+      let nonRepeat = candidates.filter(p => p.text !== lastPrompt);
+      if (nonRepeat.length) candidates = nonRepeat;
+
+      return candidates[Math.floor(Math.random() * candidates.length)];
+    }
+
+    function preChime() {
+      if (!els.preChimeEnabled.checked) return Promise.resolve();
+      return new Promise(resolve => {
+        try {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          const ctx = new AudioContext();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(660, ctx.currentTime);
+          gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(Math.max(0.0001, Number(els.preChimeVolume.value || 0.18)), ctx.currentTime + 0.01);
+          gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.25);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.28);
+          osc.onended = () => {
+            ctx.close();
+            resolve();
+          };
+        } catch {
+          resolve();
+        }
+      });
+    }
+
+    function showOverlay(text) {
+      if (!els.showOverlay.checked) return;
+      els.overlayText.textContent = text;
+      els.interruptOverlay.classList.add("show");
+      els.interruptOverlay.setAttribute("aria-hidden", "false");
+    }
+
+    function hideOverlay() {
+      els.interruptOverlay.classList.remove("show");
+      els.interruptOverlay.setAttribute("aria-hidden", "true");
+    }
+
+    async function notify(text, category) {
+      if (!els.showNotification.checked || !("Notification" in window)) return;
+      if (Notification.permission === "granted") {
+        new Notification(`Prompt • ${category}`, { body: text });
+      }
+    }
+
+    async function ensureNotificationPermission() {
+      if (!("Notification" in window)) return;
+      if (Notification.permission === "default") {
+        try { await Notification.requestPermission(); } catch {}
+      }
+    }
+
+    function pulseVisual(category, text) {
+      els.bigPromptText.textContent = text;
+      els.categoryBadge.textContent = category;
+      els.categoryBadge.style.background = `rgba(255,255,255,.06)`;
+      els.bigPrompt.classList.add("flash");
+      els.heroCard.classList.add("interrupt");
+      setTimeout(() => {
+        els.bigPrompt.classList.remove("flash");
+        els.heroCard.classList.remove("interrupt");
+      }, 900);
     }
 
     function speak(text, category = "system") {
       speechSynthesis.cancel();
 
       const repeatCount = Math.max(1, Number(els.repeatCount.value || 1));
-      const voice = selectedVoice();
+      const baseVol = Number(els.volume.value || 1);
+      const baseRate = Number(els.rate.value || 1);
+      const basePitch = Number(els.pitch.value || 1);
+      const varPct = Math.max(0, Number(els.voiceVarPercent.value || 0));
 
-      let delayBetweenRepeats = 1200;
+      const voice = getRandomVoice();
+      const actualVolume = varyValue(baseVol, varPct, 0, 1);
+      const actualPitch = varyValue(basePitch, varPct, 0.5, 2);
+      const actualRate = varyValue(baseRate, Math.min(varPct, 35), 0.5, 2); // keep rate variation sane
+
       let i = 0;
 
       function speakOne() {
         const utter = new SpeechSynthesisUtterance(text);
         utter.voice = voice;
-        utter.volume = Number(els.volume.value || 1);
-        utter.rate = Number(els.rate.value || 1);
-        utter.pitch = Number(els.pitch.value || 1);
+        utter.volume = actualVolume;
+        utter.rate = actualRate;
+        utter.pitch = actualPitch;
 
         utter.onstart = () => {
-          els.bigPromptText.textContent = text;
+          pulseVisual(category, text);
         };
 
         utter.onend = () => {
           i++;
           if (i < repeatCount) {
-            setTimeout(speakOne, delayBetweenRepeats);
+            setTimeout(speakOne, 1200);
           }
         };
 
@@ -716,38 +1241,75 @@
       lastCategory = category;
       lastPromptTime = Date.now();
       spokenCount++;
+      categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+      recentPromptMap[text] = Date.now();
+      cycleUsed.add(text);
+
       els.spokenCount.textContent = spokenCount;
       els.lastCategory.textContent = category;
-      log(`Spoke [${category}] ${text}`);
+      renderAnalytics();
+      saveStats();
+
+      log(`Spoke [${category}] ${text} | voice="${voice ? voice.name : "default"}" vol=${actualVolume.toFixed(2)} pitch=${actualPitch.toFixed(2)} rate=${actualRate.toFixed(2)}`);
     }
 
-    function firePrompt() {
-      if (!running) return;
+    async function firePrompt() {
+      if (!running || paused) return;
+
+      if (muteUntil && Date.now() < muteUntil) {
+        log(`Muted until ${formatTime(muteUntil)}. Rescheduling.`);
+        scheduleNext(Math.max(15000, muteUntil - Date.now()));
+        return;
+      }
+
+      if (!withinActiveHours()) {
+        const wait = msUntilActiveWindow();
+        log(`Outside active hours. Next active window in ${formatRelative(wait)}.`);
+        scheduleNext(wait);
+        return;
+      }
+
       const p = pickPrompt();
+      showOverlay(p.text);
+      await notify(p.text, p.category);
+      await preChime();
       speak(p.text, p.category);
       scheduleNext();
     }
 
-    function scheduleNext() {
-      if (!running) return;
+    function scheduleNext(forcedDelay = null) {
+      if (!running || paused) return;
       clearTimeout(timeoutId);
-      const delay = randomDelayMs();
+
+      let delay = forcedDelay ?? randomDelayMs();
+
+      if (muteUntil && Date.now() < muteUntil) {
+        delay = Math.max(delay, muteUntil - Date.now());
+      }
+
+      if (!withinActiveHours()) {
+        delay = Math.max(delay, msUntilActiveWindow());
+      }
+
       nextAt = Date.now() + delay;
       els.nextPromptTime.textContent = formatTime(nextAt);
-      log(`Next prompt scheduled for ${formatTime(nextAt)}.`);
+      els.nextDelayText.textContent = formatRelative(delay);
+      log(`Next prompt scheduled for ${formatTime(nextAt)} (${formatRelative(delay)}).`);
       timeoutId = setTimeout(firePrompt, delay);
     }
 
-    function launch() {
+    async function launch() {
       saveSettings();
-      updateRunningUI(true);
+      await ensureNotificationPermission();
+      updateRunningUI("running");
 
-      // prime speech synthesis with a tiny utterance if needed
-      const prime = new SpeechSynthesisUtterance("Voice engine ready.");
+      // prime speech synthesis
+      const prime = new SpeechSynthesisUtterance("ready");
       prime.volume = 0;
       speechSynthesis.speak(prime);
 
       els.bigPromptText.textContent = "System armed.";
+      els.categoryBadge.textContent = "system";
       log("Engine launched.");
       scheduleNext();
     }
@@ -757,54 +1319,178 @@
       timeoutId = null;
       speechSynthesis.cancel();
       nextAt = null;
+      hideOverlay();
       els.nextPromptTime.textContent = "—";
-      updateRunningUI(false);
+      els.nextDelayText.textContent = "—";
+      updateRunningUI("stopped");
       log("Engine stopped.");
     }
 
+    function pauseResume() {
+      if (!running && !paused) return;
+      if (paused) {
+        updateRunningUI("running");
+        log("Engine resumed.");
+        scheduleNext(5000);
+      } else {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+        updateRunningUI("paused");
+        log("Engine paused.");
+      }
+    }
+
     function speakNow() {
+      if (!withinActiveHours()) {
+        log("Manual prompt fired outside active hours.");
+      }
       const p = pickPrompt();
-      speak(p.text, p.category);
-      if (running) scheduleNext();
+      showOverlay(p.text);
+      notify(p.text, p.category);
+      preChime().then(() => speak(p.text, p.category));
+      if (running && !paused) scheduleNext();
     }
 
     function skipAndReschedule() {
       speechSynthesis.cancel();
-      if (running) {
+      hideOverlay();
+      if (running && !paused) {
         log("Prompt skipped. Rescheduling.");
         scheduleNext();
       }
     }
 
-    function testVoice() {
-      speak("Test prompt. Your interruption engine is operational.", "system");
+    function snooze(minutes = null) {
+      const mins = minutes ?? Math.max(1, Number(els.snoozeMinutes.value || 10));
+      speechSynthesis.cancel();
+      hideOverlay();
+      if (running || paused) {
+        updateRunningUI("running");
+        log(`Snoozed for ${mins} minutes.`);
+        scheduleNext(mins * 60 * 1000);
+      }
     }
 
+    function muteFor(minutes = null) {
+      const mins = minutes ?? Math.max(1, Number(els.muteMinutes.value || 30));
+      muteUntil = Date.now() + mins * 60 * 1000;
+      els.muteUntilText.textContent = formatTime(muteUntil);
+      speechSynthesis.cancel();
+      hideOverlay();
+      log(`Muted for ${mins} minutes until ${formatTime(muteUntil)}.`);
+      if (running && !paused) scheduleNext();
+    }
+
+    function testVoice() {
+      const text = "Test prompt. Your interruption engine is operational.";
+      showOverlay(text);
+      preChime().then(() => speak(text, "system"));
+    }
+
+    function exportJSON() {
+      const payload = {
+        settings: JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"),
+        stats: JSON.parse(localStorage.getItem(STATS_KEY) || "{}")
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "ambient-prompter-config.json";
+      a.click();
+      URL.revokeObjectURL(url);
+      log("Exported JSON.");
+    }
+
+    function importJSON(file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const payload = JSON.parse(reader.result);
+          if (payload.settings) localStorage.setItem(STORAGE_KEY, JSON.stringify(payload.settings));
+          if (payload.stats) localStorage.setItem(STATS_KEY, JSON.stringify(payload.stats));
+          loadSettings();
+          initStats();
+          loadVoices();
+          log("Imported JSON.");
+        } catch {
+          log("Import failed: invalid JSON.");
+          alert("Invalid JSON file.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function tick() {
+      if (running && nextAt) {
+        const remaining = nextAt - Date.now();
+        els.nextPromptTime.textContent = formatTime(nextAt);
+        els.nextDelayText.textContent = formatRelative(remaining);
+      }
+      if (muteUntil && Date.now() >= muteUntil) {
+        muteUntil = null;
+        els.muteUntilText.textContent = "—";
+        log("Mute expired.");
+      }
+    }
+
+    // Event wiring
     els.launchBtn.addEventListener("click", launch);
     els.stopBtn.addEventListener("click", stop);
     els.speakNowBtn.addEventListener("click", speakNow);
     els.skipBtn.addEventListener("click", skipAndReschedule);
+    els.snoozeBtn.addEventListener("click", () => snooze());
+    els.muteBtn.addEventListener("click", () => muteFor());
     els.saveBtn.addEventListener("click", saveSettings);
     els.resetBtn.addEventListener("click", () => {
       resetDefaults();
       saveSettings();
+      loadVoices();
     });
     els.testVoiceBtn.addEventListener("click", testVoice);
+    els.exportBtn.addEventListener("click", exportJSON);
+    els.importBtn.addEventListener("click", () => els.importFile.click());
+    els.importFile.addEventListener("change", (e) => {
+      const file = e.target.files?.[0];
+      if (file) importJSON(file);
+      e.target.value = "";
+    });
+
+    els.interruptOverlay.addEventListener("click", hideOverlay);
+    window.addEventListener("keydown", (e) => {
+      const tag = (document.activeElement?.tagName || "").toLowerCase();
+      const typing = ["input","textarea","select"].includes(tag);
+      if (typing) return;
+
+      if (e.code === "Space") { e.preventDefault(); speakNow(); }
+      if (e.key.toLowerCase() === "s") { e.preventDefault(); snooze(); }
+      if (e.key.toLowerCase() === "m") { e.preventDefault(); muteFor(); }
+      if (e.key.toLowerCase() === "r") { e.preventDefault(); skipAndReschedule(); }
+      if (e.key.toLowerCase() === "p") { e.preventDefault(); pauseResume(); }
+      if (e.key === "Escape") { hideOverlay(); }
+    });
 
     [
       els.mode, els.voiceSelect, els.minMinutes, els.maxMinutes,
-      els.volume, els.rate, els.pitch, els.repeatCount, els.promptsBox
+      els.volume, els.rate, els.pitch, els.repeatCount,
+      els.cooldownMinutes, els.preChimeVolume, els.snoozeMinutes,
+      els.muteMinutes, els.activeStart, els.activeEnd,
+      els.voiceVarPercent, els.randomVoicePoolMode, els.promptsBox
     ].forEach(el => el.addEventListener("change", saveSettings));
+
+    [
+      els.randomVoiceEnabled, els.showOverlay, els.showNotification,
+      els.preChimeEnabled, els.avoidRecentPrompts, els.hideUsedUntilCycle
+    ].forEach(el => el.addEventListener("change", saveSettings));
+
     document.querySelectorAll(".catToggle").forEach(el => el.addEventListener("change", saveSettings));
 
-    setInterval(() => {
-      if (running && nextAt) {
-        els.nextPromptTime.textContent = formatTime(nextAt);
-      }
-    }, 1000);
-
+    // Init
     loadSettings();
     loadVoices();
+    initStats();
+    ensureNotificationPermission();
+    setInterval(tick, 1000);
     log("Ready.");
   </script>
 </body>
