@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Employment Help for an Autistic Software Developer</title>
+  <meta name="description" content="A clear, low-noise employment support page for an autistic software developer with 7 years of experience." />
+  <style>
+    :root{
+      --bg: #f7f9fc;
+      --surface: #ffffff;
+      --surface-2: #f0f4f8;
+      --text: #17212b;
+      --muted: #4f5d6b;
+      --line: #d7e0e8;
+      --accent: #2155d6;
+      --accent-2: #163b96;
+      --success: #0f766e;
+      --warn: #9a6700;
+      --danger: #a11a1a;
+      --shadow: 0 6px 20px rgba(20, 32, 50, 0.08);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --maxw: 1080px;
+      --focus: 3px solid #ffbf47;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root{
+        --bg: #0f141a;
+        --surface: #151c23;
+        --surface-2: #1a232d;
+        --text: #e7edf3;
+        --muted: #b1bfcc;
+        --line: #2c3947;
+        --accent: #7ea7ff;
+        --accent-2: #a8c0ff;
+        --success: #42c7bb;
+        --warn: #f1c453;
+        --danger: #ff8d8d;
+        --shadow: 0 8px 24px rgba(0,0,0,0.28);
+        --focus: 3px solid #ffd166;
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      background: linear-gradient(180deg, var(--bg), #eef3f8 60%, var(--bg));
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 18px;
+      letter-spacing: 0.01em;
+    }
+    @media (prefers-color-scheme: dark) {
+      body { background: linear-gradient(180deg, var(--bg), #101820 60%, var(--bg)); }
+    }
+
+    a { color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    a:hover { color: var(--accent-2); }
+    a:focus-visible, button:focus-visible, summary:focus-visible, .copy-btn:focus-visible {
+      outline: var(--focus);
+      outline-offset: 3px;
+      border-radius: 10px;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: 12px;
+      top: -100px;
+      background: #000;
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 10px;
+      z-index: 9999;
+      text-decoration: none;
+    }
+    .skip-link:focus { top: 12px; }
+
+    .page {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 24px 16px 80px;
+    }
+
+    .topbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      box-shadow: var(--shadow);
+    }
+
+    .controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    button, .btn {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font: inherit;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: transparent;
+    }
+
+    .btn-primary:hover { filter: brightness(0.96); color: #fff; }
+
+    header.hero {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 28px;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-weight: 700;
+      color: var(--accent);
+      background: rgba(33,85,214,0.08);
+      border: 1px solid rgba(33,85,214,0.15);
+      padding: 6px 10px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 3.8vw, 3.2rem);
+      line-height: 1.15;
+      margin: 0 0 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p.lead {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 68ch;
+      margin: 0 0 18px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+
+    .card h2, .card h3 {
+      margin-top: 0;
+      line-height: 1.2;
+    }
+
+    .muted { color: var(--muted); }
+
+    nav.toc {
+      position: sticky;
+      top: 14px;
+      align-self: start;
+    }
+
+    nav.toc ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    nav.toc a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: var(--surface-2);
+      text-decoration: none;
+      border: 1px solid var(--line);
+      color: var(--text);
+    }
+
+    nav.toc a:hover { background: var(--surface); }
+
+    main {
+      display: grid;
+      grid-template-columns: 1.45fr 0.55fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    section {
+      margin-bottom: 18px;
+      scroll-margin-top: 16px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .section-title .marker {
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: var(--accent);
+      flex: 0 0 auto;
+    }
+
+    .checklist, .bullet-list, .number-list {
+      margin: 12px 0 0;
+      padding-left: 1.2rem;
+    }
+
+    .checklist li, .bullet-list li, .number-list li {
+      margin: 8px 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .link-card {
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      height: 100%;
+    }
+
+    .link-card h3 { margin-bottom: 8px; }
+    .link-card p { margin: 8px 0 14px; }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.9rem;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--muted);
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+
+    .callout {
+      border-left: 6px solid var(--accent);
+      background: rgba(33,85,214,0.06);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin: 14px 0;
+    }
+
+    .callout.success {
+      border-left-color: var(--success);
+      background: rgba(15,118,110,0.08);
+    }
+
+    .callout.warn {
+      border-left-color: var(--warn);
+      background: rgba(154,103,0,0.08);
+    }
+
+    .callout.danger {
+      border-left-color: var(--danger);
+      background: rgba(161,26,26,0.08);
+    }
+
+    details {
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin: 12px 0;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+      list-style: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+
+    .codebox {
+      position: relative;
+      background: #0d1117;
+      color: #e6edf3;
+      border-radius: 16px;
+      padding: 16px;
+      overflow: auto;
+      border: 1px solid #202938;
+      font-family: var(--mono);
+      font-size: 0.96rem;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .copy-wrap {
+      position: relative;
+      margin-top: 10px;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 2;
+      border: 1px solid #3b4556;
+      background: #151b23;
+      color: #fff;
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 0.92rem;
+      cursor: pointer;
+    }
+
+    .mini {
+      font-size: 0.96rem;
+    }
+
+    .sticky-box {
+      position: sticky;
+      top: 14px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: var(--success);
+      flex: 0 0 auto;
+    }
+
+    .footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .source-list li { margin-bottom: 8px; }
+
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0,0,0,0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid, main, .grid-2, .grid-3 {
+        grid-template-columns: 1fr;
+      }
+      nav.toc { position: static; }
+      .sticky-box { position: static; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { transition: none !important; animation: none !important; }
+    }
+
+    .compact body, .compact {
+      line-height: 1.5;
+    }
+    .compact .card, .compact .link-card, .compact details, .compact header.hero {
+      padding: 16px;
+    }
+    .compact .pill, .compact button, .compact .btn {
+      padding: 8px 12px;
+    }
+
+    .high-contrast {
+      --bg: #ffffff;
+      --surface: #ffffff;
+      --surface-2: #f2f2f2;
+      --text: #000000;
+      --muted: #1d1d1d;
+      --line: #000000;
+      --accent: #0037ff;
+      --accent-2: #001fa8;
+      --success: #006b5f;
+      --warn: #8a5b00;
+      --danger: #8f0000;
+      --shadow: none;
+      --focus: 4px solid #ffbf47;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <div class="page" id="page">
+    <div class="topbar" aria-label="Page controls">
+      <div class="pill-row" aria-label="Page qualities">
+        <span class="pill">Low-noise layout</span>
+        <span class="pill">Literal language</span>
+        <span class="pill">Clear next actions</span>
+        <span class="pill">Copy-friendly</span>
+      </div>
+      <div class="controls">
+        <button id="toggleContrast" type="button" aria-pressed="false">High contrast</button>
+        <button id="toggleCompact" type="button" aria-pressed="false">Compact mode</button>
+        <a class="btn" href="#quick-start">Go to quick start</a>
+      </div>
+    </div>
+
+    <header class="hero" aria-labelledby="page-title">
+      <div class="eyebrow">Employment Support</div>
+      <h1 id="page-title">Employment Help for an Autistic Software Developer</h1>
+      <p class="lead">
+        Clear route into good technical work — without unnecessary friction, vague recruiter language, or performative hiring nonsense.
+      </p>
+
+      <div class="hero-grid">
+        <div class="card">
+          <h2>Who this page is for</h2>
+          <p>
+            This page is for an autistic software developer with:
+          </p>
+          <ul class="checklist">
+            <li><strong>7 years of real software development experience</strong></li>
+            <li>strong technical ability</li>
+            <li>evidence of useful delivered work</li>
+            <li>possible difficulty with standard interviews, vague recruiters, or overselling</li>
+          </ul>
+
+          <div class="callout success">
+            <strong>Important:</strong> This is <strong>not</strong> an entry-level profile.  
+            It is a <strong>mid-level technical profile</strong> and should be treated that way.
+          </div>
+        </div>
+
+        <nav class="toc card" aria-labelledby="toc-title">
+          <h2 id="toc-title">Page map</h2>
+          <ul>
+            <li><a href="#quick-start">Quick Start</a></li>
+            <li><a href="#best-sites">Best Specialist Websites</a></li>
+            <li><a href="#job-strategy">Job Search Strategy</a></li>
+            <li><a href="#evidence-pack">Evidence Pack</a></li>
+            <li><a href="#interviews">Interview Protection Plan</a></li>
+            <li><a href="#scripts">Copy-Paste Scripts</a></li>
+            <li><a href="#sources">Sources</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <div>
+        <section id="quick-start" class="card" aria-labelledby="quick-start-title">
+          <div class="section-title">
+            <span class="marker" aria-hidden="true"></span>
+            <h2 id="quick-start-title">Quick Start</h2>
+          </div>
+          <p class="muted">If energy is limited, do only these first.</p>
+
+          <div class="grid-3">
+            <div class="link-card">
+              <h3>1) Use specialist routes first</h3>
+              <p>These are more likely to understand non-standard communication and reduce pointless friction.</p>
+              <p>
+                <a class="btn btn-primary" href="https://auticon.com/uk/careers/" target="_blank" rel="noopener noreferrer">Open Auticon UK</a>
+              </p>
+              <p>
+                <a class="btn" href="https://exceptionalindividuals.com/" target="_blank" rel="noopener noreferrer">Open Exceptional Individuals</a>
+              </p>
+              <p>
+                <a class="btn" href="https://www.evenbreak.co.uk/" target="_blank" rel="noopener noreferrer">Open Evenbreak</a>
+              </p>
+            </div>
+
+            <div class="link-card">
+              <h3>2) Build a proof-first pack</h3>
+              <ul class="bullet-list">
+                <li>1-page CV</li>
+                <li>Skills list</li>
+                <li>GitHub / portfolio</li>
+                <li>Project evidence sheet</li>
+                <li>Interview adjustments script</li>
+              </ul>
+            </div>
+
+            <div class="link-card">
+              <h3>3) Target the right roles</h3>
+              <ul class="bullet-list">
+                <li>Software Developer</li>
+                <li>Backend / Full-Stack</li>
+                <li>QA Automation</li>
+                <li>DevOps / Platform</li>
+                <li>Data / Integration</li>
+                <li>Technical Support Engineer</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="best-sites" class="card" aria-labelledby="best-sites-title">
+          <div class="section-title">
+            <span class="marker" aria-hidden="true"></span>
+            <h2 id="best-sites-title">Best Specialist Websites</h2>
+          </div>
+
+          <div class="grid-3">
+            <article class="link-card">
+              <h3>Auticon UK</h3>
+              <div class="tag">Best for: autism-focused tech work</div>
+              <p>
+                Auticon is an autistic-majority technology consultancy and publicly describes work in software development, QA, data, and engineering.
+              </p>
+              <p>
+                <a class="btn btn-primary" href="https://auticon.com/uk/careers/" target="_blank" rel="noopener noreferrer">Careers</a>
+                <a class="btn" href="https://auticon.com/uk/it-consulting/software-development/" target="_blank" rel="noopener noreferrer">Software Development</a>
+              </p>
+            </article>
+
+            <article class="link-card">
+              <h3>Exceptional Individuals</h3>
+              <div class="tag">Best for: recruitment support + neurodivergent hiring</div>
+              <p>
+                Useful if the main problem is not technical ability, but getting through hiring systems, interviews, and recruiter mismatch.
+              </p>
+              <p>
+                <a class="btn btn-primary" href="https://exceptionalindividuals.com/" target="_blank" rel="noopener noreferrer">Open Site</a>
+              </p>
+            </article>
+
+            <article class="link-card">
+              <h3>Evenbreak</h3>
+              <div class="tag">Best for: inclusive employers + remote roles</div>
+              <p>
+                A disability-inclusive jobs board that is often more usable than generic recruiter funnels.
+              </p>
+              <p>
+                <a class="btn btn-primary" href="https://www.evenbreak.co.uk/" target="_blank" rel="noopener noreferrer">Open Jobs Board</a>
+              </p>
+            </article>
+          </div>
+
+          <div class="callout">
+            <strong>Best order:</strong>  
+            <strong>Auticon → Exceptional Individuals → Evenbreak</strong>
+          </div>
+        </section>
+
+        <section id="job-strategy" class="card" aria-labelledby="job-strategy-title">
+          <div class="section-title">
+            <span class="marker" aria-hidden="true"></span>
+            <h2 id="job-strategy-title">Job Search Strategy</h2>
+          </div>
+
+          <p><strong>Do not</strong> use random mass applications. That wastes energy.</p>
+
+          <div class="grid-3">
+            <div class="link-card">
+              <h3>Bucket A — Best-fit roles</h3>
+              <p>Apply when there is a <strong>70–90% match</strong>.</p>
+              <ul class="bullet-list">
+                <li>Same stack</li>
+                <li>Same level</li>
+                <li>Mostly written communication</li>
+                <li>Clear responsibilities</li>
+              </ul>
+              <p><strong>Target:</strong> 5–10 strong applications</p>
+            </div>
+
+            <div class="link-card">
+              <h3>Bucket B — Adjacent roles</h3>
+              <p>Apply when the work is very doable even if the title differs.</p>
+              <ul class="bullet-list">
+                <li>Software Developer → QA Automation</li>
+                <li>Backend → Platform / Integration</li>
+                <li>Full-Stack → Internal Tools</li>
+              </ul>
+              <p><strong>Target:</strong> 10–20 applications</p>
+            </div>
+
+            <div class="link-card">
+              <h3>Bucket C — Safe fallback</h3>
+              <p>Useful if income needs restoring quickly.</p>
+              <ul class="bullet-list">
+                <li>Technical Support Engineer</li>
+                <li>Implementation Engineer</li>
+                <li>Systems Analyst</li>
+                <li>Support Developer</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="evidence-pack" class="card" aria-labelledby="evidence-pack-title">
+          <div class="section-title">
+            <span class="marker" aria-hidden="true"></span>
+            <h2 id="evidence-pack-title">Proof-First Evidence Pack</h2>
+          </div>
+
+          <div class="grid-2">
+            <div class="link-card">
+              <h3>1) One-page CV</h3>
+              <ul class="bullet-list">
+                <li>Name</li>
+                <li>Title: <strong>Software Developer</strong></li>
+                <li>Short summary</li>
+                <li>Skills</li>
+                <li>Work history</li>
+                <li>Selected projects</li>
+                <li>Links</li>
+              </ul>
+            </div>
+
+            <div class="link-card">
+              <h3>2) Technical proof sheet</h3>
+              <ul class="bullet-list">
+                <li>Strongest languages</li>
+                <li>Strongest frameworks</li>
+                <li>Tooling / infrastructure</li>
+                <li>Systems built</li>
+                <li>Examples of problem-solving</li>
+                <li>Examples of reliability</li>
+              </ul>
+            </div>
+          </div>
+
+          <details>
+            <summary>Example technical proof categories</summary>
+            <p>
+              <strong>Languages:</strong> Python, JavaScript, TypeScript, C#, Java<br />
+              <strong>Frameworks:</strong> React, Node.js, Django, .NET, Spring<br />
+              <strong>Infrastructure:</strong> Docker, CI/CD, AWS, Linux, Git<br />
+              <strong>Work style:</strong> debugging, architecture, automation, refactoring, delivery
+            </p>
+          </details>
+
+          <details>
+            <summary>Best project evidence format</summary>
+            <ul class="bullet-list">
+              <li><strong>Problem:</strong> What needed fixing or building</li>
+              <li><strong>Built:</strong> What was created or changed</li>
+              <li><strong>Tech:</strong> Languages, frameworks, tools</li>
+              <li><strong>Result:</strong> What improved</li>
+              <li><strong>Proof:</strong> Link, screenshot, repo, or brief note</li>
+            </ul>
+          </details>
+        </section>
+
+        <section id="interviews" class="card" aria-labelledby="interviews-title">
+          <div class="section-title">
+            <span class="marker" aria-hidden="true"></span>
+            <h2 id="interviews-title">Interview Protection Plan</h2>
+          </div>
+
+          <p>Useful adjustments can reduce noise without reducing standards.</p>
+
+          <div class="grid-2">
+            <div class="link-card">
+              <h3>Reasonable adjustments to request</h3>
+              <ul class="bullet-list">
+                <li>Interview questions in advance</li>
+                <li>Written technical questions where possible</li>
+                <li>Clear agenda and timings</li>
+                <li>Reduced panel size</li>
+                <li>Extra processing time</li>
+                <li>Practical task instead of behavioural theatre</li>
+              </ul>
+            </div>
+
+            <div class="link-card">
+              <h3>Correct positioning</h3>
+              <p><strong>Do not frame as:</strong></p>
+              <ul class="bullet-list">
+                <li>“Looking for a chance”</li>
+                <li>“Passionate self-starter”</li>
+                <li>“Hard-working autistic candidate”</li>
+              </ul>
+              <p><strong>Frame as:</strong></p>
+              <div class="callout success">
+                <strong>Software developer with 7 years of practical experience delivering useful technical work.</strong>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="scripts" class="card" aria-labelledby="scripts-title">
+          <div class="section-title">
+            <span class="marker" aria-hidden="true"></span>
+            <h2 id="scripts-title">Copy-Paste Scripts</h2>
+          </div>
+
+          <h3>1) Message to specialist organisations</h3>
+          <div class="copy-wrap">
+            <button class="copy-btn" data-copy="msg1" type="button">Copy</button>
+            <div class="codebox" id="msg1">Hello, I am an autistic software developer with 7 years of experience.
+
+I am looking for software engineering or related technical opportunities.
+
+My strongest areas are:
+- [insert stack / strengths]
+
+I would like to know whether my profile may be suitable for current or upcoming roles.
+
+Thank you.</div>
+          </div>
+
+          <h3>2) Interview adjustments request</h3>
+          <div class="copy-wrap">
+            <button class="copy-btn" data-copy="msg2" type="button">Copy</button>
+            <div class="codebox" id="msg2">Hello,
+
+I would like to request a few reasonable adjustments for the interview process.
+
+The most helpful adjustments would be:
+- clear interview structure in advance
+- written or practical technical questions where possible
+- explicit expectations for each stage
+
+Thank you.</div>
+          </div>
+
+          <h3>3) Short personal introduction</h3>
+          <div class="copy-wrap">
+            <button class="copy-btn" data-copy="msg3" type="button">Copy</button>
+            <div class="codebox" id="msg3">Software developer with 7 years of experience building and improving software systems.
+
+Strong in structured problem-solving, debugging, implementation, and reliable delivery.
+
+Looking for a role with clear expectations, meaningful technical work, and a team that values competence.</div>
+          </div>
+        </section>
+
+        <section id="week-plan" class="card" aria-labelledby="week-plan-title">
+          <div class="section-title">
+            <span class="marker" aria-hidden="true"></span>
+            <h2 id="week-plan-title">Minimum Useful Plan (This Week)</h2>
+          </div>
+
+          <ol class="number-list">
+            <li><strong>Day 1:</strong> Create CV + proof sheet + project list</li>
+            <li><strong>Day 2:</strong> Contact Auticon + Exceptional Individuals</li>
+            <li><strong>Day 3:</strong> Create Evenbreak account + apply to 5 strong-fit roles</li>
+            <li><strong>Day 4:</strong> Prepare interview adjustments script + 3 project case studies</li>
+            <li><strong>Day 5:</strong> Apply to 5 more roles + follow up</li>
+          </ol>
+
+          <div class="callout warn">
+            <strong>Reality check:</strong>  
+            If mainstream recruiters are failing, that often means the <strong>funnel is broken</strong>, not the candidate.
+          </div>
+        </section>
+
+        <section id="sources" class="card" aria-labelledby="sources-title">
+          <div class="section-title">
+            <span class="marker" aria-hidden="true"></span>
+            <h2 id="sources-title">Best Source Websites</h2>
+          </div>
+
+          <p class="muted">These are the main sources used for this page.</p>
+
+          <ul class="source-list">
+            <li>
+              <strong>Auticon UK Careers:</strong>
+              <a href="https://auticon.com/uk/careers/" target="_blank" rel="noopener noreferrer">
+                https://auticon.com/uk/careers/
+              </a>
+            </li>
+            <li>
+              <strong>Auticon UK Software Development:</strong>
+              <a href="https://auticon.com/uk/it-consulting/software-development/" target="_blank" rel="noopener noreferrer">
+                https://auticon.com/uk/it-consulting/software-development/
+              </a>
+            </li>
+            <li>
+              <strong>Exceptional Individuals:</strong>
+              <a href="https://exceptionalindividuals.com/" target="_blank" rel="noopener noreferrer">
+                https://exceptionalindividuals.com/
+              </a>
+            </li>
+            <li>
+              <strong>Evenbreak:</strong>
+              <a href="https://www.evenbreak.co.uk/" target="_blank" rel="noopener noreferrer">
+                https://www.evenbreak.co.uk/
+              </a>
+            </li>
+            <li>
+              <strong>Neurodiversity in Business:</strong>
+              <a href="https://www.neurodiversityinbusiness.org/" target="_blank" rel="noopener noreferrer">
+                https://www.neurodiversityinbusiness.org/
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <div class="footer">
+          <p>
+            <strong>Core principle:</strong> proof over performance.  
+            The goal is not to “seem impressive.” The goal is to make real technical ability legible to employers.
+          </p>
+        </div>
+      </div>
+
+      <aside aria-label="Helpful summary">
+        <div class="sticky-box">
+          <div class="card">
+            <div class="status">
+              <span class="dot" aria-hidden="true"></span>
+              <span>Best immediate route</span>
+            </div>
+            <ol class="number-list mini">
+              <li>Auticon UK</li>
+              <li>Exceptional Individuals</li>
+              <li>Evenbreak</li>
+            </ol>
+          </div>
+
+          <div class="card">
+            <h2>Correct framing</h2>
+            <div class="callout success">
+              <strong>Mid-level software developer with 7 years of practical experience.</strong>
+            </div>
+            <p class="mini muted">
+              That framing is accurate, simple, and stronger than self-promotional language.
+            </p>
+          </div>
+
+          <div class="card">
+            <h2>Best search terms</h2>
+            <div class="tag">software developer</div>
+            <div class="tag">backend developer</div>
+            <div class="tag">full-stack developer</div>
+            <div class="tag">QA automation</div>
+            <div class="tag">DevOps</div>
+            <div class="tag">technical support engineer</div>
+            <div class="tag">internal tools</div>
+            <div class="tag">remote developer</div>
+          </div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      const page = document.getElementById('page');
+      const contrastBtn = document.getElementById('toggleContrast');
+      const compactBtn = document.getElementById('toggleCompact');
+
+      const savedContrast = localStorage.getItem('employmentPageHighContrast') === 'true';
+      const savedCompact = localStorage.getItem('employmentPageCompact') === 'true';
+
+      if (savedContrast) {
+        document.documentElement.classList.add('high-contrast');
+        contrastBtn.setAttribute('aria-pressed', 'true');
+      }
+      if (savedCompact) {
+        page.classList.add('compact');
+        compactBtn.setAttribute('aria-pressed', 'true');
+      }
+
+      contrastBtn.addEventListener('click', function () {
+        const enabled = document.documentElement.classList.toggle('high-contrast');
+        localStorage.setItem('employmentPageHighContrast', String(enabled));
+        contrastBtn.setAttribute('aria-pressed', String(enabled));
+      });
+
+      compactBtn.addEventListener('click', function () {
+        const enabled = page.classList.toggle('compact');
+        localStorage.setItem('employmentPageCompact', String(enabled));
+        compactBtn.setAttribute('aria-pressed', String(enabled));
+      });
+
+      document.querySelectorAll('.copy-btn').forEach(function (btn) {
+        btn.addEventListener('click', async function () {
+          const targetId = btn.getAttribute('data-copy');
+          const el = document.getElementById(targetId);
+          if (!el) return;
+
+          const text = el.innerText;
+          try {
+            await navigator.clipboard.writeText(text);
+            const original = btn.textContent;
+            btn.textContent = 'Copied';
+            setTimeout(() => btn.textContent = original, 1500);
+          } catch (err) {
+            const range = document.createRange();
+            range.selectNodeContents(el);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            btn.textContent = 'Select manually';
+            setTimeout(() => btn.textContent = 'Copy', 1800);
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
