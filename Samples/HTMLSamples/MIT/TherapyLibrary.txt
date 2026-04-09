@@ -1,0 +1,506 @@
+grounding | Unclench your face.
+grounding | Exhale fully.
+grounding | Feel your feet.
+grounding | Drop your shoulders.
+grounding | Relax your jaw.
+grounding | Notice your breathing without changing it.
+grounding | Look around and name three real things.
+grounding | You are here, not in the tab.
+grounding | Let your eyes soften.
+grounding | Sit like your body is allowed to exist.
+grounding | Release one unnecessary muscle.
+grounding | Check whether you are bracing.
+grounding | Return to the room.
+grounding | Let today be slightly simpler.
+grounding | Nothing needs to be solved this second.
+grounding | Notice the weight of your body.
+grounding | Let your hands rest.
+grounding | Slow down by three percent.
+grounding | You can be present without performing.
+grounding | Feel the chair under you.
+grounding | Widen your attention.
+grounding | Soften your forehead.
+grounding | Let your mouth be neutral.
+grounding | You do not need to chase every thought.
+grounding | Come back to the nearest real thing.
+grounding | Your body is allowed to take up space.
+grounding | Unhook from the invisible argument.
+grounding | You can pause without losing momentum.
+grounding | Relax the back of your tongue.
+grounding | Notice one sound in the room.
+grounding | Let your breathing be boring.
+grounding | Lower the internal volume a little.
+grounding | Feel your clothing on your skin.
+grounding | Be where your hands are.
+grounding | Let the moment be plain.
+grounding | You do not need to be mentally elsewhere.
+grounding | Notice the temperature of the air.
+grounding | Let your shoulders stop auditioning for danger.
+grounding | You can arrive before you optimise.
+grounding | Find one point of stillness.
+grounding | Put less tension into being a person.
+grounding | Stop leaning forward into imaginary emergencies.
+grounding | Return to your senses.
+grounding | The room is more real than the spiral.
+grounding | Come back before making anything bigger.
+grounding | Notice whether your body thinks it is under attack.
+grounding | Ease your grip on the moment.
+grounding | Let the floor do some of the work.
+grounding | Rest your eyes on something ordinary.
+grounding | Be here without fixing here.
+grounding | Let your ribs move.
+grounding | The body first, the story second.
+grounding | Stop clenching around the next hour.
+grounding | Make contact with the present tense.
+grounding | Let your breathing reach your lower lungs.
+grounding | Nothing urgent is improved by extra bracing.
+grounding | Let your attention land instead of ricochet.
+grounding | Your nervous system is allowed a less dramatic interpretation.
+grounding | Feel one point of support.
+grounding | Stop preparing for a conversation that is not happening.
+grounding | Be in the room before being in the future.
+grounding | Notice the difference between alert and alarm.
+grounding | Let your neck stop carrying the plot.
+grounding | Loosen your face into human mode.
+grounding | Pause before adding meaning.
+grounding | You can come back in one breath.
+grounding | Rest one hand somewhere reassuring.
+grounding | Allow one layer of urgency to leave.
+grounding | Feel the edge of the desk, chair, or floor.
+grounding | Reality is often quieter than anticipation.
+grounding | Return to the immediate and the actual.
+grounding | Your body does not need to narrate every sensation.
+grounding | Stay with what is here before what might happen.
+grounding | Let your chest stop negotiating with gravity.
+grounding | There is no prize for remaining tightly wound.
+grounding | Be local, not cosmic, for ten seconds.
+grounding | You can exist without explanation right now.
+grounding | One ordinary breath counts.
+grounding | Stop gripping the next thought before it arrives.
+grounding | Be less haunted by your own browser tabs.
+grounding | Come back to texture, sound, shape, weight.
+grounding | Let your system update in peace.
+grounding | This moment does not require theatrics.
+grounding | Unfreeze one tiny part of yourself.
+
+executive | Name the task.
+executive | One tab. One task.
+executive | Finish before switching.
+executive | What are you actually doing?
+executive | Is this movement or avoidance?
+executive | Reduce the next step.
+executive | What would count as done?
+executive | Start ugly, not late.
+executive | Pick the version you can do now.
+executive | You do not need the perfect setup.
+executive | Which screen matters?
+executive | Choose the smallest real action.
+executive | Make it easier to continue.
+executive | Decide, then move.
+executive | If this took two minutes, what would you do?
+executive | What is the actual deliverable?
+executive | Stop setting up and begin.
+executive | Open the file, not the fantasy.
+executive | Choose one lane.
+executive | What gets this unstuck?
+executive | You are allowed to begin before feeling ready.
+executive | Do the part that has edges.
+executive | Make the first move visible.
+executive | Which step creates momentum?
+executive | Do not optimise the doorway.
+executive | Turn the vague thing into a named thing.
+executive | What can be completed, not merely explored?
+executive | Start with the easiest honest version.
+executive | Which action reduces uncertainty fastest?
+executive | Shrink the mission until it becomes moveable.
+executive | If you had to finish something in ten minutes, what would it be?
+executive | Choose progress over elegant delay.
+executive | Put the next action where you can see it.
+executive | What is the one bottleneck?
+executive | Stop browsing for permission.
+executive | This probably has a simpler first step.
+executive | Pick a stopping point before you drift.
+executive | Define the finish line.
+executive | You are one click away from beginning.
+executive | What is the least ceremonial way to start?
+executive | Decide what this is not.
+executive | What deserves attention first?
+executive | Replace possibility with sequence.
+executive | What is the first irreversible action?
+executive | If it mattered today, what would you do next?
+executive | Close the optional and keep the necessary.
+executive | Convert intention into a visible step.
+executive | What is waiting for your decision?
+executive | Do not let planning cosplay as work.
+executive | Start before the mood arrives.
+executive | The next step should fit on one line.
+executive | Pick one thing to move forward.
+executive | Which unfinished thing is easiest to close?
+executive | Stop preparing for preparation.
+executive | What would make later easier?
+executive | Name the next five-minute chunk.
+executive | Turn this into a checklist of one.
+executive | Put the real task in front of your eyes.
+executive | What is the smallest complete version?
+executive | What can you send, submit, or finish?
+executive | What decision are you avoiding?
+executive | Choose the boring effective move.
+executive | Make the hidden task explicit.
+executive | The work is probably less mystical than advertised.
+executive | What can you complete before opening anything else?
+executive | Pick the next physical action.
+executive | What needs to be opened, closed, written, moved, or sent?
+executive | Move from maybe to doing.
+executive | Give the task a shape.
+executive | If this were easy, what would you do first?
+executive | Choose a start that survives low motivation.
+executive | What would remove confusion right now?
+executive | Turn the blob into bullets.
+executive | Do the thing that future-you will not want to do later.
+executive | What can be made obvious?
+executive | One decision now saves ten micro-decisions later.
+executive | Stop circling. Enter.
+executive | What is the shortest path to useful?
+executive | Aim for momentum, not mastery.
+executive | Pick a task that can actually end.
+executive | Which item is quietly taxing your attention?
+executive | Select one open loop and close it.
+executive | Name the next checkpoint.
+executive | You need traction, not a better vibe.
+executive | Make the next move smaller than your resistance.
+
+reflective | What are you postponing?
+reflective | What narrative is running right now?
+reflective | What would clean action look like?
+reflective | What are you feeding?
+reflective | If this vanished, what would still matter?
+reflective | What loop is active?
+reflective | What are you hoping to avoid feeling?
+reflective | Are you confused, or just reluctant?
+reflective | What would future-you thank you for?
+reflective | Is this helping, or just familiar?
+reflective | What are you making harder than necessary?
+reflective | What would honesty sound like here?
+reflective | What do you already know?
+reflective | Which part of this is real?
+reflective | What are you rehearsing internally?
+reflective | What are you trying not to notice?
+reflective | Is this protection or paralysis?
+reflective | What would enough look like?
+reflective | What are you waiting to feel first?
+reflective | What story gets to stay if you do not interrupt it?
+reflective | What would be true without the drama?
+reflective | Are you solving the problem or orbiting it?
+reflective | What would you advise someone else to do here?
+reflective | What are you preserving by not moving?
+reflective | What costs are hidden inside this habit?
+reflective | Which belief is steering right now?
+reflective | What is the simple truth beneath the noise?
+reflective | What is this behaviour buying you?
+reflective | What emotion is underneath the tactic?
+reflective | What would be kind and accurate at the same time?
+reflective | Is this a need, a fear, or a pattern?
+reflective | What are you protecting with complexity?
+reflective | What are you hoping will happen if you keep delaying?
+reflective | Is this desire, dread, or depletion?
+reflective | Which interpretation is least distorted?
+reflective | What is your mind trying to turn into a moral issue?
+reflective | What matters after the mood passes?
+reflective | What would reduce regret tonight?
+reflective | What is unresolved versus merely uncomfortable?
+reflective | What are you outsourcing to future-you?
+reflective | What are you repeatedly proving to yourself?
+reflective | Which problem is concrete and which is atmospheric?
+reflective | What would a calmer mind do next?
+reflective | What are you trying to earn right now?
+reflective | Which part of this can stay unsolved?
+reflective | What are you using busyness to avoid?
+reflective | What happens if you stop negotiating with the obvious?
+reflective | Are you tired, threatened, lonely, or overloaded?
+reflective | What would make this feel less adversarial?
+reflective | What are you making personal that might just be friction?
+reflective | Which standard here is fake?
+reflective | What are you still carrying from earlier?
+reflective | What are you making permanent that is temporary?
+reflective | Is this thought useful enough to keep?
+reflective | What is being mistaken for identity?
+reflective | What would be good enough for today?
+reflective | Which expectation needs revising?
+reflective | What are you trying to outrun?
+reflective | What if this does not need a grand explanation?
+reflective | Which part of you needs less punishment and more structure?
+reflective | What do you want more of, after this?
+reflective | What is asking for care rather than critique?
+reflective | What would lower the temperature here?
+reflective | What are you assuming without checking?
+reflective | What are you trying to resolve by overthinking?
+reflective | What is the smallest honest admission available?
+reflective | What would count as self-respect here?
+reflective | Which pattern is active because it is familiar, not because it is wise?
+reflective | Are you making a temporary state into a worldview?
+reflective | What is true even if your mood disagrees?
+reflective | What do you keep forgetting when you are stressed?
+reflective | What are you demanding from yourself that no one asked for?
+reflective | What would be easier if you dropped the performance?
+reflective | Which part of this deserves compassion, not theatrics?
+reflective | What are you pretending not to know?
+reflective | What needs naming before it can change?
+reflective | Is this a signal, a spiral, or simple fatigue?
+reflective | What are you trying to control that does not belong to you?
+reflective | What would a less frightened interpretation be?
+reflective | What have you learned that you keep not applying?
+reflective | Which thought keeps returning because it wants action, not analysis?
+reflective | What is quietly asking to be handled?
+
+physical | Drink water.
+physical | Stand up.
+physical | Eyes far distance. Ten seconds.
+physical | Stretch your neck.
+physical | Uncurl your hands.
+physical | Reset your posture.
+physical | Roll your shoulders slowly.
+physical | Put both feet on the floor.
+physical | Blink on purpose.
+physical | Loosen your grip.
+physical | Check whether you need the toilet.
+physical | Walk to a doorway and back.
+physical | Take one longer exhale.
+physical | Adjust your seat before your body complains.
+physical | Your spine would like a vote.
+physical | Move your wrists.
+physical | Relax your tongue.
+physical | Drop your ribcage out of battle mode.
+physical | Stretch your fingers wide.
+physical | Move your ankles.
+physical | Release your stomach.
+physical | Let your shoulders descend one floor.
+physical | Sit back instead of hovering.
+physical | Change position before your body files a complaint.
+physical | Hydration is still surprisingly relevant.
+physical | Lift your gaze above the rectangle.
+physical | Uncross what has been crossed for too long.
+physical | Let your hands stop becoming claws.
+physical | Stand like gravity is not a personal attack.
+physical | Shake out one limb.
+physical | Breathe into your back.
+physical | Loosen your jaw hinge.
+physical | Let your eyes focus on something far away.
+physical | Check whether you are cold, hot, thirsty, or stiff.
+physical | Release your neck from unpaid emotional labour.
+physical | Straighten one compressed part of yourself.
+physical | Stop folding into the machine.
+physical | Walk a short pointless lap for biomechanical dignity.
+physical | Give your lungs more real estate.
+physical | Sit in a way your future joints would not resent.
+physical | Unshrimp your torso.
+physical | Put your heels down.
+physical | Let your shoulders and ears file for separation.
+physical | Micro-stretch now beats macro-regret later.
+physical | Open your chest a little.
+physical | Wiggle your toes inside your shoes.
+physical | Rest your eyes somewhere that is not glowing.
+physical | Shift your weight and reset.
+physical | Your body has not consented to permanent desk sculpture mode.
+physical | Release the tiny full-body flinch.
+physical | Let your face stop doing admin.
+physical | Check whether you need food, not just stimulation.
+physical | Make one movement that is not screen-related.
+physical | Reach upward for three seconds.
+physical | Breathe as if your ribs are allowed to move.
+physical | Put some length back into your spine.
+physical | Let your hands be open for a moment.
+physical | Move your head through a gentle range.
+physical | Decompress your hips.
+physical | If your body had a polite complaint, what would it be?
+physical | Relax your shoulders like you are not carrying a medieval burden.
+physical | Take a few slower steps.
+physical | Re-enter mammal mode.
+physical | Put your body in a position that helps thinking.
+physical | Stop using caffeine as a substitute for circulation.
+physical | Loosen your seat-grip on reality.
+physical | Give your eyes a horizon.
+physical | Adjust the room before your body adapts badly.
+physical | Sit taller without becoming rigid.
+physical | Breathe out longer than you breathe in.
+physical | Make your skeleton less apologetic.
+physical | Stop pretending the headache arrived from nowhere.
+physical | Straighten the angle of your neck.
+physical | Step away from the screen glow for a beat.
+physical | Your jaw is not a storage unit.
+physical | Check whether your body is quietly asking for maintenance.
+physical | Move before your thoughts fossilise.
+physical | Use your legs briefly so your brain remembers the alliance.
+physical | Allow one small physical reset.
+physical | Take care of the animal before consulting philosophy.
+physical | Do one thing that your circulation would approve of.
+physical | Get out of statue mode.
+
+behaviour | Do the smallest meaningful thing now.
+behaviour | Delete friction.
+behaviour | Open less. Complete more.
+behaviour | Two minutes. Start now.
+behaviour | Reduce the next step.
+behaviour | Move one thing to done.
+behaviour | Close one thing you are not using.
+behaviour | Put the tool where the action is.
+behaviour | Make the good choice easier.
+behaviour | Set up the next win.
+behaviour | Leave a breadcrumb for later.
+behaviour | Tidy one tiny edge.
+behaviour | Remove one future annoyance.
+behaviour | Do it once instead of thinking five times.
+behaviour | Make your environment help you.
+behaviour | Put one item back where it belongs.
+behaviour | Clear one small surface.
+behaviour | Carry one thing with you when you stand up.
+behaviour | Wipe one obvious mess.
+behaviour | Reset the room by one percent.
+behaviour | Wash the cup before it reproduces.
+behaviour | Put dishes closer to finished.
+behaviour | Start the laundry if it is clearly time.
+behaviour | Empty one bin if needed.
+behaviour | Put away five things.
+behaviour | Remove one visual irritation.
+behaviour | Return one object to its home.
+behaviour | Make the bed more usable, not perfect.
+behaviour | Tidy the area your future self will first encounter.
+behaviour | Do one boring maintenance task before it mutates.
+behaviour | Put the charger where the problem begins.
+behaviour | Plug in the thing before it becomes dramatic.
+behaviour | Check the kitchen before the kitchen checks you.
+behaviour | Set out the thing you will need later.
+behaviour | Refill or replace one almost-empty essential.
+behaviour | Make tomorrow slightly less stupid.
+behaviour | Place one obstacle in front of a bad habit.
+behaviour | Place one convenience in front of a good habit.
+behaviour | Reduce one source of low-grade chaos.
+behaviour | Solve one tiny recurring irritation.
+behaviour | Move one admin task closer to finished.
+behaviour | Clear one path, shelf, or corner.
+behaviour | If it takes under two minutes, stop outsourcing it to later.
+behaviour | Put one thing away before opening another.
+behaviour | Reset your desk into a usable state.
+behaviour | Put rubbish in an actual bin.
+behaviour | Pick up one thing from the floor.
+behaviour | Make one future action easier to begin.
+behaviour | Close one open loop.
+behaviour | Take one object all the way home.
+behaviour | Reduce one reason to avoid the room.
+behaviour | Leave your space more cooperative than you found it.
+behaviour | Turn one intention into a visible cue.
+behaviour | Put the thing where your hand will need it.
+behaviour | Put one useful item in your launch zone.
+behaviour | Make the first step frictionless.
+behaviour | Make one recurring task more idiot-proof.
+behaviour | Put less faith in memory and more in setup.
+behaviour | Write it down instead of hoping.
+behaviour | Check the calendar before the calendar checks you.
+behaviour | Confirm the time, place, or deadline now.
+behaviour | Message the person before it becomes weird.
+behaviour | Do the tiny admin before it evolves teeth.
+behaviour | Check what needs charging, carrying, or remembering.
+behaviour | Put tomorrow’s essentials together.
+behaviour | Look at tonight before tonight arrives.
+behaviour | Prevent one avoidable problem.
+behaviour | Back up the important thing.
+behaviour | Take the medicine or vitamins if it is time.
+behaviour | Check whether you have eaten something useful.
+behaviour | Replace one silent dependency before it fails.
+behaviour | Put one recurring reminder into a system.
+behaviour | If you will forget, design for forgetting.
+behaviour | Fix one thing your future self keeps tripping over.
+behaviour | Make the obvious healthy option more visible.
+behaviour | Choose maintenance over heroic recovery.
+behaviour | Take out one tiny piece of life admin.
+behaviour | Pay one small bill, reply, or form.
+behaviour | Reduce the number of things you have to remember manually.
+behaviour | Put one task where your eyes will catch it.
+behaviour | Make your environment less negotiable.
+behaviour | Solve one preventable annoyance today.
+behaviour | The kind version of discipline is setup.
+behaviour | Leave one gift for tomorrow-you.
+behaviour | Move your life one notch toward easier.
+
+absurd | Your attention has escaped the enclosure.
+absurd | This is your legally mandated goblin reset.
+absurd | You are piloting meat in an electricity storm.
+absurd | The seventh tab is not a strategy.
+absurd | Reality check: are you in command?
+absurd | The simulation requests less browser archaeology.
+absurd | Your brain has wandered into the decorative bushes again.
+absurd | The council of tiny tasks demands tribute.
+absurd | You are currently being haunted by optional nonsense.
+absurd | The goblin in charge of momentum has fallen asleep.
+absurd | Your focus has been stolen by a Victorian fog of nonsense.
+absurd | A suspicious amount of side-quest energy is present.
+absurd | Your executive function has gone to lick a battery.
+absurd | The room requests one less chaos artifact.
+absurd | Your tabs are breeding in captivity.
+absurd | The machine spirits would prefer completion.
+absurd | Please return to your assigned meat-based objectives.
+absurd | A tiny wizard has misplaced your attention.
+absurd | You have entered ceremonial procrastination mode.
+absurd | This task does not need a moon landing.
+absurd | The snack goblin may be innocent, but remains a suspect.
+absurd | Your inbox has developed emotional weather.
+absurd | The spreadsheet hungers, but not forever.
+absurd | You are overcomplicating the ritual.
+absurd | A gremlin has labelled avoidance as research.
+absurd | Your nervous system is writing fan fiction again.
+absurd | This room contains traces of abandoned side quests.
+absurd | You appear to be buffering as a person.
+absurd | The sauce of your life is too chunky.
+absurd | A minor exorcism of clutter may be indicated.
+absurd | Your skeleton requests less shrimp behaviour.
+absurd | Productivity but make it less haunted.
+absurd | The vibe has become overengineered.
+absurd | The goblin king of micro-distraction has been sighted.
+absurd | Your desktop has become a pagan shrine to deferred intention.
+absurd | The next step is smaller than your internal opera suggests.
+absurd | A bureaucratic pigeon is pecking at your plans.
+absurd | You have drifted into the swamp of ambient maybe.
+absurd | Your to-do list has developed folklore.
+absurd | There is no need to make this spiritually baroque.
+absurd | The fridge remembers what you have done.
+absurd | Your laundry is entering the prophecy stage.
+absurd | A highly avoidable side quest has appeared.
+absurd | Your room is auditioning for a low-budget apocalypse.
+absurd | Your browser history is trying to become architecture.
+absurd | The pile has become sentient enough to negotiate.
+absurd | You are one cup away from a domestic ecosystem.
+absurd | Your body would like fewer medieval postures.
+absurd | The tiny committee in your skull has lost the agenda.
+absurd | The task is not cursed. It is merely boring.
+absurd | You have summoned seventeen vibes and zero outcomes.
+absurd | A portal has opened between intention and nonsense.
+absurd | The mission remains embarrassingly achievable.
+absurd | Your inner raccoon has discovered novelty again.
+absurd | This could be solved with one less goblin flourish.
+absurd | The kingdom of later is overpopulated.
+absurd | Your attention span has put on a fake moustache and fled.
+absurd | You are not a Victorian widow of your own inbox.
+absurd | A deeply unserious amount of avoidance is occurring.
+absurd | You have become too enchanted by the preamble.
+absurd | The dishes are staging a quiet coup.
+absurd | A wizardly quantity of nonsense has attached itself to this hour.
+absurd | The machine yearns for fewer open loops.
+absurd | You have accidentally become a curator of tiny unfinished relics.
+absurd | This level of dramatic hovering is not required by law.
+absurd | The room contains a detectable goblin surplus.
+absurd | Your focus has slipped into a side tunnel lined with trinkets.
+absurd | The administrative bog grows stronger when ignored.
+absurd | Your future self has sent back a mildly annoyed owl.
+absurd | You have been gently kidnapped by irrelevant detail.
+absurd | A feral aura of almost-doing surrounds this task.
+absurd | The cheese of reality remains mostly unbrieched.
+absurd | The ritual has become more elaborate than the objective.
+absurd | The chaos sprites thrive on unattended mugs.
+absurd | You are negotiating with a problem that would accept a simpler answer.
+absurd | The house elves have filed a formal complaint.
+absurd | This does not require seventeen browser tabs and a spiritual framework.
+absurd | Your plans have become too damp and mythological.
+absurd | Please return from the astral plane of avoidable complexity.
+absurd | The goblin economy of your desk is unstable.
+absurd | One tiny competent act will appease the void.
+absurd | The shrine of later has enough offerings already.
+absurd | You are allowed to be effective without becoming a productivity warlock.
