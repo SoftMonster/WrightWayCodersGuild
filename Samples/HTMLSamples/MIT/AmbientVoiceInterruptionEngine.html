@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ambient Voice Interruption Engine</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --panel: #171a21;
+      --panel-2: #1d222b;
+      --text: #e9eef7;
+      --muted: #9aa6b2;
+      --accent: #7dd3fc;
+      --accent-2: #a78bfa;
+      --danger: #f87171;
+      --good: #34d399;
+      --border: #2a3140;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(125,211,252,.08), transparent 20%),
+        radial-gradient(circle at top right, rgba(167,139,250,.08), transparent 20%),
+        linear-gradient(180deg, #0b0d12 0%, #0f1115 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      backdrop-filter: blur(8px);
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      min-height: 540px;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      line-height: 1.05;
+      letter-spacing: -.02em;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 800;
+    }
+
+    h2 {
+      font-size: 1.15rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    p, label, small, textarea, input, select, button {
+      font-size: 0.97rem;
+    }
+
+    .muted { color: var(--muted); }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      width: fit-content;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      font-weight: 700;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--danger);
+      box-shadow: 0 0 12px rgba(248,113,113,.55);
+    }
+
+    .dot.live {
+      background: var(--good);
+      box-shadow: 0 0 14px rgba(52,211,153,.7);
+    }
+
+    .big-prompt {
+      margin-top: 8px;
+      flex: 1;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 28px;
+      border-radius: 26px;
+      background:
+        linear-gradient(180deg, rgba(125,211,252,.06), rgba(167,139,250,.04)),
+        rgba(255,255,255,.02);
+      border: 1px solid rgba(255,255,255,.06);
+      min-height: 280px;
+    }
+
+    .big-prompt-text {
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: 1.06;
+      font-weight: 800;
+      max-width: 16ch;
+      letter-spacing: -.03em;
+    }
+
+    .subgrid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 14px;
+    }
+
+    .control-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    button {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: var(--panel-2);
+      color: var(--text);
+      padding: 12px 16px;
+      border-radius: 14px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: .18s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      border-color: rgba(125,211,252,.45);
+    }
+
+    button.primary {
+      background: linear-gradient(135deg, rgba(125,211,252,.18), rgba(167,139,250,.18));
+      border-color: rgba(125,211,252,.38);
+    }
+
+    button.danger {
+      border-color: rgba(248,113,113,.35);
+    }
+
+    input[type="number"],
+    input[type="text"],
+    select,
+    textarea,
+    input[type="range"] {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #10141b;
+      color: var(--text);
+      padding: 12px 14px;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 260px;
+      resize: vertical;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      line-height: 1.45;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .field label {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      padding: 10px 12px;
+      border-radius: 999px;
+      user-select: none;
+    }
+
+    .pill input { width: auto; }
+
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+    }
+
+    .stat {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.025);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .stat .k {
+      font-size: .8rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .stat .v {
+      font-size: 1.35rem;
+      font-weight: 800;
+    }
+
+    .log {
+      max-height: 220px;
+      overflow: auto;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: #0d1117;
+      padding: 10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .9rem;
+      line-height: 1.45;
+      white-space: pre-wrap;
+    }
+
+    .tiny {
+      font-size: .84rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 980px) {
+      .wrap {
+        grid-template-columns: 1fr;
+      }
+      .subgrid, .meta {
+        grid-template-columns: 1fr;
+      }
+      .hero { min-height: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="card hero">
+      <div style="display:flex; justify-content:space-between; gap:16px; align-items:flex-start; flex-wrap:wrap;">
+        <div>
+          <h1>Ambient Voice Interruption Engine</h1>
+          <h2>Random spoken prompts at irregular intervals</h2>
+        </div>
+        <div class="status" id="statusBadge">
+          <span class="dot" id="statusDot"></span>
+          <span id="statusText">Stopped</span>
+        </div>
+      </div>
+
+      <div class="control-row">
+        <button class="primary" id="launchBtn">Launch</button>
+        <button id="speakNowBtn">Speak Now</button>
+        <button id="skipBtn">Skip / Reschedule</button>
+        <button class="danger" id="stopBtn">Stop</button>
+      </div>
+
+      <div class="meta">
+        <div class="stat">
+          <div class="k">Next Prompt</div>
+          <div class="v" id="nextPromptTime">—</div>
+        </div>
+        <div class="stat">
+          <div class="k">Last Category</div>
+          <div class="v" id="lastCategory">—</div>
+        </div>
+        <div class="stat">
+          <div class="k">Total Spoken</div>
+          <div class="v" id="spokenCount">0</div>
+        </div>
+      </div>
+
+      <div class="big-prompt">
+        <div class="big-prompt-text" id="bigPromptText">Ready.</div>
+      </div>
+
+      <div>
+        <h3 style="margin-bottom:10px;">Activity Log</h3>
+        <div class="log" id="logBox"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <h3>Controls</h3>
+        <small class="muted">Saved automatically</small>
+      </div>
+
+      <div class="subgrid">
+        <div class="field">
+          <label for="mode">Mode</label>
+          <select id="mode">
+            <option value="gentle">Gentle</option>
+            <option value="normal" selected>Normal</option>
+            <option value="chaos">Chaos</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="voiceSelect">Voice</label>
+          <select id="voiceSelect"></select>
+        </div>
+
+        <div class="field">
+          <label for="minMinutes">Minimum delay (minutes)</label>
+          <input id="minMinutes" type="number" min="1" max="600" step="1" value="8" />
+        </div>
+
+        <div class="field">
+          <label for="maxMinutes">Maximum delay (minutes)</label>
+          <input id="maxMinutes" type="number" min="1" max="600" step="1" value="45" />
+        </div>
+
+        <div class="field">
+          <label for="volume">Volume</label>
+          <input id="volume" type="range" min="0" max="1" step="0.01" value="1" />
+        </div>
+
+        <div class="field">
+          <label for="rate">Rate</label>
+          <input id="rate" type="range" min="0.6" max="1.5" step="0.01" value="1" />
+        </div>
+
+        <div class="field">
+          <label for="pitch">Pitch</label>
+          <input id="pitch" type="range" min="0.5" max="1.7" step="0.01" value="1" />
+        </div>
+
+        <div class="field">
+          <label for="repeatCount">Repeat each prompt</label>
+          <input id="repeatCount" type="number" min="1" max="5" step="1" value="1" />
+        </div>
+      </div>
+
+      <div style="margin-top:18px;" class="field">
+        <label>Categories enabled</label>
+        <div class="pill-group">
+          <label class="pill"><input type="checkbox" class="catToggle" value="grounding" checked /> Grounding</label>
+          <label class="pill"><input type="checkbox" class="catToggle" value="executive" checked /> Executive</label>
+          <label class="pill"><input type="checkbox" class="catToggle" value="reflective" checked /> Reflective</label>
+          <label class="pill"><input type="checkbox" class="catToggle" value="physical" checked /> Physical</label>
+          <label class="pill"><input type="checkbox" class="catToggle" value="absurd" checked /> Absurd</label>
+          <label class="pill"><input type="checkbox" class="catToggle" value="behaviour" checked /> Behaviour</label>
+        </div>
+      </div>
+
+      <div style="margin-top:18px;" class="field">
+        <label for="promptsBox">Prompt library (format: <code>category | prompt</code>, one per line)</label>
+        <textarea id="promptsBox"></textarea>
+        <div class="tiny">
+          Example: <code>executive | Name the task.</code>
+        </div>
+      </div>
+
+      <div class="control-row" style="margin-top:16px;">
+        <button id="saveBtn">Save Settings</button>
+        <button id="resetBtn">Reset Defaults</button>
+        <button id="testVoiceBtn">Test Voice</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const DEFAULT_PROMPTS = [
+      "grounding | Unclench your face.",
+      "grounding | Exhale fully.",
+      "grounding | Feel your feet.",
+      "grounding | Drop your shoulders.",
+      "grounding | Relax your jaw.",
+
+      "executive | Name the task.",
+      "executive | One tab. One task.",
+      "executive | Finish before switching.",
+      "executive | What are you actually doing?",
+      "executive | Is this movement or avoidance?",
+
+      "reflective | What are you postponing?",
+      "reflective | What narrative is running right now?",
+      "reflective | What would clean action look like?",
+      "reflective | What are you feeding?",
+      "reflective | If this vanished, what would still matter?",
+
+      "physical | Drink water.",
+      "physical | Stand up.",
+      "physical | Eyes far distance. Ten seconds.",
+      "physical | Stretch your neck.",
+      "physical | Uncurl your hands.",
+
+      "absurd | Your attention has escaped the enclosure.",
+      "absurd | This is your legally mandated goblin reset.",
+      "absurd | You are piloting meat in an electricity storm.",
+      "absurd | The seventh tab is not a strategy.",
+      "absurd | Reality check: are you in command?",
+
+      "behaviour | Do the smallest meaningful thing now.",
+      "behaviour | Delete friction.",
+      "behaviour | Open less. Complete more.",
+      "behaviour | Two minutes. Start now.",
+      "behaviour | Reduce the next step."
+    ];
+
+    const els = {
+      launchBtn: document.getElementById("launchBtn"),
+      stopBtn: document.getElementById("stopBtn"),
+      speakNowBtn: document.getElementById("speakNowBtn"),
+      skipBtn: document.getElementById("skipBtn"),
+      saveBtn: document.getElementById("saveBtn"),
+      resetBtn: document.getElementById("resetBtn"),
+      testVoiceBtn: document.getElementById("testVoiceBtn"),
+
+      statusDot: document.getElementById("statusDot"),
+      statusText: document.getElementById("statusText"),
+      nextPromptTime: document.getElementById("nextPromptTime"),
+      lastCategory: document.getElementById("lastCategory"),
+      spokenCount: document.getElementById("spokenCount"),
+      bigPromptText: document.getElementById("bigPromptText"),
+      logBox: document.getElementById("logBox"),
+
+      mode: document.getElementById("mode"),
+      voiceSelect: document.getElementById("voiceSelect"),
+      minMinutes: document.getElementById("minMinutes"),
+      maxMinutes: document.getElementById("maxMinutes"),
+      volume: document.getElementById("volume"),
+      rate: document.getElementById("rate"),
+      pitch: document.getElementById("pitch"),
+      repeatCount: document.getElementById("repeatCount"),
+      promptsBox: document.getElementById("promptsBox"),
+      catToggles: () => [...document.querySelectorAll(".catToggle")]
+    };
+
+    let voices = [];
+    let running = false;
+    let timeoutId = null;
+    let nextAt = null;
+    let spokenCount = 0;
+    let lastPrompt = "";
+    let lastCategory = "";
+    let lastPromptTime = 0;
+
+    function log(msg) {
+      const stamp = new Date().toLocaleTimeString();
+      els.logBox.textContent = `[${stamp}] ${msg}\n` + els.logBox.textContent;
+    }
+
+    function saveSettings() {
+      const settings = {
+        mode: els.mode.value,
+        voiceURI: els.voiceSelect.value,
+        minMinutes: els.minMinutes.value,
+        maxMinutes: els.maxMinutes.value,
+        volume: els.volume.value,
+        rate: els.rate.value,
+        pitch: els.pitch.value,
+        repeatCount: els.repeatCount.value,
+        prompts: els.promptsBox.value,
+        categories: els.catToggles().filter(c => c.checked).map(c => c.value)
+      };
+      localStorage.setItem("ambientPrompterSettings", JSON.stringify(settings));
+      log("Settings saved.");
+    }
+
+    function loadSettings() {
+      const raw = localStorage.getItem("ambientPrompterSettings");
+      if (!raw) {
+        els.promptsBox.value = DEFAULT_PROMPTS.join("\n");
+        return;
+      }
+      try {
+        const s = JSON.parse(raw);
+        els.mode.value = s.mode || "normal";
+        els.minMinutes.value = s.minMinutes || 8;
+        els.maxMinutes.value = s.maxMinutes || 45;
+        els.volume.value = s.volume || 1;
+        els.rate.value = s.rate || 1;
+        els.pitch.value = s.pitch || 1;
+        els.repeatCount.value = s.repeatCount || 1;
+        els.promptsBox.value = s.prompts || DEFAULT_PROMPTS.join("\n");
+
+        const enabled = new Set(s.categories || ["grounding","executive","reflective","physical","absurd","behaviour"]);
+        els.catToggles().forEach(c => c.checked = enabled.has(c.value));
+
+        setTimeout(() => {
+          if (s.voiceURI) els.voiceSelect.value = s.voiceURI;
+        }, 150);
+      } catch {
+        els.promptsBox.value = DEFAULT_PROMPTS.join("\n");
+      }
+    }
+
+    function resetDefaults() {
+      localStorage.removeItem("ambientPrompterSettings");
+      els.mode.value = "normal";
+      els.minMinutes.value = 8;
+      els.maxMinutes.value = 45;
+      els.volume.value = 1;
+      els.rate.value = 1;
+      els.pitch.value = 1;
+      els.repeatCount.value = 1;
+      els.promptsBox.value = DEFAULT_PROMPTS.join("\n");
+      els.catToggles().forEach(c => c.checked = true);
+      log("Defaults restored.");
+    }
+
+    function loadVoices() {
+      voices = speechSynthesis.getVoices();
+      els.voiceSelect.innerHTML = "";
+      voices.forEach(v => {
+        const opt = document.createElement("option");
+        opt.value = v.voiceURI;
+        opt.textContent = `${v.name} — ${v.lang}${v.default ? " (default)" : ""}`;
+        els.voiceSelect.appendChild(opt);
+      });
+
+      const saved = JSON.parse(localStorage.getItem("ambientPrompterSettings") || "{}");
+      if (saved.voiceURI) {
+        els.voiceSelect.value = saved.voiceURI;
+      } else {
+        const preferred =
+          voices.find(v => /en-GB/i.test(v.lang)) ||
+          voices.find(v => /en/i.test(v.lang)) ||
+          voices[0];
+        if (preferred) els.voiceSelect.value = preferred.voiceURI;
+      }
+    }
+
+    speechSynthesis.onvoiceschanged = loadVoices;
+
+    function parsePrompts() {
+      return els.promptsBox.value
+        .split("\n")
+        .map(line => line.trim())
+        .filter(Boolean)
+        .map(line => {
+          const parts = line.split("|");
+          if (parts.length < 2) return null;
+          return {
+            category: parts[0].trim().toLowerCase(),
+            text: parts.slice(1).join("|").trim()
+          };
+        })
+        .filter(Boolean);
+    }
+
+    function getEnabledCategories() {
+      return new Set(els.catToggles().filter(c => c.checked).map(c => c.value));
+    }
+
+    function weightedCategoryPick(categories) {
+      const mode = els.mode.value;
+      const weights = {
+        gentle: {
+          grounding: 5, physical: 4, executive: 3, behaviour: 2, reflective: 2, absurd: 1
+        },
+        normal: {
+          grounding: 3, physical: 3, executive: 4, behaviour: 4, reflective: 3, absurd: 2
+        },
+        chaos: {
+          grounding: 2, physical: 2, executive: 4, behaviour: 4, reflective: 4, absurd: 5
+        }
+      }[mode];
+
+      const bag = [];
+      for (const c of categories) {
+        const w = weights[c] || 1;
+        for (let i = 0; i < w; i++) bag.push(c);
+      }
+      return bag[Math.floor(Math.random() * bag.length)];
+    }
+
+    function pickPrompt() {
+      const prompts = parsePrompts();
+      const enabled = getEnabledCategories();
+
+      const filtered = prompts.filter(p => enabled.has(p.category));
+      if (!filtered.length) {
+        return { category: "system", text: "No enabled prompts available." };
+      }
+
+      const categories = [...new Set(filtered.map(p => p.category))];
+      const chosenCategory = weightedCategoryPick(categories);
+
+      let candidates = filtered.filter(p => p.category === chosenCategory);
+
+      // avoid immediate repetition if possible
+      let nonRepeat = candidates.filter(p => p.text !== lastPrompt);
+      if (nonRepeat.length) candidates = nonRepeat;
+
+      const chosen = candidates[Math.floor(Math.random() * candidates.length)];
+      return chosen;
+    }
+
+    function randomDelayMs() {
+      let min = Math.max(1, Number(els.minMinutes.value || 8));
+      let max = Math.max(min, Number(els.maxMinutes.value || 45));
+
+      const mode = els.mode.value;
+
+      // textured randomness rather than flat uniform
+      const r = Math.random();
+      let minutes;
+
+      if (mode === "gentle") {
+        if (r < 0.75) {
+          minutes = min + Math.random() * (max - min) * 0.65;
+        } else {
+          minutes = min + Math.random() * (max - min);
+        }
+      } else if (mode === "chaos") {
+        if (r < 0.15) {
+          minutes = min + Math.random() * Math.min(6, max - min); // surprise short hit
+        } else if (r < 0.85) {
+          minutes = min + Math.random() * (max - min) * 0.7;
+        } else {
+          minutes = min + Math.random() * (max - min);
+        }
+      } else {
+        if (r < 0.1) {
+          minutes = min + Math.random() * Math.min(5, max - min);
+        } else if (r < 0.8) {
+          minutes = min + Math.random() * (max - min) * 0.7;
+        } else {
+          minutes = min + Math.random() * (max - min);
+        }
+      }
+
+      return Math.round(minutes * 60 * 1000);
+    }
+
+    function formatTime(ts) {
+      return new Date(ts).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+    }
+
+    function updateRunningUI(isRunning) {
+      running = isRunning;
+      els.statusText.textContent = isRunning ? "Running" : "Stopped";
+      els.statusDot.classList.toggle("live", isRunning);
+    }
+
+    function selectedVoice() {
+      return voices.find(v => v.voiceURI === els.voiceSelect.value) || null;
+    }
+
+    function speak(text, category = "system") {
+      speechSynthesis.cancel();
+
+      const repeatCount = Math.max(1, Number(els.repeatCount.value || 1));
+      const voice = selectedVoice();
+
+      let delayBetweenRepeats = 1200;
+      let i = 0;
+
+      function speakOne() {
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.voice = voice;
+        utter.volume = Number(els.volume.value || 1);
+        utter.rate = Number(els.rate.value || 1);
+        utter.pitch = Number(els.pitch.value || 1);
+
+        utter.onstart = () => {
+          els.bigPromptText.textContent = text;
+        };
+
+        utter.onend = () => {
+          i++;
+          if (i < repeatCount) {
+            setTimeout(speakOne, delayBetweenRepeats);
+          }
+        };
+
+        speechSynthesis.speak(utter);
+      }
+
+      speakOne();
+
+      lastPrompt = text;
+      lastCategory = category;
+      lastPromptTime = Date.now();
+      spokenCount++;
+      els.spokenCount.textContent = spokenCount;
+      els.lastCategory.textContent = category;
+      log(`Spoke [${category}] ${text}`);
+    }
+
+    function firePrompt() {
+      if (!running) return;
+      const p = pickPrompt();
+      speak(p.text, p.category);
+      scheduleNext();
+    }
+
+    function scheduleNext() {
+      if (!running) return;
+      clearTimeout(timeoutId);
+      const delay = randomDelayMs();
+      nextAt = Date.now() + delay;
+      els.nextPromptTime.textContent = formatTime(nextAt);
+      log(`Next prompt scheduled for ${formatTime(nextAt)}.`);
+      timeoutId = setTimeout(firePrompt, delay);
+    }
+
+    function launch() {
+      saveSettings();
+      updateRunningUI(true);
+
+      // prime speech synthesis with a tiny utterance if needed
+      const prime = new SpeechSynthesisUtterance("Voice engine ready.");
+      prime.volume = 0;
+      speechSynthesis.speak(prime);
+
+      els.bigPromptText.textContent = "System armed.";
+      log("Engine launched.");
+      scheduleNext();
+    }
+
+    function stop() {
+      clearTimeout(timeoutId);
+      timeoutId = null;
+      speechSynthesis.cancel();
+      nextAt = null;
+      els.nextPromptTime.textContent = "—";
+      updateRunningUI(false);
+      log("Engine stopped.");
+    }
+
+    function speakNow() {
+      const p = pickPrompt();
+      speak(p.text, p.category);
+      if (running) scheduleNext();
+    }
+
+    function skipAndReschedule() {
+      speechSynthesis.cancel();
+      if (running) {
+        log("Prompt skipped. Rescheduling.");
+        scheduleNext();
+      }
+    }
+
+    function testVoice() {
+      speak("Test prompt. Your interruption engine is operational.", "system");
+    }
+
+    els.launchBtn.addEventListener("click", launch);
+    els.stopBtn.addEventListener("click", stop);
+    els.speakNowBtn.addEventListener("click", speakNow);
+    els.skipBtn.addEventListener("click", skipAndReschedule);
+    els.saveBtn.addEventListener("click", saveSettings);
+    els.resetBtn.addEventListener("click", () => {
+      resetDefaults();
+      saveSettings();
+    });
+    els.testVoiceBtn.addEventListener("click", testVoice);
+
+    [
+      els.mode, els.voiceSelect, els.minMinutes, els.maxMinutes,
+      els.volume, els.rate, els.pitch, els.repeatCount, els.promptsBox
+    ].forEach(el => el.addEventListener("change", saveSettings));
+    document.querySelectorAll(".catToggle").forEach(el => el.addEventListener("change", saveSettings));
+
+    setInterval(() => {
+      if (running && nextAt) {
+        els.nextPromptTime.textContent = formatTime(nextAt);
+      }
+    }, 1000);
+
+    loadSettings();
+    loadVoices();
+    log("Ready.");
+  </script>
+</body>
+</html>
