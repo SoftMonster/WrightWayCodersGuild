@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Comprehensive directory of 200+ AI tools organized by category. Find the perfect AI solution for writing, coding, design, video, audio, and more.">
-    <meta name="theme-color" content="#0f172a">
-    <title>AI Tools Directory - 200+ Resources by Category</title>
+    <title>200 AI Tools Directory</title>
     <style>
         * {
             margin: 0;
@@ -13,164 +11,190 @@
             box-sizing: border-box;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            line-height: 1.6;
-            background: linear-gradient(135deg, #0f172a 0%, #1a1f35 100%);
-            color: #e5e7eb;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #ffffff;
             min-height: 100vh;
+            padding: 40px 20px;
         }
 
-        /* Header & Navigation */
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid #334155;
-            padding: 1rem 0;
-        }
-
-        .header-container {
+        .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        header h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        header p {
+            font-size: 1.2em;
+            color: #b0b0b0;
+            margin-bottom: 30px;
+        }
+
+        .controls {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .header-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #38bdf8;
-        }
-
-        .search-container {
-            flex: 1;
-            max-width: 400px;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 10px 16px;
-            border: 1px solid #334155;
-            border-radius: 6px;
-            background: #1e293b;
-            color: #e5e7eb;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: #38bdf8;
-            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
-        }
-
-        .nav-categories {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            padding-bottom: 8px;
-            scroll-behavior: smooth;
-        }
-
-        .nav-categories::-webkit-scrollbar {
-            height: 4px;
-        }
-
-        .nav-categories::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .nav-categories::-webkit-scrollbar-thumb {
-            background: #334155;
-            border-radius: 2px;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
         }
 
         .category-btn {
-            padding: 8px 16px;
-            border: 1px solid #334155;
-            border-radius: 20px;
+            padding: 10px 20px;
+            border: 2px solid #00d4ff;
             background: transparent;
-            color: #cbd5e1;
+            color: #00d4ff;
+            border-radius: 25px;
             cursor: pointer;
-            font-size: 0.85rem;
-            white-space: nowrap;
+            font-size: 1em;
+            font-weight: 600;
             transition: all 0.3s ease;
         }
 
         .category-btn:hover,
         .category-btn.active {
-            border-color: #38bdf8;
-            color: #38bdf8;
-            background: rgba(56, 189, 248, 0.1);
+            background: #00d4ff;
+            color: #1a1a2e;
         }
 
-        /* Main Content */
-        main {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        .hero {
-            text-align: center;
+        .category-section {
             margin-bottom: 50px;
+            animation: slideIn 0.5s ease-out;
         }
 
-        .hero h1 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            color: #38bdf8;
-            margin-bottom: 12px;
-            font-weight: 800;
+        .category-title {
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #00d4ff;
+            color: #00d4ff;
         }
 
-        .hero p {
-            font-size: 1.1rem;
-            color: #94a3b8;
-            margin-bottom: 24px;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #243b55 0%, #141e30 100%);
+            border: 2px solid #00d4ff;
+            border-radius: 12px;
+            padding: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.3);
+            border-color: #00ffff;
+        }
+
+        .emoji {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 12px;
+            filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.3));
+        }
+
+        .info {
+            position: relative;
+            z-index: 1;
+        }
+
+        .number {
+            font-size: 0.85em;
+            color: #00d4ff;
+            font-weight: 600;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .name {
+            font-size: 1.4em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .desc {
+            font-size: 0.95em;
+            color: #b0b0b0;
+            line-height: 1.5;
+            min-height: 40px;
         }
 
         .stats {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
-
-        .stat {
             text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(0, 212, 255, 0.05);
+            border-radius: 12px;
+            border: 2px solid #00d4ff;
         }
 
-        .stat-number {
-            font-size: 2rem;
+        .stats-num {
+            font-size: 2.5em;
+            color: #00d4ff;
             font-weight: 700;
-            color: #38bdf8;
         }
 
-        .stat-label {
-            font-size: 0.9rem;
-            color: #94a3b8;
-            margin-top: 4px;
-        }
-
-        /* Category Sections */
-        .category-section {
-            margin-bottom: 60px;
-            opacity: 0;
-            animation: fadeIn 0.6s ease forwards;
+        .stats-label {
+            color: #b0b0b0;
+            margin-top: 5px;
         }
 
         @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
             from {
                 opacity: 0;
                 transform: translateY(20px);
@@ -181,941 +205,340 @@
             }
         }
 
-        .category-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 2px solid #334155;
-        }
-
-        .category-emoji {
-            font-size: 2rem;
-        }
-
-        .category-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #38bdf8;
-        }
-
-        .category-count {
-            margin-left: auto;
-            background: rgba(56, 189, 248, 0.1);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            color: #38bdf8;
-        }
-
-        /* Grid Layout */
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #b0b0b0;
+            font-size: 1.2em;
         }
 
         @media (max-width: 768px) {
-            .tools-grid {
-                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-                gap: 16px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .tools-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Card Styles */
-        .tool-card {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            border: 1px solid #334155;
-            border-radius: 12px;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tool-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, transparent 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .tool-card:hover {
-            border-color: #38bdf8;
-            background: linear-gradient(135deg, #1e293b 0%, #1a2f4d 100%);
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(56, 189, 248, 0.15);
-        }
-
-        .tool-card:hover::before {
-            opacity: 1;
-        }
-
-        .tool-card-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .tool-emoji {
-            font-size: 2.5rem;
-            line-height: 1;
-            margin-bottom: 8px;
-        }
-
-        .tool-name {
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: #a5f3fc;
-            margin-bottom: 6px;
-        }
-
-        .tool-desc {
-            font-size: 0.9rem;
-            color: #cbd5e1;
-            line-height: 1.4;
-            flex-grow: 1;
-            margin-bottom: 12px;
-        }
-
-        .tool-badge {
-            display: inline-block;
-            background: rgba(56, 189, 248, 0.15);
-            color: #7dd3fc;
-            padding: 4px 10px;
-            border-radius: 14px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            width: fit-content;
-        }
-
-        /* Filter Controls */
-        .filter-controls {
-            background: #1e293b;
-            padding: 24px;
-            border-radius: 12px;
-            margin-bottom: 40px;
-            border: 1px solid #334155;
-        }
-
-        .filter-title {
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: #38bdf8;
-        }
-
-        .filter-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .filter-tag {
-            padding: 8px 14px;
-            border: 1px solid #334155;
-            border-radius: 20px;
-            background: transparent;
-            color: #cbd5e1;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .filter-tag:hover {
-            border-color: #38bdf8;
-            color: #38bdf8;
-        }
-
-        .filter-tag.active {
-            background: #38bdf8;
-            border-color: #38bdf8;
-            color: #0f172a;
-        }
-
-        /* Footer */
-        footer {
-            background: #0f172a;
-            border-top: 1px solid #334155;
-            padding: 40px 20px;
-            margin-top: 60px;
-        }
-
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-        }
-
-        .footer-section h3 {
-            color: #38bdf8;
-            margin-bottom: 16px;
-            font-size: 1rem;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section li {
-            margin-bottom: 10px;
-        }
-
-        .footer-section a {
-            color: #cbd5e1;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-section a:hover {
-            color: #38bdf8;
-        }
-
-        .footer-bottom {
-            max-width: 1400px;
-            margin: 40px auto 0;
-            padding-top: 24px;
-            border-top: 1px solid #334155;
-            text-align: center;
-            color: #94a3b8;
-            font-size: 0.9rem;
-        }
-
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #94a3b8;
-        }
-
-        .empty-state-icon {
-            font-size: 3rem;
-            margin-bottom: 16px;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                gap: 12px;
+            header h1 {
+                font-size: 2.2em;
             }
 
-            .search-container {
-                max-width: 100%;
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 15px;
             }
 
-            .hero h1 {
-                font-size: 1.8rem;
+            .card {
+                padding: 15px;
             }
 
-            .stats {
-                gap: 20px;
+            .emoji {
+                font-size: 2.5em;
+                width: 60px;
+                height: 60px;
             }
 
-            .category-header {
-                flex-wrap: wrap;
-            }
-
-            .category-count {
-                margin-left: 0;
-                width: 100%;
-            }
-        }
-
-        /* Accessibility */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-        }
-
-        @media (prefers-color-scheme: light) {
-            body {
-                background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-                color: #1e293b;
-            }
-
-            .search-input,
-            .filter-controls {
-                background: #ffffff;
-                border-color: #e2e8f0;
-            }
-
-            .search-input {
-                color: #1e293b;
-            }
-
-            .tool-card {
-                background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-                border-color: #e2e8f0;
-            }
-
-            .tool-card:hover {
-                border-color: #38bdf8;
-            }
-        }
-
-        /* Print Styles */
-        @media print {
-            header,
-            footer,
-            .search-container,
-            .filter-controls {
-                display: none;
-            }
-
-            .tool-card {
-                break-inside: avoid;
-                page-break-inside: avoid;
-            }
-        }
-
-        /* Loading Animation */
-        .loading {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #38bdf8;
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
+            .name {
+                font-size: 1.1em;
             }
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <header>
+            <h1>🤖 200 AI Tools Directory</h1>
+            <p>Comprehensive collection of cutting-edge AI technologies</p>
+        </header>
 
-<!-- Header with Navigation -->
-<header>
-    <div class="header-container">
-        <div class="header-title">🧠 AI Tools</div>
-        <div class="search-container">
-            <input 
-                type="search" 
-                class="search-input" 
-                id="searchInput" 
-                placeholder="Search tools by name or description..."
-                aria-label="Search AI tools"
-            >
-        </div>
-    </div>
-    <nav class="header-container">
-        <div class="nav-categories" id="navCategories" role="navigation" aria-label="Category navigation">
-            <!-- Populated by JavaScript -->
-        </div>
-    </nav>
-</header>
-
-<!-- Main Content -->
-<main>
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>Your Complete AI Tools Directory</h1>
-        <p>Discover 200+ AI-powered tools organized by category to supercharge your workflow</p>
         <div class="stats">
-            <div class="stat">
-                <div class="stat-number" id="totalTools">200+</div>
-                <div class="stat-label">Tools</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number" id="totalCategories">16</div>
-                <div class="stat-label">Categories</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number">100%</div>
-                <div class="stat-label">Verified</div>
-            </div>
+            <div class="stats-num">200</div>
+            <div class="stats-label">AI Tools & Technologies</div>
         </div>
-    </section>
 
-    <!-- Filter Controls -->
-    <section class="filter-controls" id="filterControls">
-        <div class="filter-title">Filter by Category:</div>
-        <div class="filter-tags" id="filterTags">
-            <!-- Populated by JavaScript -->
-        </div>
-    </section>
+        <div class="controls" id="controls"></div>
 
-    <!-- Categories Container -->
-    <div id="categoriesContainer">
-        <!-- Populated by JavaScript -->
+        <div id="content"></div>
     </div>
 
-    <!-- Empty State -->
-    <div class="empty-state" id="emptyState" style="display: none;">
-        <div class="empty-state-icon">🔍</div>
-        <h2>No tools found</h2>
-        <p>Try adjusting your search or filter criteria</p>
-    </div>
-</main>
+    <script>
+        const tools = [
+            { id: 1, category: 'Conversational AI', emoji: '🤖', name: 'ChatGPT', desc: 'Conversational AI', url: 'https://chatgpt.com' },
+            { id: 2, category: 'Conversational AI', emoji: '🪄', name: 'Claude', desc: 'Long-context reasoning assistant', url: 'https://claude.ai' },
+            { id: 3, category: 'Image Generation', emoji: '🎨', name: 'Midjourney', desc: 'AI image generation', url: 'https://www.midjourney.com' },
+            { id: 4, category: 'Image Generation', emoji: '🖼️', name: 'DALL·E 3', desc: 'OpenAI image generation', url: 'https://openai.com/dall-e-3' },
+            { id: 5, category: 'Content Creation', emoji: '✍️', name: 'Jasper', desc: 'Marketing content AI', url: 'https://www.jasper.ai' },
+            { id: 6, category: 'Content Creation', emoji: '📝', name: 'Copy.ai', desc: 'Copywriting assistant', url: 'https://www.copy.ai' },
+            { id: 7, category: 'Search & Research', emoji: '🧠', name: 'Perplexity AI', desc: 'Research answer engine', url: 'https://www.perplexity.ai' },
+            { id: 8, category: 'Search & Research', emoji: '🔍', name: 'You.com', desc: 'AI search engine', url: 'https://you.com' },
+            { id: 9, category: 'Video & Media', emoji: '🎬', name: 'Runway ML', desc: 'Video editing & VFX', url: 'https://runwayml.com' },
+            { id: 10, category: 'Video & Media', emoji: '🎥', name: 'HeyGen', desc: 'AI avatars & translation', url: 'https://www.heygen.com' },
+            { id: 11, category: 'Audio & Podcasting', emoji: '🎤', name: 'Descript', desc: 'Podcast & video editing', url: 'https://www.descript.com' },
+            { id: 12, category: 'Audio & Podcasting', emoji: '🎧', name: 'Adobe Podcast AI', desc: 'Speech enhancement', url: 'https://podcast.adobe.com' },
+            { id: 13, category: 'Data & Analytics', emoji: '📈', name: 'Tableau GPT', desc: 'AI data analysis', url: 'https://www.tableau.com' },
+            { id: 14, category: 'Data & Analytics', emoji: '📊', name: 'Julius AI', desc: 'Charts & analytics', url: 'https://julius.ai' },
+            { id: 15, category: 'Code & Development', emoji: '💻', name: 'GitHub Copilot', desc: 'AI pair programmer', url: 'https://github.com/features/copilot' },
+            { id: 16, category: 'Code & Development', emoji: '🧑‍💻', name: 'Cursor', desc: 'AI-first code editor', url: 'https://cursor.com' },
+            { id: 17, category: 'Productivity', emoji: '📄', name: 'Gamma', desc: 'AI slides & docs', url: 'https://gamma.app' },
+            { id: 18, category: 'Research & Academia', emoji: '🔬', name: 'Elicit', desc: 'Research assistant', url: 'https://elicit.com' },
+            { id: 19, category: 'Research & Academia', emoji: '📚', name: 'Consensus', desc: 'Academic paper search', url: 'https://consensus.app' },
+            { id: 20, category: 'Education', emoji: '🎓', name: 'Khanmigo', desc: 'AI tutor', url: 'https://www.khanacademy.org/khan-labs' },
+            { id: 21, category: 'Productivity', emoji: '🧾', name: 'Fireflies.ai', desc: 'Meeting transcription', url: 'https://fireflies.ai' },
+            { id: 22, category: 'Productivity', emoji: '📧', name: 'Superhuman AI', desc: 'AI email assistant', url: 'https://superhuman.com' },
+            { id: 23, category: 'Productivity', emoji: '🗓️', name: 'Reclaim AI', desc: 'Smart calendar', url: 'https://reclaim.ai' },
+            { id: 24, category: 'Wellness & Journaling', emoji: '🧘', name: 'Rosebud', desc: 'AI journaling', url: 'https://www.rosebud.app' },
+            { id: 25, category: 'Music & Audio', emoji: '🎵', name: 'Suno', desc: 'AI music generation', url: 'https://suno.com' },
+            { id: 26, category: 'Music & Audio', emoji: '🎚️', name: 'Boomy', desc: 'AI music creation', url: 'https://boomy.com' },
+            { id: 27, category: 'Audio & Podcasting', emoji: '🗣️', name: 'ElevenLabs', desc: 'Text-to-speech', url: 'https://elevenlabs.io' },
+            { id: 28, category: 'Video & Media', emoji: '📹', name: 'Synthesia', desc: 'AI avatar videos', url: 'https://www.synthesia.io' },
+            { id: 29, category: 'Image Generation', emoji: '🪄', name: 'Leonardo.ai', desc: 'Concept art generation', url: 'https://leonardo.ai' },
+            { id: 30, category: 'Image Generation', emoji: '🧬', name: 'Stable Diffusion', desc: 'Open-source image AI', url: 'https://stability.ai' },
+            { id: 31, category: 'Conversational AI', emoji: '😄', name: 'Hume AI', desc: 'Emotional AI voice', url: 'https://www.hume.ai' },
+            { id: 32, category: 'Image Enhancement', emoji: '📸', name: 'Remini', desc: 'Photo enhancement', url: 'https://remini.ai' },
+            { id: 33, category: 'Productivity', emoji: '🏢', name: 'Beautiful.ai', desc: 'Smart presentations', url: 'https://www.beautiful.ai' },
+            { id: 34, category: 'Search & Research', emoji: '🧮', name: 'Wolfram Alpha', desc: 'Computational intelligence', url: 'https://www.wolframalpha.com' },
+            { id: 35, category: 'Automation & Workflows', emoji: '🎯', name: 'Zapier AI', desc: 'Workflow automation', url: 'https://zapier.com/ai' },
+            { id: 36, category: 'Productivity', emoji: '🗂️', name: 'Coda AI', desc: 'AI documents', url: 'https://coda.io/ai' },
+            { id: 37, category: 'Productivity', emoji: '📋', name: 'Notion AI', desc: 'Workspace AI', url: 'https://www.notion.so/product/ai' },
+            { id: 38, category: 'E-commerce & Sales', emoji: '🛍️', name: 'Clerk.io', desc: 'E-commerce recommendations', url: 'https://clerk.io' },
+            { id: 39, category: 'Audio & Podcasting', emoji: '📣', name: 'Synthesys', desc: 'Commercial AI voice', url: 'https://synthesys.io' },
+            { id: 40, category: 'E-commerce & Sales', emoji: '🌐', name: 'Octane AI', desc: 'Conversational marketing', url: 'https://octaneai.com' },
+            { id: 41, category: 'Video & Media', emoji: '🤯', name: 'Pika Labs', desc: 'AI video generation', url: 'https://pika.art' },
+            { id: 42, category: 'Image Generation', emoji: '🖍️', name: 'Craiyon', desc: 'Free image generator', url: 'https://www.craiyon.com' },
+            { id: 43, category: 'Productivity', emoji: '🛠️', name: 'Mem', desc: 'Knowledge management', url: 'https://mem.ai' },
+            { id: 44, category: 'Sales & Marketing', emoji: '🧪', name: 'Lavender', desc: 'Sales email coach', url: 'https://www.lavender.ai' },
+            { id: 45, category: 'Customer Support', emoji: '📞', name: 'Crisp', desc: 'AI customer support', url: 'https://crisp.chat' },
+            { id: 46, category: 'Scientific AI', emoji: '🧬', name: 'AlphaFold', desc: 'Protein prediction', url: 'https://deepmind.google/technologies/alphafold/' },
+            { id: 47, category: 'Content Creation', emoji: '📰', name: 'Wordtune', desc: 'Rewriting assistant', url: 'https://www.wordtune.com' },
+            { id: 48, category: 'Audio & Podcasting', emoji: '🔊', name: 'Murf', desc: 'Voiceover synthesis', url: 'https://murf.ai' },
+            { id: 49, category: 'Image Enhancement', emoji: '🧹', name: 'Cleanup.pictures', desc: 'Object removal', url: 'https://cleanup.pictures' },
+            { id: 50, category: 'Image Generation', emoji: '🧑‍🎨', name: 'Krea AI', desc: 'Real-time image generation', url: 'https://www.krea.ai' },
+            { id: 51, category: 'Content Creation', emoji: '✍️', name: 'Rytr', desc: 'Affordable AI writing', url: 'https://rytr.me' },
+            { id: 52, category: 'Content Creation', emoji: '📝', name: 'Writesonic', desc: 'Articles & ads', url: 'https://writesonic.com' },
+            { id: 53, category: 'Conversational AI', emoji: '🧠', name: 'Merlin AI', desc: 'Browser AI assistant', url: 'https://www.getmerlin.in' },
+            { id: 54, category: 'Education', emoji: '🎓', name: 'Tutor AI', desc: 'Personalized learning', url: 'https://tutorai.me' },
+            { id: 55, category: 'Audio & Podcasting', emoji: '🗣️', name: 'Play.ht', desc: 'Realistic speech AI', url: 'https://play.ht' },
+            { id: 56, category: 'Music & Audio', emoji: '🎶', name: 'AIVA', desc: 'AI soundtrack composer', url: 'https://www.aiva.ai' },
+            { id: 57, category: 'Productivity', emoji: '🧾', name: 'Otter.ai', desc: 'Live meeting notes', url: 'https://otter.ai' },
+            { id: 58, category: 'Productivity', emoji: '📑', name: 'Mem.ai', desc: 'Smart notes', url: 'https://mem.ai' },
+            { id: 59, category: 'Legal AI', emoji: '🧑‍⚖️', name: 'Casetext', desc: 'Legal AI assistant', url: 'https://casetext.com' },
+            { id: 60, category: 'Legal AI', emoji: '💼', name: 'Harvey AI', desc: 'Legal & enterprise AI', url: 'https://www.harvey.ai' },
+            { id: 61, category: 'Data & Analytics', emoji: '📊', name: 'Polymer', desc: 'Data visualization', url: 'https://www.polymersearch.com' },
+            { id: 62, category: 'Data & Analytics', emoji: '📉', name: 'Akkio', desc: 'Predictive analytics', url: 'https://www.akkio.com' },
+            { id: 63, category: 'Code & Development', emoji: '🧹', name: 'Tabnine', desc: 'Code autocomplete', url: 'https://www.tabnine.com' },
+            { id: 64, category: 'Code & Development', emoji: '🐍', name: 'Codeium', desc: 'Free code completion', url: 'https://codeium.com' },
+            { id: 65, category: 'Search & Research', emoji: '🧪', name: 'Seek AI', desc: 'Natural language queries', url: 'https://seek.ai' },
+            { id: 66, category: 'E-commerce & Sales', emoji: '📦', name: 'Mutiny', desc: 'Website personalization', url: 'https://www.mutinyhq.com' },
+            { id: 67, category: 'E-commerce & Sales', emoji: '🛒', name: 'Syte', desc: 'Visual product discovery', url: 'https://syte.ai' },
+            { id: 68, category: 'Code & Development', emoji: '🧠', name: 'LangChain', desc: 'LLM app framework', url: 'https://www.langchain.com' },
+            { id: 69, category: 'Automation & Workflows', emoji: '🔌', name: 'Flowise AI', desc: 'Visual AI workflow builder', url: 'https://flowiseai.com' },
+            { id: 70, category: 'AI Agents', emoji: '🧰', name: 'AutoGPT', desc: 'Autonomous AI tasks', url: 'https://github.com/Significant-Gravitas/AutoGPT' },
+            { id: 71, category: 'AI Agents', emoji: '🤖', name: 'BabyAGI', desc: 'Task-driven AI agents', url: 'https://babyagi.org' },
+            { id: 72, category: 'AI Agents', emoji: '🧩', name: 'Fixie AI', desc: 'Custom AI agents', url: 'https://www.fixie.ai' },
+            { id: 73, category: 'Image Generation', emoji: '🧬', name: 'Bria AI', desc: 'Responsible image generation', url: 'https://bria.ai' },
+            { id: 74, category: 'Image Enhancement', emoji: '🖌️', name: 'Clipdrop', desc: 'Background removal & relight', url: 'https://clipdrop.co' },
+            { id: 75, category: 'Video & Media', emoji: '🎭', name: 'Viggle AI', desc: 'Character animation', url: 'https://viggle.ai' },
+            { id: 76, category: 'Video & Media', emoji: '🎞️', name: 'Kaiber', desc: 'Creative video generation', url: 'https://kaiber.ai' },
+            { id: 77, category: 'Image Generation', emoji: '📝', name: 'Lexica', desc: 'Stable Diffusion search', url: 'https://lexica.art' },
+            { id: 78, category: 'Image Generation', emoji: '🧙', name: 'Mage Space', desc: 'Stable Diffusion platform', url: 'https://www.mage.space' },
+            { id: 79, category: 'Image Generation', emoji: '🧑‍🎨', name: 'Playground AI', desc: 'Image editing & layers', url: 'https://playground.com' },
+            { id: 80, category: 'Image Generation', emoji: '🎛️', name: 'Invoke AI', desc: 'Professional image workflows', url: 'https://invoke.ai' },
+            { id: 81, category: 'Tools & Resources', emoji: '🧠', name: 'PromptBase', desc: 'Prompt marketplace', url: 'https://promptbase.com' },
+            { id: 82, category: 'Image Enhancement', emoji: '📸', name: 'PhotoRoom', desc: 'AI product photography', url: 'https://www.photoroom.com' },
+            { id: 83, category: 'Image Enhancement', emoji: '🧼', name: 'Magic Eraser', desc: 'Image object remover', url: 'https://magicstudio.com/magiceraser' },
+            { id: 84, category: 'Audio & Podcasting', emoji: '🎙️', name: 'Podcastle', desc: 'Podcast recording & editing', url: 'https://podcastle.ai' },
+            { id: 85, category: 'Conversational AI', emoji: '📞', name: 'Bland AI', desc: 'AI phone calls', url: 'https://www.bland.ai' },
+            { id: 86, category: 'Sales & Marketing', emoji: '🧑‍💼', name: 'Crystal AI', desc: 'DISC email coach', url: 'https://www.crystalknows.com' },
+            { id: 87, category: 'Automation & Workflows', emoji: '📧', name: 'EmailTree AI', desc: 'Email automation', url: 'https://emailtree.ai' },
+            { id: 88, category: 'Productivity', emoji: '🧾', name: 'Scribe AI', desc: 'Process documentation', url: 'https://scribehow.com' },
+            { id: 89, category: 'Research & Academia', emoji: '📚', name: 'Genei', desc: 'Research summarization', url: 'https://www.genei.io' },
+            { id: 90, category: 'Research & Academia', emoji: '💡', name: 'Humata AI', desc: 'Chat with PDFs', url: 'https://www.humata.ai' },
+            { id: 91, category: 'Research & Academia', emoji: '📎', name: 'Sharly AI', desc: 'Multi-document Q&A', url: 'https://sharly.ai' },
+            { id: 92, category: 'Sales & Marketing', emoji: '🎯', name: 'Adcreative.ai', desc: 'Ad creative generation', url: 'https://www.adcreative.ai' },
+            { id: 93, category: 'E-commerce & Sales', emoji: '🛍️', name: 'Rebuy', desc: 'Post-purchase recommendations', url: 'https://www.rebuyengine.com' },
+            { id: 94, category: 'Search & Research', emoji: '🔍', name: 'Neeva AI', desc: 'Private search', url: 'https://neeva.com' },
+            { id: 95, category: 'Data & Analytics', emoji: '📦', name: 'Viable', desc: 'Qualitative analytics', url: 'https://www.askviable.com' },
+            { id: 96, category: 'Productivity', emoji: '📑', name: 'Tome', desc: 'AI storytelling', url: 'https://tome.app' },
+            { id: 97, category: 'Research & Academia', emoji: '🧠', name: 'Expanse AI', desc: 'Document understanding', url: 'https://expanse.com' },
+            { id: 98, category: 'Data & Analytics', emoji: '📊', name: 'Rows AI', desc: 'Spreadsheet AI', url: 'https://rows.com/ai' },
+            { id: 99, category: 'Data & Analytics', emoji: '📈', name: 'Sheet AI', desc: 'AI for Google Sheets', url: 'https://sheetai.app' },
+            { id: 100, category: 'Education', emoji: '🎓', name: 'Knowji', desc: 'Vocabulary learning AI', url: 'https://www.knowji.com' },
+            { id: 101, category: 'Productivity', emoji: '🗂️', name: 'Notion AI', desc: 'Workspace AI assistant', url: 'https://www.notion.so/product/ai' },
+            { id: 102, category: 'Productivity', emoji: '📋', name: 'Coda AI', desc: 'Collaborative AI docs', url: 'https://coda.io/ai' },
+            { id: 103, category: 'Productivity', emoji: '🛠️', name: 'Mem', desc: 'AI knowledge management', url: 'https://mem.ai' },
+            { id: 104, category: 'Productivity', emoji: '🧾', name: 'Otter.ai', desc: 'Meeting transcription', url: 'https://otter.ai' },
+            { id: 105, category: 'Productivity', emoji: '📑', name: 'Fireflies.ai', desc: 'Meeting assistant', url: 'https://fireflies.ai' },
+            { id: 106, category: 'Productivity', emoji: '📝', name: 'Reflect AI', desc: 'AI note-taking', url: 'https://reflect.app' },
+            { id: 107, category: 'Productivity', emoji: '📄', name: 'Tana', desc: 'AI workspace', url: 'https://tana.inc' },
+            { id: 108, category: 'Productivity', emoji: '📋', name: 'ClickUp AI', desc: 'Project management AI', url: 'https://clickup.com/ai' },
+            { id: 109, category: 'Productivity', emoji: '📝', name: 'Slite AI', desc: 'Team documentation AI', url: 'https://slite.com' },
+            { id: 110, category: 'Productivity', emoji: '🗂️', name: 'Taskade AI', desc: 'Collaborative AI workflows', url: 'https://www.taskade.com' },
+            { id: 111, category: 'Research & Academia', emoji: '🔬', name: 'Elicit', desc: 'Research automation', url: 'https://elicit.com' },
+            { id: 112, category: 'Research & Academia', emoji: '📚', name: 'Consensus', desc: 'Academic AI search', url: 'https://consensus.app' },
+            { id: 113, category: 'Research & Academia', emoji: '📄', name: 'SciSpace', desc: 'Scientific paper assistant', url: 'https://typeset.io' },
+            { id: 114, category: 'Research & Academia', emoji: '🧠', name: 'Humata AI', desc: 'Document Q&A AI', url: 'https://www.humata.ai' },
+            { id: 115, category: 'Research & Academia', emoji: '📎', name: 'Sharly AI', desc: 'Document intelligence', url: 'https://sharly.ai' },
+            { id: 116, category: 'Research & Academia', emoji: '📚', name: 'Genei', desc: 'Research summarizer', url: 'https://www.genei.io' },
+            { id: 117, category: 'Research & Academia', emoji: '🧠', name: 'Explainpaper', desc: 'Explain research papers', url: 'https://www.explainpaper.com' },
+            { id: 118, category: 'Research & Academia', emoji: '📑', name: 'ChatPDF', desc: 'Chat with PDFs', url: 'https://www.chatpdf.com' },
+            { id: 119, category: 'Search & Research', emoji: '🔍', name: 'Petal', desc: 'Document search platform', url: 'https://www.petal.org' },
+            { id: 120, category: 'Research & Academia', emoji: '🧠', name: 'Lateral.io', desc: 'Research discovery AI', url: 'https://www.lateral.io' },
+            { id: 121, category: 'Sales & Marketing', emoji: '🎯', name: 'Jasper Marketing', desc: 'Marketing content AI', url: 'https://www.jasper.ai' },
+            { id: 122, category: 'Sales & Marketing', emoji: '📣', name: 'Lavender', desc: 'Sales email optimization', url: 'https://www.lavender.ai' },
+            { id: 123, category: 'E-commerce & Sales', emoji: '🛍️', name: 'Clerk.io', desc: 'E-commerce personalization', url: 'https://clerk.io' },
+            { id: 124, category: 'E-commerce & Sales', emoji: '🌐', name: 'Octane AI', desc: 'Conversational commerce', url: 'https://octaneai.com' },
+            { id: 125, category: 'Sales & Marketing', emoji: '🎯', name: 'Adcreative.ai', desc: 'AI ad generation', url: 'https://www.adcreative.ai' },
+            { id: 126, category: 'E-commerce & Sales', emoji: '🛒', name: 'Syte', desc: 'Visual shopping search', url: 'https://syte.ai' },
+            { id: 127, category: 'E-commerce & Sales', emoji: '📊', name: 'Mutiny', desc: 'Website personalization', url: 'https://www.mutinyhq.com' },
+            { id: 128, category: 'Customer Support', emoji: '📞', name: 'Crisp AI', desc: 'Support chatbot AI', url: 'https://crisp.chat' },
+            { id: 129, category: 'Automation & Workflows', emoji: '📧', name: 'EmailTree AI', desc: 'Email workflow AI', url: 'https://emailtree.ai' },
+            { id: 130, category: 'Sales & Marketing', emoji: '📈', name: 'Albert AI', desc: 'Marketing automation', url: 'https://albert.ai' },
+            { id: 131, category: 'Sales & Marketing', emoji: '🎯', name: 'Seventh Sense', desc: 'Email timing optimization', url: 'https://www.theseventhsense.com' },
+            { id: 132, category: 'Sales & Marketing', emoji: '🧠', name: 'Regie.ai', desc: 'Sales engagement AI', url: 'https://www.regie.ai' },
+            { id: 133, category: 'Sales & Marketing', emoji: '📊', name: 'Gong.io', desc: 'Revenue intelligence', url: 'https://www.gong.io' },
+            { id: 134, category: 'Sales & Marketing', emoji: '🎯', name: 'Seamless AI', desc: 'Sales prospecting', url: 'https://www.seamless.ai' },
+            { id: 135, category: 'Customer Support', emoji: '📞', name: 'Drift AI', desc: 'Conversational sales AI', url: 'https://www.drift.com' },
+            { id: 136, category: 'Legal AI', emoji: '⚖️', name: 'Casetext', desc: 'Legal AI research', url: 'https://casetext.com' },
+            { id: 137, category: 'Legal AI', emoji: '💼', name: 'Harvey AI', desc: 'Enterprise legal AI', url: 'https://www.harvey.ai' },
+            { id: 138, category: 'Legal AI', emoji: '📑', name: 'Spellbook', desc: 'AI contract drafting', url: 'https://www.spellbook.legal' },
+            { id: 139, category: 'Legal AI', emoji: '⚖️', name: 'Luminance', desc: 'Legal document AI', url: 'https://www.luminance.com' },
+            { id: 140, category: 'Legal AI', emoji: '📜', name: 'Legalese Decoder', desc: 'Plain-English legal AI', url: 'https://www.legalesedecoder.com' },
+            { id: 141, category: 'Education', emoji: '🎓', name: 'Khanmigo', desc: 'AI tutoring assistant', url: 'https://www.khanacademy.org/khan-labs' },
+            { id: 142, category: 'Education', emoji: '🧠', name: 'Tutor AI', desc: 'Personalized education AI', url: 'https://tutorai.me' },
+            { id: 143, category: 'Education', emoji: '📚', name: 'Knowji', desc: 'Vocabulary learning AI', url: 'https://www.knowji.com' },
+            { id: 144, category: 'Education', emoji: '🧠', name: 'Socratic', desc: 'Homework helper AI', url: 'https://socratic.org' },
+            { id: 145, category: 'Education', emoji: '🎓', name: 'Coursera Coach', desc: 'Learning guidance AI', url: 'https://www.coursera.org' },
+            { id: 146, category: 'Content Creation', emoji: '📝', name: 'Quillbot', desc: 'Paraphrasing assistant', url: 'https://quillbot.com' },
+            { id: 147, category: 'Education', emoji: '🧠', name: 'Brainly AI', desc: 'Student Q&A AI', url: 'https://brainly.com' },
+            { id: 148, category: 'Scientific AI', emoji: '🧬', name: 'AlphaFold', desc: 'Protein structure prediction', url: 'https://deepmind.google/technologies/alphafold/' },
+            { id: 149, category: 'Wellness & Journaling', emoji: '🧠', name: 'Rosebud', desc: 'Reflective journaling AI', url: 'https://www.rosebud.app' },
+            { id: 150, category: 'Conversational AI', emoji: '😄', name: 'Hume AI', desc: 'Emotion-aware AI', url: 'https://www.hume.ai' },
+            { id: 151, category: 'Code & Development', emoji: '🧠', name: 'LangChain', desc: 'LLM application framework', url: 'https://www.langchain.com' },
+            { id: 152, category: 'Automation & Workflows', emoji: '🔌', name: 'Flowise AI', desc: 'Visual LLM builder', url: 'https://flowiseai.com' },
+            { id: 153, category: 'AI Agents', emoji: '🤖', name: 'AutoGPT', desc: 'Autonomous AI agent', url: 'https://github.com/Significant-Gravitas/AutoGPT' },
+            { id: 154, category: 'AI Agents', emoji: '🧠', name: 'BabyAGI', desc: 'Task-driven AI systems', url: 'https://babyagi.org' },
+            { id: 155, category: 'AI Agents', emoji: '🧩', name: 'Fixie AI', desc: 'Custom AI agents', url: 'https://www.fixie.ai' },
+            { id: 156, category: 'Conversational AI', emoji: '🎭', name: 'Character.AI', desc: 'Character chatbots', url: 'https://character.ai' },
+            { id: 157, category: 'Tools & Resources', emoji: '🧙', name: 'PromptBase', desc: 'Prompt marketplace', url: 'https://promptbase.com' },
+            { id: 158, category: 'Tools & Resources', emoji: '🧠', name: 'GPTZero', desc: 'AI text detection', url: 'https://gptzero.me' },
+            { id: 159, category: 'Tools & Resources', emoji: '📝', name: 'Originality.ai', desc: 'Plagiarism & AI detection', url: 'https://originality.ai' },
+            { id: 160, category: 'Tools & Resources', emoji: '🛡️', name: 'CopyLeaks', desc: 'AI detection platform', url: 'https://copyleaks.com' },
+            { id: 161, category: 'Game Development', emoji: '🎮', name: 'Scenario', desc: 'Game asset AI', url: 'https://www.scenario.com' },
+            { id: 162, category: 'Image Generation', emoji: '🧑‍🎨', name: 'Artbreeder', desc: 'Collaborative image generation', url: 'https://www.artbreeder.com' },
+            { id: 163, category: 'Game Development', emoji: '🧬', name: 'Rosebud AI', desc: 'Game generation tools', url: 'https://www.rosebud.ai' },
+            { id: 164, category: 'Image Generation', emoji: '🧠', name: 'DeepDream', desc: 'Neural image visualization', url: 'https://deepdreamgenerator.com' },
+            { id: 165, category: 'Video & Media', emoji: '🎥', name: 'EbSynth', desc: 'Video style transfer', url: 'https://ebsynth.com' },
+            { id: 166, category: 'Productivity', emoji: '📧', name: 'Superhuman AI', desc: 'Email acceleration AI', url: 'https://superhuman.com' },
+            { id: 167, category: 'Productivity', emoji: '🗓️', name: 'Reclaim AI', desc: 'Smart scheduling', url: 'https://reclaim.ai' },
+            { id: 168, category: 'Productivity', emoji: '📞', name: 'Motion AI', desc: 'AI calendar assistant', url: 'https://www.usemotion.com' },
+            { id: 169, category: 'Productivity', emoji: '🗓️', name: 'Clockwise', desc: 'Calendar optimization', url: 'https://www.getclockwise.com' },
+            { id: 170, category: 'Productivity', emoji: '📧', name: 'Shortwave', desc: 'AI email productivity', url: 'https://www.shortwave.com' },
+            { id: 171, category: 'Productivity', emoji: '📞', name: 'Clara Labs', desc: 'Meeting scheduling assistant', url: 'https://claralabs.com' },
+            { id: 172, category: 'Productivity', emoji: '📧', name: 'Missive AI', desc: 'Collaborative email AI', url: 'https://missiveapp.com' },
+            { id: 173, category: 'Productivity', emoji: '🏢', name: 'Beautiful.ai', desc: 'AI presentations', url: 'https://www.beautiful.ai' },
+            { id: 174, category: 'Productivity', emoji: '📄', name: 'Gamma', desc: 'AI presentation builder', url: 'https://gamma.app' },
+            { id: 175, category: 'Productivity', emoji: '📑', name: 'Tome', desc: 'Narrative AI presentations', url: 'https://tome.app' },
+            { id: 176, category: 'Design & Branding', emoji: '🎨', name: 'Designs.ai', desc: 'Creative design suite', url: 'https://designs.ai' },
+            { id: 177, category: 'Productivity', emoji: '📊', name: 'Pitch', desc: 'Presentation collaboration AI', url: 'https://pitch.com' },
+            { id: 178, category: 'Design & Branding', emoji: '🖌️', name: 'Khroma', desc: 'AI color palette generator', url: 'https://www.khroma.co' },
+            { id: 179, category: 'Design & Branding', emoji: '📐', name: 'Uizard', desc: 'UI/UX AI prototyping', url: 'https://uizard.io' },
+            { id: 180, category: 'Design & Branding', emoji: '🧑‍🎨', name: 'Relume', desc: 'Wireframe generation', url: 'https://www.relume.io' },
+            { id: 181, category: 'Search & Research', emoji: '🔍', name: 'Perplexity', desc: 'AI answer engine', url: 'https://www.perplexity.ai' },
+            { id: 182, category: 'Search & Research', emoji: '🌐', name: 'Exa', desc: 'Neural search engine', url: 'https://exa.ai' },
+            { id: 183, category: 'Search & Research', emoji: '🧠', name: 'Kagi AI', desc: 'Premium AI search', url: 'https://kagi.com' },
+            { id: 184, category: 'Search & Research', emoji: '📚', name: 'Andi Search', desc: 'Conversational search', url: 'https://andisearch.com' },
+            { id: 185, category: 'Search & Research', emoji: '🔎', name: 'Metaphor', desc: 'Semantic search API', url: 'https://metaphor.systems' },
+            { id: 186, category: 'Code & Development', emoji: '🤖', name: 'GPT Engineer', desc: 'AI software engineer', url: 'https://gptengineer.app' },
+            { id: 187, category: 'AI Agents', emoji: '🧠', name: 'SuperAGI', desc: 'Autonomous AI framework', url: 'https://superagi.com' },
+            { id: 188, category: 'AI Agents', emoji: '🤖', name: 'AgentGPT', desc: 'Browser AI agents', url: 'https://agentgpt.reworkd.ai' },
+            { id: 189, category: 'Code & Development', emoji: '🧩', name: 'Smol Developer', desc: 'Minimal AI coding agent', url: 'https://github.com/smol-ai/developer' },
+            { id: 190, category: 'Code & Development', emoji: '🤖', name: 'Open Interpreter', desc: 'Local code execution AI', url: 'https://www.openinterpreter.com' },
+            { id: 191, category: 'Image Enhancement', emoji: '🧹', name: 'Cleanup.pictures', desc: 'Image cleanup AI', url: 'https://cleanup.pictures' },
+            { id: 192, category: 'Image Enhancement', emoji: '📸', name: 'BgRem', desc: 'Background remover', url: 'https://bgrem.deelvin.com' },
+            { id: 193, category: 'Branding', emoji: '🧠', name: 'Namecheap AI', desc: 'AI domain generation', url: 'https://www.namecheap.com/logo-maker/ai-business-name-generator/' },
+            { id: 194, category: 'Branding', emoji: '✍️', name: 'Namelix', desc: 'Business name generator', url: 'https://namelix.com' },
+            { id: 195, category: 'Design & Branding', emoji: '🧠', name: 'Looka', desc: 'AI logo creator', url: 'https://looka.com' },
+            { id: 196, category: 'Image Generation', emoji: '🧙', name: 'Stockimg.ai', desc: 'AI stock image generation', url: 'https://stockimg.ai' },
+            { id: 197, category: 'Design & Branding', emoji: '🧠', name: 'Brandmark', desc: 'AI branding tools', url: 'https://brandmark.io' },
+            { id: 198, category: 'Sales & Marketing', emoji: '📧', name: 'MailerLite AI', desc: 'Email campaign AI', url: 'https://www.mailerlite.com' },
+            { id: 199, category: 'Video & Media', emoji: '🧾', name: 'Lumen5', desc: 'Video from blog content', url: 'https://lumen5.com' },
+            { id: 200, category: 'Automation & Workflows', emoji: '🎯', name: 'Browse AI', desc: 'Web scraping automation', url: 'https://www.browse.ai' }
+        ];
 
-<!-- Footer -->
-<footer>
-    <div class="footer-content">
-        <div class="footer-section">
-            <h3>About</h3>
-            <p>A curated directory of the best AI tools to enhance productivity, creativity, and development workflows.</p>
-        </div>
-        <div class="footer-section">
-            <h3>Categories</h3>
-            <ul id="footerCategories">
-                <!-- Populated by JavaScript -->
-            </ul>
-        </div>
-        <div class="footer-section">
-            <h3>Resources</h3>
-            <ul>
-                <li><a href="#top">Back to Top</a></li>
-                <li><a href="#" target="_blank">Submit a Tool</a></li>
-                <li><a href="#" target="_blank">Report Issues</a></li>
-                <li><a href="#" target="_blank">API</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <p>🤖 AI Tools Directory | Last Updated: May 2026 | Made with <span style="color: #f87171;">♥</span> for Developers</p>
-    </div>
-</footer>
+        const categories = [...new Set(tools.map(t => t.category))].sort();
+        let activeCategory = 'all';
 
-<script>
-    // Complete Data Structure with ALL 200 Tools
-    const categories = [
-        {
-            id: 'conversational-ai',
-            emoji: '🤖',
-            name: 'Conversational AI',
-            description: 'General-purpose chat and reasoning assistants',
-            tools: [
-                { id: 1, emoji: '🤖', name: 'ChatGPT', desc: 'Conversational AI', url: 'https://chatgpt.com' },
-                { id: 2, emoji: '🪄', name: 'Claude', desc: 'Long-context reasoning assistant', url: 'https://claude.ai' },
-                { id: 3, emoji: '🎨', name: 'Midjourney', desc: 'AI image generation', url: 'https://www.midjourney.com' },
-                { id: 156, emoji: '🎭', name: 'Character.AI', desc: 'Character chatbots', url: 'https://character.ai' },
-            ]
-        },
-        {
-            id: 'image-generation',
-            emoji: '🖼️',
-            name: 'Image & Design',
-            description: 'Visual creation and design tools',
-            tools: [
-                { id: 4, emoji: '🖼️', name: 'DALL·E 3', desc: 'OpenAI image generation', url: 'https://openai.com/dall-e-3' },
-                { id: 5, emoji: '✍️', name: 'Jasper', desc: 'Marketing content AI', url: 'https://www.jasper.ai' },
-                { id: 6, emoji: '📝', name: 'Copy.ai', desc: 'Copywriting assistant', url: 'https://www.copy.ai' },
-                { id: 29, emoji: '🪄', name: 'Leonardo.ai', desc: 'Concept art generation', url: 'https://leonardo.ai' },
-                { id: 30, emoji: '🧬', name: 'Stable Diffusion', desc: 'Open-source image AI', url: 'https://stability.ai' },
-                { id: 42, emoji: '🖍️', name: 'Craiyon', desc: 'Free image generator', url: 'https://www.craiyon.com' },
-                { id: 50, emoji: '🧑‍🎨', name: 'Krea AI', desc: 'Real-time image generation', url: 'https://www.krea.ai' },
-                { id: 73, emoji: '🧬', name: 'Bria AI', desc: 'Responsible image generation', url: 'https://bria.ai' },
-                { id: 74, emoji: '🖌️', name: 'Clipdrop', desc: 'Background removal & relight', url: 'https://clipdrop.co' },
-                { id: 79, emoji: '🧑‍🎨', name: 'Playground AI', desc: 'Image editing & layers', url: 'https://playground.com' },
-                { id: 80, emoji: '🎛️', name: 'Invoke AI', desc: 'Professional image workflows', url: 'https://invoke.ai' },
-                { id: 82, emoji: '📸', name: 'PhotoRoom', desc: 'AI product photography', url: 'https://www.photoroom.com' },
-                { id: 83, emoji: '🧼', name: 'Magic Eraser', desc: 'Image object remover', url: 'https://magicstudio.com/magiceraser' },
-                { id: 162, emoji: '🧑‍🎨', name: 'Artbreeder', desc: 'Collaborative image generation', url: 'https://www.artbreeder.com' },
-            ]
-        },
-        {
-            id: 'video-creation',
-            emoji: '🎬',
-            name: 'Video & Animation',
-            description: 'Video generation, editing, and animation',
-            tools: [
-                { id: 9, emoji: '🎬', name: 'Runway ML', desc: 'Video editing & VFX', url: 'https://runwayml.com' },
-                { id: 10, emoji: '🎥', name: 'HeyGen', desc: 'AI avatars & translation', url: 'https://www.heygen.com' },
-                { id: 41, emoji: '🤯', name: 'Pika Labs', desc: 'AI video generation', url: 'https://pika.art' },
-                { id: 75, emoji: '🎭', name: 'Viggle AI', desc: 'Character animation', url: 'https://viggle.ai' },
-                { id: 76, emoji: '🎞️', name: 'Kaiber', desc: 'Creative video generation', url: 'https://kaiber.ai' },
-                { id: 165, emoji: '🎥', name: 'EbSynth', desc: 'Video style transfer', url: 'https://ebsynth.com' },
-                { id: 199, emoji: '🧾', name: 'Lumen5', desc: 'Video from blog content', url: 'https://lumen5.com' },
-            ]
-        },
-        {
-            id: 'audio-voice',
-            emoji: '🎤',
-            name: 'Audio & Voice',
-            description: 'Text-to-speech, voice synthesis, and audio tools',
-            tools: [
-                { id: 11, emoji: '🎤', name: 'Descript', desc: 'Podcast & video editing', url: 'https://www.descript.com' },
-                { id: 12, emoji: '🎧', name: 'Adobe Podcast AI', desc: 'Speech enhancement', url: 'https://podcast.adobe.com' },
-                { id: 25, emoji: '🎵', name: 'Suno', desc: 'AI music generation', url: 'https://suno.com' },
-                { id: 26, emoji: '🎚️', name: 'Boomy', desc: 'AI music creation', url: 'https://boomy.com' },
-                { id: 27, emoji: '🗣️', name: 'ElevenLabs', desc: 'Text-to-speech', url: 'https://elevenlabs.io' },
-                { id: 28, emoji: '📹', name: 'Synthesia', desc: 'AI avatar videos', url: 'https://www.synthesia.io' },
-                { id: 31, emoji: '😄', name: 'Hume AI', desc: 'Emotional AI voice', url: 'https://www.hume.ai' },
-                { id: 39, emoji: '📣', name: 'Synthesys', desc: 'Commercial AI voice', url: 'https://synthesys.io' },
-                { id: 48, emoji: '🔊', name: 'Murf', desc: 'Voiceover synthesis', url: 'https://murf.ai' },
-                { id: 55, emoji: '🗣️', name: 'Play.ht', desc: 'Realistic speech AI', url: 'https://play.ht' },
-                { id: 56, emoji: '🎶', name: 'AIVA', desc: 'AI soundtrack composer', url: 'https://www.aiva.ai' },
-                { id: 84, emoji: '🎙️', name: 'Podcastle', desc: 'Podcast recording & editing', url: 'https://podcastle.ai' },
-            ]
-        },
-        {
-            id: 'writing-content',
-            emoji: '✍️',
-            name: 'Writing & Content',
-            description: 'Content generation and copywriting',
-            tools: [
-                { id: 7, emoji: '🔍', name: 'You.com', desc: 'AI search engine', url: 'https://you.com' },
-                { id: 8, emoji: '🧠', name: 'Perplexity AI', desc: 'Research answer engine', url: 'https://www.perplexity.ai' },
-                { id: 47, emoji: '📰', name: 'Wordtune', desc: 'Rewriting assistant', url: 'https://www.wordtune.com' },
-                { id: 51, emoji: '✍️', name: 'Rytr', desc: 'Affordable AI writing', url: 'https://rytr.me' },
-                { id: 52, emoji: '📝', name: 'Writesonic', desc: 'Articles & ads', url: 'https://writesonic.com' },
-                { id: 146, emoji: '📝', name: 'Quillbot', desc: 'Paraphrasing assistant', url: 'https://quillbot.com' },
-            ]
-        },
-        {
-            id: 'data-analytics',
-            emoji: '📈',
-            name: 'Data & Analytics',
-            description: 'Data analysis and visualization',
-            tools: [
-                { id: 13, emoji: '📈', name: 'Tableau GPT', desc: 'AI data analysis', url: 'https://www.tableau.com' },
-                { id: 14, emoji: '📊', name: 'Julius AI', desc: 'Charts & analytics', url: 'https://julius.ai' },
-                { id: 61, emoji: '📊', name: 'Polymer', desc: 'Data visualization', url: 'https://www.polymersearch.com' },
-                { id: 62, emoji: '📉', name: 'Akkio', desc: 'Predictive analytics', url: 'https://www.akkio.com' },
-                { id: 95, emoji: '📦', name: 'Viable', desc: 'Qualitative analytics', url: 'https://www.askviable.com' },
-                { id: 98, emoji: '📊', name: 'Rows AI', desc: 'Spreadsheet AI', url: 'https://rows.com/ai' },
-                { id: 99, emoji: '📈', name: 'Sheet AI', desc: 'AI for Google Sheets', url: 'https://sheetai.app' },
-            ]
-        },
-        {
-            id: 'coding-development',
-            emoji: '💻',
-            name: 'Coding & Development',
-            description: 'Code generation and programming assistance',
-            tools: [
-                { id: 15, emoji: '💻', name: 'GitHub Copilot', desc: 'AI pair programmer', url: 'https://github.com/features/copilot' },
-                { id: 16, emoji: '🧑‍💻', name: 'Cursor', desc: 'AI-first code editor', url: 'https://cursor.com' },
-                { id: 63, emoji: '🧹', name: 'Tabnine', desc: 'Code autocomplete', url: 'https://www.tabnine.com' },
-                { id: 64, emoji: '🐍', name: 'Codeium', desc: 'Free code completion', url: 'https://codeium.com' },
-                { id: 65, emoji: '🧪', name: 'Seek AI', desc: 'Natural language queries', url: 'https://seek.ai' },
-                { id: 186, emoji: '🤖', name: 'GPT Engineer', desc: 'AI software engineer', url: 'https://gptengineer.app' },
-                { id: 187, emoji: '🧠', name: 'SuperAGI', desc: 'Autonomous AI framework', url: 'https://superagi.com' },
-                { id: 188, emoji: '🤖', name: 'AgentGPT', desc: 'Browser AI agents', url: 'https://agentgpt.reworkd.ai' },
-                { id: 189, emoji: '🧩', name: 'Smol Developer', desc: 'Minimal AI coding agent', url: 'https://github.com/smol-ai/developer' },
-                { id: 190, emoji: '🤖', name: 'Open Interpreter', desc: 'Local code execution AI', url: 'https://www.openinterpreter.com' },
-            ]
-        },
-        {
-            id: 'research-learning',
-            emoji: '🔬',
-            name: 'Research & Learning',
-            description: 'Research papers, academic tools, and education',
-            tools: [
-                { id: 17, emoji: '📄', name: 'Gamma', desc: 'AI slides & docs', url: 'https://gamma.app' },
-                { id: 18, emoji: '🔬', name: 'Elicit', desc: 'Research assistant', url: 'https://elicit.com' },
-                { id: 19, emoji: '📚', name: 'Consensus', desc: 'Academic paper search', url: 'https://consensus.app' },
-                { id: 20, emoji: '🎓', name: 'Khanmigo', desc: 'AI tutor', url: 'https://www.khanacademy.org/khan-labs' },
-                { id: 44, emoji: '📚', name: 'Consensus', desc: 'Academic AI search', url: 'https://consensus.app' },
-                { id: 89, emoji: '📚', name: 'Genei', desc: 'Research summarization', url: 'https://www.genei.io' },
-                { id: 90, emoji: '💡', name: 'Humata AI', desc: 'Chat with PDFs', url: 'https://www.humata.ai' },
-                { id: 91, emoji: '📎', name: 'Sharly AI', desc: 'Multi-document Q&A', url: 'https://sharly.ai' },
-                { id: 100, emoji: '🎓', name: 'Knowji', desc: 'Vocabulary learning AI', url: 'https://www.knowji.com' },
-                { id: 113, emoji: '📄', name: 'SciSpace', desc: 'Scientific paper assistant', url: 'https://typeset.io' },
-                { id: 114, emoji: '🧠', name: 'Humata AI', desc: 'Document Q&A AI', url: 'https://www.humata.ai' },
-                { id: 115, emoji: '📎', name: 'Sharly AI', desc: 'Document intelligence', url: 'https://sharly.ai' },
-                { id: 117, emoji: '🧠', name: 'Explainpaper', desc: 'Explain research papers', url: 'https://www.explainpaper.com' },
-                { id: 118, emoji: '📑', name: 'ChatPDF', desc: 'Chat with PDFs', url: 'https://www.chatpdf.com' },
-                { id: 141, emoji: '🎓', name: 'Khanmigo', desc: 'AI tutoring assistant', url: 'https://www.khanacademy.org/khan-labs' },
-                { id: 142, emoji: '🧠', name: 'Tutor AI', desc: 'Personalized education AI', url: 'https://tutorai.me' },
-                { id: 144, emoji: '🧠', name: 'Socratic', desc: 'Homework helper AI', url: 'https://socratic.org' },
-                { id: 145, emoji: '🎓', name: 'Coursera Coach', desc: 'Learning guidance AI', url: 'https://www.coursera.org' },
-                { id: 147, emoji: '🧠', name: 'Brainly AI', desc: 'Student Q&A AI', url: 'https://brainly.com' },
-            ]
-        },
-        {
-            id: 'productivity-organization',
-            emoji: '📊',
-            name: 'Productivity & Organization',
-            description: 'Workspace, notes, and workflow organization',
-            tools: [
-                { id: 21, emoji: '🧾', name: 'Fireflies.ai', desc: 'Meeting transcription', url: 'https://fireflies.ai' },
-                { id: 22, emoji: '📧', name: 'Superhuman AI', desc: 'AI email assistant', url: 'https://superhuman.com' },
-                { id: 23, emoji: '🗓️', name: 'Reclaim AI', desc: 'Smart calendar', url: 'https://reclaim.ai' },
-                { id: 24, emoji: '🧘', name: 'Rosebud', desc: 'AI journaling', url: 'https://www.rosebud.app' },
-                { id: 36, emoji: '🛍️', name: 'Clerk.io', desc: 'E-commerce recommendations', url: 'https://clerk.io' },
-                { id: 37, emoji: '🗂️', name: 'Coda AI', desc: 'AI documents', url: 'https://coda.io/ai' },
-                { id: 38, emoji: '📋', name: 'Notion AI', desc: 'Workspace AI', url: 'https://www.notion.so/product/ai' },
-                { id: 43, emoji: '🛠️', name: 'Mem', desc: 'Knowledge management', url: 'https://mem.ai' },
-                { id: 57, emoji: '🧾', name: 'Otter.ai', desc: 'Live meeting notes', url: 'https://otter.ai' },
-                { id: 58, emoji: '📑', name: 'Mem.ai', desc: 'Smart notes', url: 'https://mem.ai' },
-                { id: 101, emoji: '🗂️', name: 'Notion AI', desc: 'Workspace AI assistant', url: 'https://www.notion.so/product/ai' },
-                { id: 102, emoji: '📋', name: 'Coda AI', desc: 'Collaborative AI docs', url: 'https://coda.io/ai' },
-                { id: 103, emoji: '🛠️', name: 'Mem', desc: 'AI knowledge management', url: 'https://mem.ai' },
-                { id: 104, emoji: '🧾', name: 'Otter.ai', desc: 'Meeting assistant', url: 'https://otter.ai' },
-                { id: 105, emoji: '📑', name: 'Fireflies.ai', desc: 'Meeting assistant', url: 'https://fireflies.ai' },
-                { id: 106, emoji: '📝', name: 'Reflect AI', desc: 'AI note-taking', url: 'https://reflect.app' },
-                { id: 107, emoji: '📄', name: 'Tana', desc: 'AI workspace', url: 'https://tana.inc' },
-                { id: 108, emoji: '📋', name: 'ClickUp AI', desc: 'Project management AI', url: 'https://clickup.com/ai' },
-                { id: 109, emoji: '📝', name: 'Slite AI', desc: 'Team documentation AI', url: 'https://slite.com' },
-                { id: 110, emoji: '🗂️', name: 'Taskade AI', desc: 'Collaborative AI workflows', url: 'https://www.taskade.com' },
-                { id: 166, emoji: '📧', name: 'Superhuman AI', desc: 'Email acceleration AI', url: 'https://superhuman.com' },
-                { id: 167, emoji: '🗓️', name: 'Reclaim AI', desc: 'Smart scheduling', url: 'https://reclaim.ai' },
-                { id: 168, emoji: '📞', name: 'Motion AI', desc: 'AI calendar assistant', url: 'https://www.usemotion.com' },
-                { id: 169, emoji: '🗓️', name: 'Clockwise', desc: 'Calendar optimization', url: 'https://www.getclockwise.com' },
-                { id: 170, emoji: '📧', name: 'Shortwave', desc: 'AI email productivity', url: 'https://www.shortwave.com' },
-                { id: 172, emoji: '📧', name: 'Missive AI', desc: 'Collaborative email AI', url: 'https://missiveapp.com' },
-                { id: 96, emoji: '📑', name: 'Tome', desc: 'AI storytelling', url: 'https://tome.app' },
-            ]
-        },
-        {
-            id: 'marketing-sales',
-            emoji: '📈',
-            name: 'Marketing & Sales',
-            description: 'Marketing automation, sales tools, and customer engagement',
-            tools: [
-                { id: 40, emoji: '🌐', name: 'Octane AI', desc: 'Conversational marketing', url: 'https://octaneai.com' },
-                { id: 44, emoji: '🧪', name: 'Lavender', desc: 'Sales email coach', url: 'https://www.lavender.ai' },
-                { id: 45, emoji: '📞', name: 'Crisp', desc: 'AI customer support', url: 'https://crisp.chat' },
-                { id: 92, emoji: '🎯', name: 'Adcreative.ai', desc: 'Ad creative generation', url: 'https://www.adcreative.ai' },
-                { id: 93, emoji: '🛍️', name: 'Rebuy', desc: 'Post-purchase recommendations', url: 'https://www.rebuyengine.com' },
-                { id: 121, emoji: '🎯', name: 'Jasper Marketing', desc: 'Marketing content AI', url: 'https://www.jasper.ai' },
-                { id: 122, emoji: '📣', name: 'Lavender', desc: 'Sales email optimization', url: 'https://www.lavender.ai' },
-                { id: 123, emoji: '🛍️', name: 'Clerk.io', desc: 'E-commerce personalization', url: 'https://clerk.io' },
-                { id: 124, emoji: '🌐', name: 'Octane AI', desc: 'Conversational commerce', url: 'https://octaneai.com' },
-                { id: 125, emoji: '🎯', name: 'Adcreative.ai', desc: 'AI ad generation', url: 'https://www.adcreative.ai' },
-                { id: 126, emoji: '🛒', name: 'Syte', desc: 'Visual shopping search', url: 'https://syte.ai' },
-                { id: 127, emoji: '📊', name: 'Mutiny', desc: 'Website personalization', url: 'https://www.mutinyhq.com' },
-                { id: 128, emoji: '📞', name: 'Crisp AI', desc: 'Support chatbot AI', url: 'https://crisp.chat' },
-                { id: 129, emoji: '📧', name: 'EmailTree AI', desc: 'Email workflow AI', url: 'https://emailtree.ai' },
-                { id: 130, emoji: '📈', name: 'Albert AI', desc: 'Marketing automation', url: 'https://albert.ai' },
-                { id: 131, emoji: '🎯', name: 'Seventh Sense', desc: 'Email timing optimization', url: 'https://www.theseventhsense.com' },
-                { id: 132, emoji: '🧠', name: 'Regie.ai', desc: 'Sales engagement AI', url: 'https://www.regie.ai' },
-                { id: 133, emoji: '📊', name: 'Gong.io', desc: 'Revenue intelligence', url: 'https://www.gong.io' },
-                { id: 134, emoji: '🎯', name: 'Seamless AI', desc: 'Sales prospecting', url: 'https://www.seamless.ai' },
-                { id: 135, emoji: '📞', name: 'Drift AI', desc: 'Conversational sales AI', url: 'https://www.drift.com' },
-                { id: 198, emoji: '📧', name: 'MailerLite AI', desc: 'Email campaign AI', url: 'https://www.mailerlite.com' },
-            ]
-        },
-        {
-            id: 'legal-specialized',
-            emoji: '⚖️',
-            name: 'Legal & Specialized',
-            description: 'Legal, industry-specific, and niche AI tools',
-            tools: [
-                { id: 59, emoji: '🧑‍⚖️', name: 'Casetext', desc: 'Legal AI assistant', url: 'https://casetext.com' },
-                { id: 60, emoji: '💼', name: 'Harvey AI', desc: 'Legal & enterprise AI', url: 'https://www.harvey.ai' },
-                { id: 136, emoji: '⚖️', name: 'Casetext', desc: 'Legal AI research', url: 'https://casetext.com' },
-                { id: 137, emoji: '💼', name: 'Harvey AI', desc: 'Enterprise legal AI', url: 'https://www.harvey.ai' },
-                { id: 138, emoji: '📑', name: 'Spellbook', desc: 'AI contract drafting', url: 'https://www.spellbook.legal' },
-                { id: 139, emoji: '⚖️', name: 'Luminance', desc: 'Legal document AI', url: 'https://www.luminance.com' },
-                { id: 140, emoji: '📜', name: 'Legalese Decoder', desc: 'Plain-English legal AI', url: 'https://www.legalesedecoder.com' },
-                { id: 71, emoji: '🏥', name: 'Ada Health', desc: 'Health symptom checker', url: 'https://ada.com' },
-                { id: 72, emoji: '🧘', name: 'Wysa', desc: 'Mental health support', url: 'https://wysa.com' },
-                { id: 32, emoji: '📸', name: 'Remini', desc: 'Photo enhancement', url: 'https://remini.ai' },
-                { id: 49, emoji: '🧹', name: 'Cleanup.pictures', desc: 'Object removal', url: 'https://cleanup.pictures' },
-                { id: 148, emoji: '🧬', name: 'AlphaFold', desc: 'Protein structure prediction', url: 'https://deepmind.google/technologies/alphafold/' },
-                { id: 149, emoji: '🧠', name: 'Rosebud', desc: 'Reflective journaling AI', url: 'https://www.rosebud.app' },
-                { id: 150, emoji: '😄', name: 'Hume AI', desc: 'Emotion-aware AI', url: 'https://www.hume.ai' },
-            ]
-        },
-        {
-            id: 'ai-frameworks',
-            emoji: '🧬',
-            name: 'AI Frameworks & Agents',
-            description: 'Advanced frameworks, agents, and LLM development',
-            tools: [
-                { id: 68, emoji: '🧠', name: 'LangChain', desc: 'LLM app framework', url: 'https://www.langchain.com' },
-                { id: 69, emoji: '🔌', name: 'Flowise AI', desc: 'Visual AI workflow builder', url: 'https://flowiseai.com' },
-                { id: 70, emoji: '🧰', name: 'AutoGPT', desc: 'Autonomous AI tasks', url: 'https://github.com/Significant-Gravitas/AutoGPT' },
-                { id: 71, emoji: '🤖', name: 'BabyAGI', desc: 'Task-driven AI agents', url: 'https://babyagi.org' },
-                { id: 72, emoji: '🧩', name: 'Fixie AI', desc: 'Custom AI agents', url: 'https://www.fixie.ai' },
-                { id: 151, emoji: '🧠', name: 'LangChain', desc: 'LLM application framework', url: 'https://www.langchain.com' },
-                { id: 152, emoji: '🔌', name: 'Flowise AI', desc: 'Visual LLM builder', url: 'https://flowiseai.com' },
-                { id: 153, emoji: '🤖', name: 'AutoGPT', desc: 'Autonomous AI agent', url: 'https://github.com/Significant-Gravitas/AutoGPT' },
-                { id: 154, emoji: '🧠', name: 'BabyAGI', desc: 'Task-driven AI systems', url: 'https://babyagi.org' },
-                { id: 155, emoji: '🧩', name: 'Fixie AI', desc: 'Custom AI agents', url: 'https://www.fixie.ai' },
-            ]
-        },
-        {
-            id: 'search-discovery',
-            emoji: '🔍',
-            name: 'Search & Discovery',
-            description: 'AI-powered search and information discovery',
-            tools: [
-                { id: 94, emoji: '🔍', name: 'Neeva AI', desc: 'Private search', url: 'https://neeva.ai' },
-                { id: 119, emoji: '🔍', name: 'Petal', desc: 'Document search platform', url: 'https://www.petal.org' },
-                { id: 120, emoji: '🧠', name: 'Lateral.io', desc: 'Research discovery AI', url: 'https://www.lateral.io' },
-                { id: 181, emoji: '🔍', name: 'Perplexity', desc: 'AI answer engine', url: 'https://www.perplexity.ai' },
-                { id: 182, emoji: '🌐', name: 'Exa', desc: 'Neural search engine', url: 'https://exa.ai' },
-                { id: 183, emoji: '🧠', name: 'Kagi AI', desc: 'Premium AI search', url: 'https://kagi.com' },
-                { id: 184, emoji: '📚', name: 'Andi Search', desc: 'Conversational search', url: 'https://andisearch.com' },
-                { id: 185, emoji: '🔎', name: 'Metaphor', desc: 'Semantic search API', url: 'https://metaphor.systems' },
-            ]
-        },
-        {
-            id: 'design-automation',
-            emoji: '🎨',
-            name: 'Design & Web Automation',
-            description: 'Web design, UI/UX, and automation builders',
-            tools: [
-                { id: 33, emoji: '🏢', name: 'Beautiful.ai', desc: 'Smart presentations', url: 'https://www.beautiful.ai' },
-                { id: 34, emoji: '🧮', name: 'Wolfram Alpha', desc: 'Computational intelligence', url: 'https://www.wolframalpha.com' },
-                { id: 35, emoji: '🎯', name: 'Zapier AI', desc: 'Workflow automation', url: 'https://zapier.com/ai' },
-                { id: 66, emoji: '📦', name: 'Mutiny', desc: 'Website personalization', url: 'https://www.mutinyhq.com' },
-                { id: 67, emoji: '🛒', name: 'Syte', desc: 'Visual product discovery', url: 'https://syte.ai' },
-                { id: 77, emoji: '📝', name: 'Lexica', desc: 'Stable Diffusion search', url: 'https://lexica.art' },
-                { id: 78, emoji: '🧙', name: 'Mage Space', desc: 'Stable Diffusion platform', url: 'https://www.mage.space' },
-                { id: 81, emoji: '🧠', name: 'PromptBase', desc: 'Prompt marketplace', url: 'https://promptbase.com' },
-                { id: 173, emoji: '🏢', name: 'Beautiful.ai', desc: 'AI presentations', url: 'https://www.beautiful.ai' },
-                { id: 174, emoji: '📄', name: 'Gamma', desc: 'AI presentation builder', url: 'https://gamma.app' },
-                { id: 175, emoji: '📑', name: 'Tome', desc: 'Narrative AI presentations', url: 'https://tome.app' },
-                { id: 176, emoji: '🎨', name: 'Designs.ai', desc: 'Creative design suite', url: 'https://designs.ai' },
-                { id: 177, emoji: '📊', name: 'Pitch', desc: 'Presentation collaboration AI', url: 'https://pitch.com' },
-                { id: 178, emoji: '🖌️', name: 'Khroma', desc: 'AI color palette generator', url: 'https://www.khroma.co' },
-                { id: 179, emoji: '📐', name: 'Uizard', desc: 'UI/UX AI prototyping', url: 'https://uizard.io' },
-                { id: 180, emoji: '🧑‍🎨', name: 'Relume', desc: 'Wireframe generation', url: 'https://www.relume.io' },
-            ]
-        },
-        {
-            id: 'branding-generation',
-            emoji: '🧙',
-            name: 'Branding & Generation',
-            description: 'Logo, branding, and business naming tools',
-            tools: [
-                { id: 85, emoji: '📞', name: 'Bland AI', desc: 'AI phone calls', url: 'https://www.bland.ai' },
-                { id: 86, emoji: '🧑‍💼', name: 'Crystal AI', desc: 'DISC email coach', url: 'https://www.crystalknows.com' },
-                { id: 87, emoji: '📧', name: 'EmailTree AI', desc: 'Email automation', url: 'https://emailtree.ai' },
-                { id: 88, emoji: '🧾', name: 'Scribe AI', desc: 'Process documentation', url: 'https://scribehow.com' },
-                { id: 111, emoji: '🔬', name: 'Elicit', desc: 'Research automation', url: 'https://elicit.com' },
-                { id: 112, emoji: '📚', name: 'Consensus', desc: 'Academic AI search', url: 'https://consensus.app' },
-                { id: 116, emoji: '📚', name: 'Genei', desc: 'Research summarizer', url: 'https://www.genei.io' },
-                { id: 157, emoji: '🧙', name: 'PromptBase', desc: 'Prompt marketplace', url: 'https://promptbase.com' },
-                { id: 158, emoji: '🧠', name: 'GPTZero', desc: 'AI text detection', url: 'https://gptzero.me' },
-                { id: 159, emoji: '📝', name: 'Originality.ai', desc: 'Plagiarism & AI detection', url: 'https://originality.ai' },
-                { id: 160, emoji: '🛡️', name: 'CopyLeaks', desc: 'AI detection platform', url: 'https://copyleaks.com' },
-                { id: 191, emoji: '🧹', name: 'Cleanup.pictures', desc: 'Image cleanup AI', url: 'https://cleanup.pictures' },
-                { id: 192, emoji: '📸', name: 'BgRem', desc: 'Background remover', url: 'https://bgrem.deelvin.com' },
-                { id: 193, emoji: '🧠', name: 'Namecheap AI', desc: 'AI domain generation', url: 'https://www.namecheap.com/logo-maker/ai-business-name-generator/' },
-                { id: 194, emoji: '✍️', name: 'Namelix', desc: 'Business name generator', url: 'https://namelix.com' },
-                { id: 195, emoji: '🧠', name: 'Looka', desc: 'AI logo creator', url: 'https://looka.com' },
-                { id: 196, emoji: '🧙', name: 'Stockimg.ai', desc: 'AI stock image generation', url: 'https://stockimg.ai' },
-                { id: 197, emoji: '🧠', name: 'Brandmark', desc: 'AI branding tools', url: 'https://brandmark.io' },
-            ]
-        },
-        {
-            id: 'gaming-creative',
-            emoji: '🎮',
-            name: 'Gaming & Creative',
-            description: 'Game development, creative assets, and generation',
-            tools: [
-                { id: 161, emoji: '🎮', name: 'Scenario', desc: 'Game asset AI', url: 'https://www.scenario.com' },
-                { id: 163, emoji: '🧬', name: 'Rosebud AI', desc: 'Game generation tools', url: 'https://www.rosebud.ai' },
-                { id: 164, emoji: '🧠', name: 'DeepDream', desc: 'Neural image visualization', url: 'https://deepdreamgenerator.com' },
-                { id: 200, emoji: '🎯', name: 'Browse AI', desc: 'Web scraping automation', url: 'https://www.browse.ai' },
-            ]
-        }
-    ];
+        const controls = document.getElementById('controls');
+        const content = document.getElementById('content');
 
-    // Helper functions
-    function getAllTools() {
-        return categories.reduce((acc, cat) => [...acc, ...cat.tools], []);
-    }
-
-    function renderCategorySection(category, tools) {
-        const section = document.createElement('section');
-        section.className = 'category-section';
-        section.id = `category-${category.id}`;
-
-        const header = document.createElement('div');
-        header.className = 'category-header';
-        header.innerHTML = `
-            <div class="category-emoji">${category.emoji}</div>
-            <div>
-                <h2 class="category-title">${category.name}</h2>
-                <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 4px;">${category.description}</p>
-            </div>
-            <div class="category-count">${tools.length} tools</div>
-        `;
-
-        const grid = document.createElement('div');
-        grid.className = 'tools-grid';
-
-        tools.forEach(tool => {
-            const card = document.createElement('a');
-            card.className = 'tool-card';
-            card.href = tool.url;
-            card.target = '_blank';
-            card.rel = 'noopener noreferrer';
-            card.setAttribute('data-tool-id', tool.id);
-            card.setAttribute('data-tool-name', tool.name.toLowerCase());
-            card.setAttribute('data-tool-desc', tool.desc.toLowerCase());
-
-            card.innerHTML = `
-                <div class="tool-card-content">
-                    <div class="tool-emoji">${tool.emoji}</div>
-                    <div class="tool-name">${tool.name}</div>
-                    <div class="tool-desc">${tool.desc}</div>
-                    <div class="tool-badge">${category.name}</div>
-                </div>
-            `;
-
-            grid.appendChild(card);
-        });
-
-        section.appendChild(header);
-        section.appendChild(grid);
-        return section;
-    }
-
-    function renderCategories(categoriesToRender = categories) {
-        const container = document.getElementById('categoriesContainer');
-        container.innerHTML = '';
-
-        categoriesToRender.forEach((category, index) => {
-            const section = renderCategorySection(category, category.tools);
-            section.style.animationDelay = `${index * 0.1}s`;
-            container.appendChild(section);
-        });
-
-        updateEmptyState();
-    }
-
-    function updateEmptyState() {
-        const sections = document.querySelectorAll('.category-section');
-        const emptyState = document.getElementById('emptyState');
-        emptyState.style.display = sections.length === 0 ? 'block' : 'none';
-    }
-
-    function renderNavigation() {
-        const navCategories = document.getElementById('navCategories');
-        const filterTags = document.getElementById('filterTags');
-        const footerCategories = document.getElementById('footerCategories');
-
-        navCategories.innerHTML = '<button class="category-btn active" data-category="all">All Tools</button>';
-        filterTags.innerHTML = '';
-        footerCategories.innerHTML = '';
+        // Create category buttons
+        const allBtn = document.createElement('button');
+        allBtn.className = 'category-btn active';
+        allBtn.textContent = 'All Tools';
+        allBtn.onclick = () => filterCategory('all');
+        controls.appendChild(allBtn);
 
         categories.forEach(cat => {
-            // Navigation button
             const btn = document.createElement('button');
             btn.className = 'category-btn';
-            btn.textContent = `${cat.emoji} ${cat.name}`;
-            btn.dataset.category = cat.id;
-            btn.addEventListener('click', () => scrollToCategory(cat.id));
-            navCategories.appendChild(btn);
-
-            // Filter tag
-            const tag = document.createElement('button');
-            tag.className = 'filter-tag';
-            tag.textContent = cat.name;
-            tag.dataset.category = cat.id;
-            tag.addEventListener('click', () => toggleFilter(cat.id, tag));
-            filterTags.appendChild(tag);
-
-            // Footer link
-            const li = document.createElement('li');
-            const link = document.createElement('a');
-            link.href = `#category-${cat.id}`;
-            link.textContent = cat.name;
-            li.appendChild(link);
-            footerCategories.appendChild(li);
+            btn.textContent = cat;
+            btn.onclick = () => filterCategory(cat);
+            controls.appendChild(btn);
         });
 
-        // All Tools button for filter
-        const allTag = document.createElement('button');
-        allTag.className = 'filter-tag active';
-        allTag.textContent = 'All Categories';
-        allTag.dataset.category = 'all';
-        allTag.addEventListener('click', () => clearAllFilters());
-        filterTags.insertBefore(allTag, filterTags.firstChild);
-    }
-
-    function scrollToCategory(categoryId) {
-        const section = document.getElementById(`category-${categoryId}`);
-        if (section) {
-            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    }
-
-    let activeFilters = new Set();
-
-    function toggleFilter(categoryId, element) {
-        if (activeFilters.has(categoryId)) {
-            activeFilters.delete(categoryId);
-            element.classList.remove('active');
-        } else {
-            activeFilters.add(categoryId);
-            element.classList.add('active');
+        function filterCategory(category) {
+            activeCategory = category;
+            const buttons = document.querySelectorAll('.category-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderTools();
         }
 
-        applyFilters();
-    }
+        function renderTools() {
+            content.innerHTML = '';
 
-    function clearAllFilters() {
-        activeFilters.clear();
-        document.querySelectorAll('.filter-tag').forEach(tag => tag.classList.remove('active'));
-        document.querySelector('.filter-tag[data-category="all"]').classList.add('active');
-        applyFilters();
-    }
-
-    function applyFilters() {
-        const filtered = activeFilters.size === 0 
-            ? categories 
-            : categories.filter(cat => activeFilters.has(cat.id));
-        
-        renderCategories(filtered);
-    }
-
-    // Search functionality
-    const searchInput = document.getElementById('searchInput');
-    searchInput.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase();
-
-        if (!query) {
-            renderCategories();
-            return;
+            if (activeCategory === 'all') {
+                categories.forEach(category => {
+                    const categoryTools = tools.filter(t => t.category === category);
+                    renderCategory(category, categoryTools);
+                });
+            } else {
+                const categoryTools = tools.filter(t => t.category === activeCategory);
+                renderCategory(activeCategory, categoryTools);
+            }
         }
 
-        const filteredCategories = categories.map(cat => ({
-            ...cat,
-            tools: cat.tools.filter(tool =>
-                tool.name.toLowerCase().includes(query) ||
-                tool.desc.toLowerCase().includes(query)
-            )
-        })).filter(cat => cat.tools.length > 0);
+        function renderCategory(category, categoryTools) {
+            const section = document.createElement('div');
+            section.className = 'category-section';
 
-        renderCategories(filteredCategories);
-    });
+            const title = document.createElement('h2');
+            title.className = 'category-title';
+            title.textContent = category;
+            section.appendChild(title);
 
-    // Initialization
-    document.addEventListener('DOMContentLoaded', () => {
-        renderNavigation();
-        renderCategories();
-        const totalTools = getAllTools().length;
-        document.getElementById('totalTools').textContent = totalTools + '+';
-        document.getElementById('totalCategories').textContent = categories.length;
-    });
-</script>
+            const grid = document.createElement('div');
+            grid.className = 'grid';
 
+            categoryTools.forEach(tool => {
+                const card = document.createElement('a');
+                card.className = 'card';
+                card.href = tool.url;
+                card.target = '_blank';
+                card.rel = 'noopener noreferrer';
+
+                card.innerHTML = `
+                    <div class="emoji">${tool.emoji}</div>
+                    <div class="info">
+                        <div class="number">#${tool.id}</div>
+                        <div class="name">${tool.name}</div>
+                        <div class="desc">${tool.desc}</div>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+
+            section.appendChild(grid);
+            content.appendChild(section);
+        }
+
+        // Initial render
+        renderTools();
+    </script>
 </body>
 </html>
