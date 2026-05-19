@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Idle Games Hub</title>
+
+<style>
+    :root {
+        --bg: #0f1117;
+        --card: #1a1f2b;
+        --card-hover: #252c3d;
+        --text: #f4f7fb;
+        --muted: #9aa6b2;
+        --accent: #7dd3fc;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+            radial-gradient(circle at top, #1b2233 0%, #0f1117 60%);
+        color: var(--text);
+        font-family: Inter, system-ui, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 48px 24px;
+    }
+
+    h1 {
+        font-size: clamp(2rem, 4vw, 3.5rem);
+        margin-bottom: 12px;
+        letter-spacing: -0.03em;
+    }
+
+    p.subtitle {
+        color: var(--muted);
+        margin-bottom: 48px;
+        text-align: center;
+        max-width: 700px;
+        line-height: 1.5;
+    }
+
+    .grid {
+        width: 100%;
+        max-width: 1200px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 24px;
+    }
+
+    .game-card {
+        text-decoration: none;
+        color: inherit;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        backdrop-filter: blur(12px);
+        border-radius: 24px;
+        padding: 28px 20px;
+        transition:
+            transform 0.25s ease,
+            background 0.25s ease,
+            border-color 0.25s ease,
+            box-shadow 0.25s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 220px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .game-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+            linear-gradient(
+                135deg,
+                rgba(125,211,252,0.08),
+                transparent 40%
+            );
+        pointer-events: none;
+    }
+
+    .game-card:hover {
+        transform: translateY(-8px) scale(1.03);
+        background: var(--card-hover);
+        border-color: rgba(125,211,252,0.35);
+        box-shadow:
+            0 20px 40px rgba(0,0,0,0.35),
+            0 0 24px rgba(125,211,252,0.12);
+    }
+
+    .game-title {
+        font-size: 1rem;
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: 600;
+        line-height: 1.4;
+    }
+
+    .emoji {
+        font-size: 4rem;
+        transition: transform 0.25s ease;
+    }
+
+    .game-card:hover .emoji {
+        transform: scale(1.15) rotate(-4deg);
+    }
+
+    footer {
+        margin-top: 48px;
+        color: var(--muted);
+        font-size: 0.9rem;
+        opacity: 0.7;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>🎮 Free Idle Games</h1>
+
+<p class="subtitle">
+Explore addictive incremental universes directly from Steam.
+Minimal clicks. Maximum number inflation.
+</p>
+
+<div class="grid">
+
+    <a class="game-card"
+       href="https://store.steampowered.com/app/1454400/Cookie_Clicker/"
+       target="_blank">
+        <div class="game-title">Cookie Clicker</div>
+        <div class="emoji">🍪</div>
+    </a>
+
+    <a class="game-card"
+       href="https://store.steampowered.com/app/1147690/NGU_IDLE/"
+       target="_blank">
+        <div class="game-title">NGU Idle</div>
+        <div class="emoji">🧠</div>
+    </a>
+
+    <a class="game-card"
+       href="https://store.steampowered.com/app/2863550/Revolution_Idle/"
+       target="_blank">
+        <div class="game-title">Revolution Idle</div>
+        <div class="emoji">🌌</div>
+    </a>
+
+    <a class="game-card"
+       href="https://store.steampowered.com/app/1468260/Leaf_Blower_Revolution__Idle_Game/"
+       target="_blank">
+        <div class="game-title">Leaf Blower Revolution</div>
+        <div class="emoji">🍃</div>
+    </a>
+
+    <a class="game-card"
+       href="https://store.steampowered.com/app/1476970/IdleOn__The_Idle_MMO/"
+       target="_blank">
+        <div class="game-title">IdleOn MMO</div>
+        <div class="emoji">⚔️</div>
+    </a>
+
+    <a class="game-card"
+       href="https://store.steampowered.com/app/627690/Idle_Champions_of_the_Forgotten_Realms/"
+       target="_blank">
+        <div class="game-title">Idle Champions</div>
+        <div class="emoji">🛡️</div>
+    </a>
+
+    <a class="game-card"
+       href="https://store.steampowered.com/app/1877960/Trimps/"
+       target="_blank">
+        <div class="game-title">Trimps</div>
+        <div class="emoji">📈</div>
+    </a>
+
+    <a class="game-card"
+       href="https://store.steampowered.com/app/1482860/Idle_Research/"
+       target="_blank">
+        <div class="game-title">Idle Research</div>
+        <div class="emoji">🔬</div>
+    </a>
+
+    <a class="game-card"
+       href="https://store.steampowered.com/app/3419430/Bongo_Cat/"
+       target="_blank">
+        <div class="game-title">Bongo Cat</div>
+        <div class="emoji">🐱</div>
+    </a>
+
+    <a class="game-card"
+       href="https://store.steampowered.com/app/1827980/Idle_Spiral/"
+       target="_blank">
+        <div class="game-title">Idle Spiral</div>
+        <div class="emoji">🌀</div>
+    </a>
+
+</div>
+
+<footer>
+    Built for idle minds ✨
+</footer>
+
+</body>
+</html>
