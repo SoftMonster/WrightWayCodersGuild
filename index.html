@@ -86,6 +86,20 @@
 <body>
     <div class="container">
         <h1>👋 Hello and Welcome! 🌟</h1>
+
+        <div class="search-container">
+          <input type="text" class="search-bar" placeholder="Search Google..." id="searchInput">
+          <button class="search-button" onclick="searchGoogle()">Search</button>
+        </div>
+        
+        <script>
+          function searchGoogle() {
+            const searchTerm = document.getElementById("searchInput").value;
+            const url = "https://www.google.com/search?q=" + encodeURIComponent(searchTerm);
+            window.open(url, "_blank");
+          }
+        </script>
+        
         <p>This is a simple and welcoming webpage. Feel free to customize it!</p>
 
         <a class="icon-card"
