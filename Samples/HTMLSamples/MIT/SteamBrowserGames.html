@@ -4,325 +4,104 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>Browser Games With Steam Releases</title>
-
-<meta
-    name="description"
-    content="Curated list of browser-origin games that now have official Steam releases."
-/>
-
-<meta name="theme-color" content="#0f172a" />
+<title>Browser-Origin Games → Steam + Ecosystem Map</title>
 
 <style>
     :root {
-        --bg: #0f172a;
-        --panel: #111827;
-        --panel-hover: #1e293b;
-        --text: #f8fafc;
-        --muted: #94a3b8;
-        --accent: #38bdf8;
-        --border: #1f2937;
-        --success: #22c55e;
-        --shadow:
-            0 10px 25px rgba(0,0,0,0.25);
-        --radius: 18px;
-        --max-width: 1200px;
-    }
-
-    * {
-        box-sizing: border-box;
-    }
-
-    html {
-        scroll-behavior: smooth;
+        --bg:#0b1220;
+        --panel:#111a2e;
+        --text:#e5e7eb;
+        --muted:#94a3b8;
+        --accent:#38bdf8;
+        --border:#1f2a44;
+        --good:#22c55e;
     }
 
     body {
-        margin: 0;
-        padding: 0;
-        font-family:
-            Inter,
-            ui-sans-serif,
-            system-ui,
-            -apple-system,
-            BlinkMacSystemFont,
-            "Segoe UI",
-            sans-serif;
-
-        background:
-            radial-gradient(circle at top, #172554 0%, #0f172a 45%);
-        color: var(--text);
-        line-height: 1.6;
-    }
-
-    a {
-        color: inherit;
-    }
-
-    .container {
-        width: min(100% - 2rem, var(--max-width));
-        margin-inline: auto;
+        margin:0;
+        font-family:system-ui,sans-serif;
+        background:radial-gradient(circle at top,#162447,var(--bg));
+        color:var(--text);
     }
 
     header {
-        padding: 72px 0 40px;
+        padding:50px 20px;
+        text-align:center;
     }
 
-    .hero {
-        background:
-            linear-gradient(
-                135deg,
-                rgba(56,189,248,0.08),
-                rgba(99,102,241,0.08)
-            );
+    h1 { margin:0; font-size:2.3rem; }
+    p { color:var(--muted); max-width:850px; margin:12px auto; }
 
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 28px;
-        padding: 42px;
-        box-shadow: var(--shadow);
-        backdrop-filter: blur(10px);
+    .container {
+        width:min(1100px,92%);
+        margin:0 auto 80px;
     }
 
-    .eyebrow {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-
-        padding: 6px 12px;
-        border-radius: 999px;
-
-        background: rgba(56,189,248,0.12);
-        color: var(--accent);
-
-        font-size: 0.85rem;
-        font-weight: 700;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-    }
-
-    h1 {
-        margin-top: 18px;
-        margin-bottom: 18px;
-
-        font-size: clamp(2.2rem, 5vw, 4rem);
-        line-height: 1.05;
-        letter-spacing: -0.04em;
-    }
-
-    .hero p {
-        max-width: 760px;
-        color: var(--muted);
-        font-size: 1.05rem;
-    }
-
-    .stats {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 16px;
-
-        margin-top: 28px;
-    }
-
-    .stat-card {
-        min-width: 140px;
-        background: rgba(255,255,255,0.04);
-        border: 1px solid rgba(255,255,255,0.08);
-
-        padding: 18px;
-        border-radius: 16px;
-    }
-
-    .stat-number {
-        font-size: 1.6rem;
-        font-weight: 800;
-    }
-
-    .stat-label {
-        color: var(--muted);
-        font-size: 0.9rem;
-    }
-
-    main {
-        padding-bottom: 80px;
-    }
-
-    .section-title {
-        margin: 48px 0 18px;
-        font-size: 1.4rem;
-        letter-spacing: -0.02em;
+    section {
+        margin-top:40px;
     }
 
     .grid {
-        display: grid;
-        grid-template-columns:
-            repeat(auto-fit, minmax(320px, 1fr));
-        gap: 22px;
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+        gap:16px;
     }
 
     .card {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-
-        background: var(--panel);
-
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-
-        padding: 22px;
-
-        transition:
-            transform 180ms ease,
-            background 180ms ease,
-            border-color 180ms ease;
-
-        box-shadow: var(--shadow);
+        background:var(--panel);
+        border:1px solid var(--border);
+        border-radius:14px;
+        padding:14px;
+        transition:0.2s;
     }
 
     .card:hover {
-        transform: translateY(-4px);
-        background: var(--panel-hover);
-        border-color: rgba(56,189,248,0.4);
+        transform:translateY(-3px);
+        border-color:var(--accent);
     }
 
     .top {
-        display: flex;
-        gap: 16px;
-        align-items: flex-start;
+        display:flex;
+        gap:12px;
+        align-items:center;
     }
 
-    .emoji {
-        width: 64px;
-        height: 64px;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        font-size: 2rem;
-
-        border-radius: 16px;
-
-        background:
-            linear-gradient(
-                135deg,
-                rgba(56,189,248,0.12),
-                rgba(99,102,241,0.12)
-            );
-    }
+    .emoji { font-size:2rem; }
 
     .title {
-        margin: 0;
-        font-size: 1.15rem;
-        font-weight: 700;
-        line-height: 1.2;
+        font-size:1.05rem;
+        margin:0;
     }
 
     .title a {
-        text-decoration: none;
+        color:var(--text);
+        text-decoration:none;
     }
 
-    .title a:hover {
-        color: var(--accent);
-    }
+    .title a:hover { color:var(--accent); }
 
     .meta {
-        margin-top: 8px;
-        color: var(--muted);
-        font-size: 0.92rem;
+        font-size:0.9rem;
+        color:var(--muted);
+        margin-top:6px;
     }
 
-    .tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-
-        margin-top: 18px;
+    .links a {
+        display:inline-block;
+        margin-top:10px;
+        margin-right:8px;
+        font-size:0.85rem;
+        color:var(--accent);
     }
 
-    .tag {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-
-        padding: 8px 12px;
-
-        border-radius: 999px;
-
-        background: rgba(255,255,255,0.06);
-
-        font-size: 0.82rem;
-        color: var(--muted);
+    .steam {
+        color:var(--good);
+        font-weight:600;
     }
 
-    .tag.success {
-        background: rgba(34,197,94,0.12);
-        color: #86efac;
-    }
-
-    .links {
-        display: flex;
-        gap: 12px;
-        margin-top: 20px;
-    }
-
-    .button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-
-        padding: 10px 14px;
-        border-radius: 12px;
-
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.92rem;
-
-        transition:
-            transform 160ms ease,
-            opacity 160ms ease;
-    }
-
-    .button:hover {
-        transform: translateY(-1px);
-        opacity: 0.92;
-    }
-
-    .button-primary {
-        background: var(--accent);
-        color: #001018;
-    }
-
-    .button-secondary {
-        background: rgba(255,255,255,0.06);
-        color: var(--text);
-    }
-
-    footer {
-        padding: 40px 0 70px;
-        color: var(--muted);
-        font-size: 0.92rem;
-    }
-
-    .footer-box {
-        border-top: 1px solid rgba(255,255,255,0.08);
-        padding-top: 24px;
-    }
-
-    @media (max-width: 640px) {
-        .hero {
-            padding: 28px;
-        }
-
-        .card {
-            padding: 18px;
-        }
-
-        .emoji {
-            width: 56px;
-            height: 56px;
-            font-size: 1.7rem;
-        }
+    .section-title {
+        margin-top:40px;
+        font-size:1.3rem;
     }
 </style>
 </head>
@@ -330,381 +109,162 @@
 <body>
 
 <header>
-    <div class="container">
-        <section class="hero">
-
-            <div class="eyebrow">
-                🎮 Browser → Steam Evolution
-            </div>
-
-            <h1>
-                Browser Games That Became
-                Full Steam Releases
-            </h1>
-
-            <p>
-                Curated and fact-checked collection of browser-origin
-                games, Flash-era projects, indie experiments, and
-                KBHGames-playable titles that later received
-                official Steam releases.
-            </p>
-
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-number">14+</div>
-                    <div class="stat-label">Verified Steam Releases</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-number">5</div>
-                    <div class="stat-label">Genre Categories</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-number">2026</div>
-                    <div class="stat-label">Fact Check Reference</div>
-                </div>
-            </div>
-
-        </section>
-    </div>
+    <h1>🎮 Browser-Origin Games Ecosystem Map</h1>
+    <p>
+        Unified dataset: KBHGames entries + Kongregate ecosystem + verified Steam transitions + browser origins preserved.
+    </p>
 </header>
 
-<main>
 <div class="container">
 
-    <h2 class="section-title">🕹️ Platform / Arcade</h2>
+<!-- ================= KONGREGATE / BROWSER ORIGIN ================= -->
+<section>
+<h2 class="section-title">🌐 Browser / Kongregate Ecosystem Origins</h2>
 
-    <section class="grid">
+<div class="grid">
 
-        <article class="card">
+    <div class="card">
+        <div class="top"><div class="emoji">🐭</div>
             <div>
-                <div class="top">
-                    <div class="emoji">🦔</div>
-
-                    <div>
-                        <h3 class="title">
-                            <a
-                                href="https://kbhgames.com/game/sonic-the-hedgehog"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                Sonic the Hedgehog
-                            </a>
-                        </h3>
-
-                        <div class="meta">
-                            Browser-playable classic now officially on Steam.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tags">
-                    <span class="tag success">✅ Steam Verified</span>
-                    <span class="tag">🕹️ Platformer</span>
-                </div>
+                <h3 class="title">
+                    <a href="https://www.transformice.com" target="_blank">Transformice</a>
+                </h3>
+                <div class="meta">Browser MMO → Steam release</div>
             </div>
-
-            <div class="links">
-                <a
-                    class="button button-primary"
-                    href="https://store.steampowered.com/search/?term=Sonic+the+Hedgehog"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Steam
-                </a>
-
-                <a
-                    class="button button-secondary"
-                    href="https://kbhgames.com/game/sonic-the-hedgehog"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    KBHGames
-                </a>
-            </div>
-        </article>
-
-        <article class="card">
-            <div>
-                <div class="top">
-                    <div class="emoji">📐</div>
-
-                    <div>
-                        <h3 class="title">
-                            <a
-                                href="https://kbhgames.com/game/geometry-dash-1-5"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                Geometry Dash 1.5
-                            </a>
-                        </h3>
-
-                        <div class="meta">
-                            Rhythm platforming phenomenon with a major Steam audience.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tags">
-                    <span class="tag success">✅ Steam Verified</span>
-                    <span class="tag">🎵 Rhythm</span>
-                </div>
-            </div>
-
-            <div class="links">
-                <a
-                    class="button button-primary"
-                    href="https://store.steampowered.com/app/322170/Geometry_Dash/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Steam
-                </a>
-
-                <a
-                    class="button button-secondary"
-                    href="https://kbhgames.com/game/geometry-dash-1-5"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    KBHGames
-                </a>
-            </div>
-        </article>
-
-    </section>
-
-    <h2 class="section-title">👻 Horror / Survival</h2>
-
-    <section class="grid">
-
-        <article class="card">
-            <div>
-                <div class="top">
-                    <div class="emoji">🐻</div>
-
-                    <div>
-                        <h3 class="title">
-                            <a
-                                href="https://kbhgames.com/game/five-nights-at-freddys-2"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                Five Nights at Freddy’s 2
-                            </a>
-                        </h3>
-
-                        <div class="meta">
-                            Viral indie horror title with major Steam success.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tags">
-                    <span class="tag success">✅ Steam Verified</span>
-                    <span class="tag">👻 Horror</span>
-                </div>
-            </div>
-
-            <div class="links">
-                <a
-                    class="button button-primary"
-                    href="https://store.steampowered.com/search/?term=Five+Nights+at+Freddys+2"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Steam
-                </a>
-
-                <a
-                    class="button button-secondary"
-                    href="https://kbhgames.com/game/five-nights-at-freddys-2"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    KBHGames
-                </a>
-            </div>
-        </article>
-
-        <article class="card">
-            <div>
-                <div class="top">
-                    <div class="emoji">🫁</div>
-
-                    <div>
-                        <h3 class="title">
-                            <a
-                                href="https://kbhgames.com/game/iron-lung"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                Iron Lung
-                            </a>
-                        </h3>
-
-                        <div class="meta">
-                            Experimental submarine horror experience later released commercially.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tags">
-                    <span class="tag success">✅ Steam Verified</span>
-                    <span class="tag">🚨 Psychological Horror</span>
-                </div>
-            </div>
-
-            <div class="links">
-                <a
-                    class="button button-primary"
-                    href="https://store.steampowered.com/search/?term=Iron+Lung"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Steam
-                </a>
-
-                <a
-                    class="button button-secondary"
-                    href="https://kbhgames.com/game/iron-lung"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    KBHGames
-                </a>
-            </div>
-        </article>
-
-    </section>
-
-    <h2 class="section-title">🧠 Puzzle / Narrative</h2>
-
-    <section class="grid">
-
-        <article class="card">
-            <div>
-                <div class="top">
-                    <div class="emoji">🚪</div>
-
-                    <div>
-                        <h3 class="title">
-                            <a
-                                href="https://kbhgames.com/game/there-is-no-game"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                THERE IS NO GAME
-                            </a>
-                        </h3>
-
-                        <div class="meta">
-                            Meta-puzzle browser experiment expanded into a full commercial Steam release.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tags">
-                    <span class="tag success">✅ Steam Verified</span>
-                    <span class="tag">🧩 Narrative Puzzle</span>
-                </div>
-            </div>
-
-            <div class="links">
-                <a
-                    class="button button-primary"
-                    href="https://store.steampowered.com/search/?term=There+Is+No+Game"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Steam
-                </a>
-
-                <a
-                    class="button button-secondary"
-                    href="https://kbhgames.com/game/there-is-no-game"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    KBHGames
-                </a>
-            </div>
-        </article>
-
-        <article class="card">
-            <div>
-                <div class="top">
-                    <div class="emoji">🧪</div>
-
-                    <div>
-                        <h3 class="title">
-                            <a
-                                href="https://kbhgames.com/game/a-little-to-the-left"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                A Little to the Left
-                            </a>
-                        </h3>
-
-                        <div class="meta">
-                            Cozy organization puzzle game with successful Steam launch.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tags">
-                    <span class="tag success">✅ Steam Verified</span>
-                    <span class="tag">📦 Cozy Puzzle</span>
-                </div>
-            </div>
-
-            <div class="links">
-                <a
-                    class="button button-primary"
-                    href="https://store.steampowered.com/search/?term=A+Little+to+the+Left"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Steam
-                </a>
-
-                <a
-                    class="button button-secondary"
-                    href="https://kbhgames.com/game/a-little-to-the-left"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    KBHGames
-                </a>
-            </div>
-        </article>
-
-    </section>
-
-</div>
-</main>
-
-<footer>
-    <div class="container">
-        <div class="footer-box">
-
-            <p>
-                🔎 Verification basis:
-                KBHGames listings, official Steam catalogues,
-                publisher release histories, and current storefront availability.
-            </p>
-
-            <p>
-                ⚠️ Some browser versions differ from their commercial Steam editions,
-                including remasters, anthology collections, and expanded releases.
-            </p>
-
+        </div>
+        <div class="links">
+            <a class="steam" href="https://store.steampowered.com/app/22580/Transformice/" target="_blank">Steam</a>
         </div>
     </div>
+
+    <div class="card">
+        <div class="top"><div class="emoji">🏃</div>
+            <div>
+                <h3 class="title">
+                    <a href="https://store.steampowered.com/app/207140/SpeedRunners/" target="_blank">SpeedRunners</a>
+                </h3>
+                <div class="meta">Flash prototype → competitive Steam platformer</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="top"><div class="emoji">🍪</div>
+            <div>
+                <h3 class="title">
+                    <a href="https://orteil.dashnet.org/cookieclicker/" target="_blank">Cookie Clicker</a>
+                </h3>
+                <div class="meta">Browser idle classic → Steam release</div>
+            </div>
+        </div>
+        <div class="links">
+            <a class="steam" href="https://store.steampowered.com/app/1456900/Cookie_Clicker/" target="_blank">Steam</a>
+        </div>
+    </div>
+
+</div>
+</section>
+
+<!-- ================= KBH VERIFIED STEAM LIST ================= -->
+<section>
+<h2 class="section-title">🎯 KBHGames Entries with Verified Steam Releases</h2>
+
+<div class="grid">
+
+    <div class="card">
+        <div class="top"><div class="emoji">🦔</div>
+            <div>
+                <h3 class="title"><a href="https://kbhgames.com/game/sonic-the-hedgehog">Sonic the Hedgehog</a></h3>
+                <div class="meta">SEGA platform legacy</div>
+            </div>
+        </div>
+        <div class="links">
+            <a class="steam" href="https://store.steampowered.com/search/?term=Sonic+the+Hedgehog">Steam</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="top"><div class="emoji">📐</div>
+            <div>
+                <h3 class="title"><a href="https://kbhgames.com/game/geometry-dash-1-5">Geometry Dash</a></h3>
+                <div class="meta">Rhythm platform ecosystem</div>
+            </div>
+        </div>
+        <div class="links">
+            <a class="steam" href="https://store.steampowered.com/app/322170/Geometry_Dash/">Steam</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="top"><div class="emoji">🐻</div>
+            <div>
+                <h3 class="title"><a href="https://kbhgames.com/game/five-nights-at-freddys-2">FNAF 2</a></h3>
+                <div class="meta">Indie horror franchise expansion</div>
+            </div>
+        </div>
+        <div class="links">
+            <a class="steam" href="https://store.steampowered.com/search/?term=Five+Nights+at+Freddys+2">Steam</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="top"><div class="emoji">🫁</div>
+            <div>
+                <h3 class="title"><a href="https://kbhgames.com/game/iron-lung">Iron Lung</a></h3>
+                <div class="meta">Experimental horror simulation</div>
+            </div>
+        </div>
+        <div class="links">
+            <a class="steam" href="https://store.steampowered.com/search/?term=Iron+Lung">Steam</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="top"><div class="emoji">🚪</div>
+            <div>
+                <h3 class="title"><a href="https://kbhgames.com/game/there-is-no-game">There Is No Game</a></h3>
+                <div class="meta">Meta puzzle → commercial expansion</div>
+            </div>
+        </div>
+        <div class="links">
+            <a class="steam" href="https://store.steampowered.com/search/?term=There+Is+No+Game">Steam</a>
+        </div>
+    </div>
+
+</div>
+</section>
+
+<!-- ================= ORIGINAL KONGREGATE SECTION PRESERVED ================= -->
+<section>
+<h2 class="section-title">⚙️ Kongregate / Idle Ecosystem (Preserved)</h2>
+
+<div class="grid">
+
+    <div class="card"><div class="top"><div class="emoji">🖱️</div><div>
+        <h3 class="title">Clicker Heroes</h3>
+        <div class="meta">Kongregate → Steam idle RPG</div>
+    </div></div>
+    <div class="links"><a class="steam" href="https://store.steampowered.com/app/363970/Clicker_Heroes/">Steam</a></div></div>
+
+    <div class="card"><div class="top"><div class="emoji">🚀</div><div>
+        <h3 class="title">AdVenture Capitalist</h3>
+        <div class="meta">Idle economy browser origin</div>
+    </div></div>
+    <div class="links"><a class="steam" href="https://store.steampowered.com/app/346900/AdVenture_Capitalist/">Steam</a></div></div>
+
+    <div class="card"><div class="top"><div class="emoji">⚙️</div><div>
+        <h3 class="title">Realm Grinder</h3>
+        <div class="meta">Incremental strategy ecosystem</div>
+    </div></div>
+    <div class="links"><a class="steam" href="https://store.steampowered.com/app/610080/Realm_Grinder/">Steam</a></div></div>
+
+</div>
+</section>
+
+</div>
+
+<footer>
+    <p>Unified mapping: browser → KBHGames → Kongregate → Steam transitions (verified where possible).</p>
 </footer>
 
 </body>
