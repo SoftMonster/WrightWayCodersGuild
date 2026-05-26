@@ -2,223 +2,370 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>MIT Samples File Browser</title>
 
 <style>
-    :root {
-        --bg: #0f172a;
-        --panel: #ffffff;
-        --accent: #5c67f2;
-        --text: #1f2937;
-        --muted: #6b7280;
-        --border: #e5e7eb;
-    }
+:root{
+    --panel:#ffffff;
+    --accent:#5c67f2;
+    --text:#1f2937;
+    --muted:#6b7280;
+    --border:#e5e7eb;
+}
 
-    body {
-        margin: 0;
-        font-family: system-ui, Arial, sans-serif;
-        background: linear-gradient(135deg, #74ebd5, #9face6);
-        color: var(--text);
-        min-height: 100vh;
-    }
+*{ box-sizing:border-box; }
 
-    .container {
-        max-width: 820px;
-        margin: 40px auto;
-        background: var(--panel);
-        border-radius: 14px;
-        padding: 28px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-    }
+body{
+    margin:0;
+    font-family:system-ui, Arial, sans-serif;
+    background:linear-gradient(135deg,#74ebd5,#9face6);
+    color:var(--text);
+}
 
-    h1 {
-        margin-top: 0;
-        font-size: 2rem;
-    }
+/* LAYOUT */
+.container{
+    max-width:920px;
+    margin:40px auto;
+    background:var(--panel);
+    border-radius:16px;
+    padding:28px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.12);
+}
 
-    .clock {
-        font-family: monospace;
-        color: var(--muted);
-        margin-bottom: 12px;
-    }
+/* CLOCK */
+.clock{
+    font-family:monospace;
+    color:var(--muted);
+    margin-bottom:10px;
+}
 
-    .search-container {
-        display: flex;
-        gap: 10px;
-        margin: 14px 0 24px;
-    }
+/* TABS */
+.tabs{
+    display:flex;
+    gap:10px;
+    margin:18px 0;
+    border-bottom:1px solid var(--border);
+}
 
-    .search-container input {
-        flex: 1;
-        padding: 10px;
-        border: 1px solid var(--border);
-        border-radius: 8px;
-    }
+.tab-btn{
+    padding:10px 12px;
+    cursor:pointer;
+    border:none;
+    background:none;
+    color:var(--muted);
+    font-weight:600;
+    border-bottom:2px solid transparent;
+}
 
-    .search-button {
-        padding: 10px 14px;
-        border: none;
-        background: var(--accent);
-        color: white;
-        border-radius: 8px;
-        cursor: pointer;
-    }
+.tab-btn.active{
+    color:var(--accent);
+    border-bottom:2px solid var(--accent);
+}
 
-    .search-button:hover {
-        opacity: 0.9;
-    }
+/* PANELS */
+.tab-panel{ display:none; }
+.tab-panel.active{ display:block; }
 
-    .section-title {
-        margin-top: 24px;
-        font-size: 1.1rem;
-    }
+/* GRID VIEW */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:14px;
+    margin-top:16px;
+}
 
-    /* IMPORTANT FIX: removed inner scrolling container */
-    ul#file-list {
-        list-style: none;
-        padding: 0;
-        margin: 16px 0 0;
-    }
+.card{
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:14px;
+    display:flex;
+    flex-direction:column;
+    min-height:190px;
+}
 
-    li.file-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 8px;
-        border-bottom: 1px solid var(--border);
-        gap: 10px;
-    }
+.file-title{
+    font-weight:600;
+    word-break:break-word;
+}
 
-    .file-link {
-        color: #0366d6;
-        text-decoration: none;
-        font-weight: 500;
-    }
+.emoji-panel{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:4rem;
+}
 
-    .file-link:hover {
-        text-decoration: underline;
-    }
+.desc{
+    font-size:0.85rem;
+    color:var(--muted);
+}
 
-    .edit-link {
-        font-size: 0.85rem;
-        color: var(--accent);
-        text-decoration: none;
-        white-space: nowrap;
-    }
+.actions{
+    display:flex;
+    justify-content:space-between;
+    margin-top:10px;
+}
 
-    .edit-link:hover {
-        text-decoration: underline;
-    }
+.actions a{
+    font-size:0.85rem;
+    text-decoration:none;
+    color:var(--accent);
+}
 
-    #status {
-        margin-top: 10px;
-        color: var(--muted);
-    }
+/* LIST VIEW */
+.list-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:8px 0;
+    border-bottom:1px solid var(--border);
+    gap:12px;
+}
 
-    #status.error {
-        color: red;
-    }
+.list-left{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    gap:10px;
+    min-width:0;
+}
+
+.list-title{
+    font-weight:600;
+    text-decoration:none;
+    color:inherit;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.list-meta{
+    font-size:0.8rem;
+    color:var(--muted);
+    white-space:nowrap;
+    opacity:0.85;
+}
+
+.list-links a{
+    margin-left:12px;
+    color:var(--accent);
+    text-decoration:none;
+    font-size:0.85rem;
+    white-space:nowrap;
+}
 </style>
 </head>
 
 <body>
+<main class="container">
 
-<div class="container">
+<div class="clock" id="clock"></div>
+<h1>👋 Hello and Welcome</h1>
 
-    <div class="clock" id="clock"></div>
+<p>This page dynamically lists files from a GitHub repository folder.</p>
 
-    <h1>👋 Hello and Welcome</h1>
+<nav class="tabs">
+    <button class="tab-btn active" onclick="switchTab('cards')">Card View</button>
+    <button class="tab-btn" onclick="switchTab('list')">List View</button>
+</nav>
 
-    <div class="search-container">
-        <input id="searchInput" placeholder="Search Google..." />
-        <button class="search-button" onclick="searchGoogle()">Search</button>
-    </div>
+<div id="status">Loading files...</div>
 
-    <p>This page dynamically lists MIT sample HTML files from GitHub.</p>
+<section id="cards" class="tab-panel active">
+    <div class="grid" id="fileGrid"></div>
+</section>
 
-    <h2 class="section-title">📁 MIT Sample Files</h2>
-    <div id="status">Loading files...</div>
-    <ul id="file-list"></ul>
+<section id="list" class="tab-panel">
+    <ul class="list" id="fileList"></ul>
+</section>
 
-</div>
+</main>
 
 <script>
-/* ---------------- CLOCK ---------------- */
-function showTime() {
-    const d = new Date();
-    const pad = n => n < 10 ? "0" + n : n;
 
+/* CLOCK */
+function updateClock(){
+    const d = new Date();
+    const pad = n => n < 10 ? "0"+n : n;
     document.getElementById("clock").textContent =
         `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-
-    setTimeout(showTime, 1000);
 }
-showTime();
+setInterval(updateClock,1000);
+updateClock();
 
-/* ---------------- SEARCH ---------------- */
-function searchGoogle() {
-    const q = document.getElementById("searchInput").value;
-    window.open("https://www.google.com/search?q=" + encodeURIComponent(q), "_blank");
-}
-
-/* ---------------- GITHUB FILE LOADER ---------------- */
+/* CONFIG */
 const owner = "SoftMonster";
 const repo = "WrightWayCodersGuild";
 const path = "Samples/HTMLSamples/MIT";
 
 const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
-const basePageUrl = `https://${owner.toLowerCase()}.github.io/${repo}/${path}/`;
-const editBaseUrl = `https://github.com/${owner}/${repo}/edit/main/${path}/`;
+const pagesBase = `https://${owner.toLowerCase()}.github.io/${repo}/${path}/`;
+const editBase  = `https://github.com/${owner}/${repo}/edit/main/${path}/`;
+const rawBase   = `https://raw.githubusercontent.com/${owner}/${repo}/main/${path}/`;
 
+/* DOM */
 const statusEl = document.getElementById("status");
-const fileListEl = document.getElementById("file-list");
+const gridEl = document.getElementById("fileGrid");
+const listEl = document.getElementById("fileList");
 
-fetch(apiUrl)
-.then(r => {
-    if (!r.ok) throw new Error("GitHub API error: " + r.status);
-    return r.json();
-})
-.then(files => {
+/* TAB SWITCH */
+function switchTab(id){
+    document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
 
+    document.getElementById(id).classList.add("active");
+    event.target.classList.add("active");
+}
+
+/* FETCH */
+async function getDataset(){
+    const res = await fetch(apiUrl);
+    if(!res.ok) throw new Error("GitHub API error " + res.status);
+    return await res.json();
+}
+
+/* TRANSFORM */
+function transform(files){
+    return files
+        .filter(f => f.type === "file")
+        .sort((a,b) => a.name.localeCompare(b.name))
+        .map((f, idx) => ({
+            idx,
+            name: f.name,
+            desc: generateDescription(f.name),
+            pageUrl: pagesBase + encodeURIComponent(f.name),
+            editUrl: editBase + encodeURIComponent(f.name),
+            rawUrl: rawBase + f.name,
+            emoji: "📄"
+        }));
+}
+
+function generateDescription(name){
+    const ext = name.split(".").pop().toLowerCase();
+    return {
+        html:"HTML document",
+        css:"Stylesheet file",
+        js:"JavaScript file",
+        json:"JSON data file",
+        txt:"Text document"
+    }[ext] || "Repository file";
+}
+
+/* EMOJI DETECTION */
+function extractEmoji(text){
+    const m = text?.match(/[\p{Extended_Pictographic}]/u);
+    return m ? m[0] : null;
+}
+
+/* RENDER */
+function render(items){
     statusEl.style.display = "none";
 
-    if (!Array.isArray(files) || files.length === 0) {
-        statusEl.textContent = "No files found.";
-        statusEl.style.display = "block";
-        return;
+    gridEl.innerHTML = "";
+    listEl.innerHTML = "";
+
+    items.forEach(item => {
+
+        /* CARD VIEW */
+        const card = document.createElement("article");
+        card.className = "card";
+
+        const title = document.createElement("div");
+        title.className = "file-title";
+        title.textContent = item.name;
+
+        const emoji = document.createElement("div");
+        emoji.className = "emoji-panel";
+        emoji.textContent = item.emoji;
+
+        const desc = document.createElement("div");
+        desc.className = "desc";
+        desc.textContent = item.desc;
+
+        const actions = document.createElement("div");
+        actions.className = "actions";
+
+        const open = document.createElement("a");
+        open.href = item.pageUrl;
+        open.target = "_blank";
+        open.textContent = "Open";
+
+        const edit = document.createElement("a");
+        edit.href = item.editUrl;
+        edit.target = "_blank";
+        edit.textContent = "Edit";
+
+        actions.append(open, edit);
+        card.append(title, emoji, desc, actions);
+
+        gridEl.appendChild(card);
+
+        /* LIST VIEW */
+        const li = document.createElement("li");
+        li.className = "list-item";
+
+        const left = document.createElement("div");
+        left.className = "list-left";
+
+        const ltitle = document.createElement("a");
+        ltitle.className = "list-title";
+        ltitle.href = item.pageUrl;
+        ltitle.target = "_blank";
+        ltitle.textContent = item.emoji + " " + item.name;
+
+        const lmeta = document.createElement("div");
+        lmeta.className = "list-meta";
+        lmeta.textContent = item.desc;
+
+        left.append(ltitle, lmeta);
+
+        const links = document.createElement("div");
+        links.className = "list-links";
+
+        const o = document.createElement("a");
+        o.href = item.pageUrl;
+        o.target = "_blank";
+        o.textContent = "Open";
+
+        const e = document.createElement("a");
+        e.href = item.editUrl;
+        e.target = "_blank";
+        e.textContent = "Edit";
+
+        links.append(o, e);
+
+        li.append(left, links);
+        listEl.appendChild(li);
+
+        /* emoji enrichment */
+        fetch(item.rawUrl)
+            .then(r => r.ok ? r.text() : "")
+            .then(t => {
+                const em = extractEmoji(t);
+                if(em){
+                    emoji.textContent = em;
+                    ltitle.textContent = em + " " + item.name;
+                }
+            })
+            .catch(()=>{});
+    });
+}
+
+/* INIT */
+async function init(){
+    try{
+        const raw = await getDataset();
+        const data = transform(raw);
+        render(data);
+    }catch(err){
+        statusEl.textContent = "Failed: " + err.message;
     }
+}
 
-    files
-        .filter(f => f.type === "file")
-        .forEach(file => {
+init();
 
-            const li = document.createElement("li");
-            li.className = "file-item";
-
-            const left = document.createElement("a");
-            left.className = "file-link";
-            left.href = basePageUrl + encodeURIComponent(file.name);
-            left.target = "_blank";
-            left.textContent = file.name;
-
-            const edit = document.createElement("a");
-            edit.className = "edit-link";
-            edit.href = editBaseUrl + encodeURIComponent(file.name);
-            edit.target = "_blank";
-            edit.textContent = "✏️ edit";
-
-            li.appendChild(left);
-            li.appendChild(edit);
-            fileListEl.appendChild(li);
-        });
-
-})
-.catch(err => {
-    statusEl.textContent = "Failed to load files: " + err.message;
-    statusEl.className = "error";
-});
 </script>
-
 </body>
 </html>
