@@ -329,4 +329,709 @@
 </div>
 
 </body>
+
+    # Shepherd / Sheep Audio Alignment Map (YouTube API Expanded)
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shepherd / Sheep Audio Alignment Map</title>
+
+<style>
+:root{
+  --bg:#0e0f13;
+  --panel:#171a22;
+  --panel2:#1f2530;
+  --text:#e9eef6;
+  --muted:#9aa6bb;
+  --accent:#7cc4ff;
+  --border:#2a3140;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,sans-serif;
+  background:radial-gradient(circle at 20% 10%, #1a2230, var(--bg));
+  color:var(--text);
+}
+
+header{
+  text-align:center;
+  padding:28px 16px 14px;
+}
+
+h1{
+  margin:0;
+  font-size:28px;
+}
+
+#subtitle{
+  margin-top:8px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+#filters{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:8px;
+  padding:14px;
+}
+
+.filter{
+  border:1px solid var(--border);
+  padding:7px 12px;
+  border-radius:999px;
+  font-size:12px;
+  cursor:pointer;
+  color:var(--muted);
+  transition:0.15s;
+}
+
+.filter:hover{
+  border-color:var(--accent);
+}
+
+.filter.active{
+  border-color:var(--accent);
+  color:var(--text);
+  background:rgba(124,196,255,0.08);
+}
+
+#count{
+  text-align:center;
+  font-size:12px;
+  color:var(--muted);
+}
+
+.sectionTitle{
+  max-width:1200px;
+  margin:28px auto 10px;
+  padding:0 16px;
+  font-size:18px;
+  color:var(--accent);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:16px;
+  padding:16px;
+  max-width:1200px;
+  margin:0 auto;
+}
+
+.card{
+  background:linear-gradient(180deg,rgba(255,255,255,0.03),transparent),var(--panel);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:16px;
+  text-decoration:none;
+  color:inherit;
+  display:block;
+  transition:0.16s;
+}
+
+.card:hover{
+  transform:translateY(-2px);
+  border-color:rgba(124,196,255,0.4);
+  background:var(--panel2);
+}
+
+.card.dynamic{
+  border-style:dashed;
+}
+
+.top{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+}
+
+.emoji{
+  font-size:24px;
+}
+
+.name{
+  font-weight:700;
+  font-size:16px;
+}
+
+.category{
+  margin-top:5px;
+  color:var(--accent);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.desc{
+  margin-top:12px;
+  font-size:13px;
+  line-height:1.5;
+  color:var(--muted);
+}
+
+.ref{
+  margin-top:12px;
+  font-size:11px;
+  color:var(--accent);
+}
+
+.scripture{
+  margin-top:8px;
+  padding-left:10px;
+  border-left:2px solid var(--accent);
+  color:#d7e5ff;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.thumb{
+  width:100%;
+  margin-top:12px;
+  border-radius:10px;
+  border:1px solid var(--border);
+}
+
+.meta{
+  margin-top:8px;
+  font-size:11px;
+  color:var(--muted);
+}
+
+.loading{
+  text-align:center;
+  padding:30px;
+  color:var(--muted);
+}
+
+footer{
+  text-align:center;
+  padding:28px;
+  font-size:11px;
+  color:var(--muted);
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🐑 Shepherd / Sheep Audio Alignment Map</h1>
+  <div id="subtitle"></div>
+</header>
+
+<div id="filters"></div>
+<div id="count"></div>
+
+<div class="sectionTitle">Core Scripture Nodes</div>
+<div id="coreGrid" class="grid"></div>
+
+<div class="sectionTitle">Expanded Audio Exploration Nodes</div>
+<div id="dynamicGrid" class="grid">
+  <div class="loading">Loading YouTube scripture exploration cards...</div>
+</div>
+
+<footer id="footer"></footer>
+
+<script>
+
+/* ======================================
+   INSERT YOUR YOUTUBE API KEY HERE
+====================================== */
+
+/* No API key required.
+   This version generates deterministic YouTube exploration cards
+   entirely offline using search-query URLs. */
+
+/* ======================================
+   CORE SCRIPTURE DATASET
+====================================== */
+
+const tools = [
+{
+id:"drift",
+emoji:"🧠🐑",
+name:"Drift is Default",
+category:"Awareness",
+desc:"Cognitive deviation is baseline human condition.",
+ref:"Isaiah 53:6",
+quote:"We all, like sheep, have gone astray; each of us has turned to our own way.",
+searches:[
+  "Isaiah 53:6 audio",
+  "Isaiah 53:6 sermon",
+  "Isaiah 53 spoken scripture"
+]
+},
+
+{
+id:"peter-drift",
+emoji:"🐑",
+name:"Return from Drift",
+category:"Awareness",
+ref:"1 Peter 2:25",
+quote:"You were like sheep going astray, but now you have returned to the Shepherd.",
+searches:[
+  "1 Peter 2:25 audio",
+  "1 Peter 2:25 sermon",
+  "1 Peter 2 spoken scripture"
+]
+},
+
+{
+id:"good-shepherd",
+emoji:"✝️🐑",
+name:"The Good Shepherd",
+category:"Authority",
+ref:"John 10:11",
+quote:"I am the good shepherd. The good shepherd lays down his life for the sheep.",
+searches:[
+  "John 10:11 audio",
+  "Good Shepherd sermon",
+  "John 10 spoken scripture"
+]
+},
+
+{
+id:"gate",
+emoji:"🚪✝️",
+name:"Entry Gate Principle",
+category:"Authority",
+ref:"John 10:9",
+quote:"I am the gate; whoever enters through me will be saved.",
+searches:[
+  "John 10:9 audio",
+  "I am the gate sermon",
+  "John 10 spoken scripture"
+]
+},
+
+{
+id:"one-flock",
+emoji:"🤝🐑",
+name:"One Flock Principle",
+category:"Unity",
+ref:"John 10:16",
+quote:"There shall be one flock and one shepherd.",
+searches:[
+  "John 10:16 audio",
+  "one flock one shepherd sermon",
+  "Christian unity scripture"
+]
+},
+
+{
+id:"psalm23",
+emoji:"🐑🌿",
+name:"Guided Provision",
+category:"Care",
+ref:"Psalm 23:1",
+quote:"The Lord is my shepherd; I shall not want.",
+searches:[
+  "Psalm 23 audio",
+  "Psalm 23 meditation",
+  "The Lord is my shepherd spoken scripture"
+]
+},
+
+{
+id:"isaiah40",
+emoji:"🤲🐑",
+name:"Carried Weakness",
+category:"Care",
+ref:"Isaiah 40:11",
+quote:"He gathers the lambs in his arms and carries them close to his heart.",
+searches:[
+  "Isaiah 40:11 audio",
+  "Isaiah 40 spoken scripture",
+  "Christian comfort meditation"
+]
+},
+
+{
+id:"ezekiel34",
+emoji:"🔍🐑",
+name:"Search for the Lost",
+category:"Restoration",
+ref:"Ezekiel 34:11",
+quote:"I myself will search for my sheep and look after them.",
+searches:[
+  "Ezekiel 34:11 audio",
+  "lost sheep sermon",
+  "Ezekiel 34 spoken scripture"
+]
+},
+
+{
+id:"psalm100",
+emoji:"🧍🐑",
+name:"Belonging Identity",
+category:"Identity",
+ref:"Psalm 100:3",
+quote:"We are his people, the sheep of his pasture.",
+searches:[
+  "Psalm 100:3 audio",
+  "identity in Christ sermon",
+  "Psalm 100 spoken scripture"
+]
+},
+
+{
+id:"psalm95",
+emoji:"🚧🐑",
+name:"Do Not Drift",
+category:"Alignment",
+ref:"Psalm 95:7",
+quote:"We are the people of his pasture, the flock under his care.",
+searches:[
+  "Psalm 95:7 audio",
+  "stay close to God sermon",
+  "Psalm 95 spoken scripture"
+]
+},
+
+{
+id:"john10voice",
+emoji:"👂🔊🐑",
+name:"Recognise His Voice",
+category:"Guidance",
+ref:"John 10:3",
+quote:"The sheep listen to his voice; he calls his own sheep by name.",
+searches:[
+  "John 10:3 audio",
+  "recognising God's voice sermon",
+  "John 10 spoken scripture"
+]
+},
+
+{
+id:"john10follow",
+emoji:"🚶‍♂️🐑",
+name:"Follow Only Truth",
+category:"Guidance",
+ref:"John 10:27",
+quote:"My sheep listen to my voice; I know them, and they follow me.",
+searches:[
+  "John 10:27 audio",
+  "follow the shepherd sermon",
+  "John 10 spoken scripture"
+]
+},
+
+{
+id:"matt9",
+emoji:"🧭🐑",
+name:"Without Shepherd Risk",
+category:"Awareness",
+ref:"Matthew 9:36",
+quote:"They were like sheep without a shepherd.",
+searches:[
+  "Matthew 9:36 audio",
+  "sheep without a shepherd sermon",
+  "Matthew 9 spoken scripture"
+]
+},
+
+{
+id:"zechariah",
+emoji:"💥🐑",
+name:"Scattering Effect",
+category:"System",
+ref:"Zechariah 13:7",
+quote:"Strike the shepherd, and the sheep will be scattered.",
+searches:[
+  "Zechariah 13:7 audio",
+  "scattered sheep sermon",
+  "leadership collapse scripture"
+]
+},
+
+{
+id:"return-peter",
+emoji:"🔁🐑",
+name:"Return After Scattering",
+category:"Restoration",
+ref:"1 Peter 2:25",
+quote:"Now you have returned to the Shepherd and Overseer of your souls.",
+searches:[
+  "1 Peter 2:25 spoken scripture",
+  "restoration sermon",
+  "return to the shepherd"
+]
+},
+
+{
+id:"matt25",
+emoji:"⚖️🐑",
+name:"Separation Awareness",
+category:"Ethics",
+ref:"Matthew 25:32",
+quote:"He will separate the people one from another as a shepherd separates sheep.",
+searches:[
+  "Matthew 25:32 audio",
+  "sheep and goats sermon",
+  "Matthew 25 spoken scripture"
+]
+},
+
+{
+id:"lost-parable",
+emoji:"🔍🐑",
+name:"Value the Lost",
+category:"Restoration",
+ref:"Luke 15:7",
+quote:"There will be more rejoicing over one sinner who repents.",
+searches:[
+  "Luke 15:7 audio",
+  "parable of the lost sheep sermon",
+  "Luke 15 spoken scripture"
+]
+},
+
+{
+id:"john21",
+emoji:"🛠️🐑",
+name:"Care for Sheep",
+category:"Leadership",
+ref:"John 21:16",
+quote:"Take care of my sheep.",
+searches:[
+  "John 21:16 audio",
+  "take care of my sheep sermon",
+  "Christian servant leadership"
+]
+},
+
+{
+id:"ezekiel34leaders",
+emoji:"⚠️🐑",
+name:"Reject Bad Shepherds",
+category:"Ethics",
+ref:"Ezekiel 34:2",
+quote:"Woe to the shepherds of Israel who only take care of themselves.",
+searches:[
+  "Ezekiel 34:2 audio",
+  "false shepherd sermon",
+  "bad leadership scripture"
+]
+},
+
+{
+id:"jeremiah23",
+emoji:"⚠️🐑",
+name:"Do Not Scatter Others",
+category:"Ethics",
+ref:"Jeremiah 23:2",
+quote:"You have scattered my flock and driven them away.",
+searches:[
+  "Jeremiah 23:2 audio",
+  "scattering the flock sermon",
+  "Jeremiah 23 spoken scripture"
+]
+}
+];
+
+/* ======================================
+   STATE
+====================================== */
+
+let active = "All";
+let dynamicCards = [];
+
+/* ======================================
+   CATEGORY SYSTEM
+====================================== */
+
+function categories(){
+  const set = new Set(tools.map(t => t.category.toLowerCase()));
+  return ["All", ...Array.from(set).sort()];
+}
+
+function renderFilters(){
+  const root = document.getElementById("filters");
+  root.innerHTML = "";
+
+  categories().forEach(cat => {
+    const btn = document.createElement("div");
+
+    btn.className = "filter" + (active === cat ? " active" : "");
+
+    btn.textContent = cat;
+
+    btn.onclick = () => {
+      active = cat;
+      render();
+    };
+
+    root.appendChild(btn);
+  });
+}
+
+/* ======================================
+   CORE CARDS
+====================================== */
+
+function renderCoreCards(){
+
+  const grid = document.getElementById("coreGrid");
+  grid.innerHTML = "";
+
+  let filtered = [...tools].sort((a,b)=>a.name.localeCompare(b.name));
+
+  if(active !== "All"){
+    filtered = filtered.filter(t => t.category.toLowerCase() === active.toLowerCase());
+  }
+
+  filtered.forEach(t => {
+
+    const query = encodeURIComponent(t.ref + " audio");
+
+    const card = document.createElement("a");
+
+    card.className = "card";
+    card.href = `https://www.youtube.com/results?search_query=${query}`;
+    card.target = "_blank";
+
+    card.innerHTML = `
+      <div class="top">
+        <div class="emoji">${t.emoji}</div>
+        <div>
+          <div class="name">${t.name}</div>
+          <div class="category">${t.category}</div>
+        </div>
+      </div>
+
+      <div class="desc">${t.desc}</div>
+
+      <div class="ref">📖 ${t.ref}</div>
+
+      <div class="scripture">
+        “${t.quote}”
+      </div>
+    `;
+
+    grid.appendChild(card);
+  });
+
+  document.getElementById("count").textContent =
+    `Core nodes: ${filtered.length} | Expanded nodes: ${dynamicCards.length}`;
+}
+
+/* ======================================
+   DYNAMIC YOUTUBE API CARDS
+====================================== */
+
+function buildDynamicCards(){
+
+  dynamicCards = [];
+
+  tools.forEach(tool => {
+
+    tool.searches.forEach(search => {
+
+      const query = encodeURIComponent(search);
+
+      dynamicCards.push({
+        title: search,
+        desc: `Exploration node generated from scripture query: ${search}`,
+        thumb: "https://dummyimage.com/640x360/1a2230/7cc4ff.png&text=%F0%9F%8E%A7+Scripture+Audio",
+        channel: "YouTube Search",
+        category: tool.category,
+        scripture: tool.ref,
+        quote: tool.quote,
+        video: `https://www.youtube.com/results?search_query=${query}`
+      });
+
+    });
+
+  });
+
+  renderDynamicCards();
+  renderCoreCards();
+}
+
+
+/* ======================================
+   RENDER DYNAMIC CARDS
+====================================== */
+
+function renderDynamicCards(){
+
+  const grid = document.getElementById("dynamicGrid");
+  grid.innerHTML = "";
+
+  let filtered = [...dynamicCards];
+
+  if(active !== "All"){
+    filtered = filtered.filter(x => x.category.toLowerCase() === active.toLowerCase());
+  }
+
+  filtered.forEach(cardData => {
+
+    const card = document.createElement("a");
+
+    card.className = "card dynamic";
+    card.href = cardData.video;
+    card.target = "_blank";
+
+    card.innerHTML = `
+      <div class="top">
+        <div class="emoji">🎧</div>
+        <div>
+          <div class="name">${cardData.title}</div>
+          <div class="category">${cardData.category}</div>
+        </div>
+      </div>
+
+      <img class="thumb" src="${cardData.thumb}" alt="thumbnail">
+
+      <div class="desc">
+        ${cardData.desc || "YouTube scripture exploration node."}
+      </div>
+
+      <div class="meta">
+        Channel: ${cardData.channel}
+      </div>
+
+      <div class="ref">
+        📖 ${cardData.scripture}
+      </div>
+
+      <div class="scripture">
+        “${cardData.quote}”
+      </div>
+    `;
+
+    grid.appendChild(card);
+  });
+}
+
+/* ======================================
+   MAIN RENDER
+====================================== */
+
+function render(){
+
+  renderFilters();
+  renderCoreCards();
+  renderDynamicCards();
+
+  document.getElementById("subtitle").textContent =
+    `Core scripture nodes + dynamically generated YouTube exploration nodes.`;
+
+  document.getElementById("footer").textContent =
+    "Generated: " + new Date().toLocaleString();
+}
+
+render();
+buildDynamicCards();
+
+</script>
+</body>
 </html>
