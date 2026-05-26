@@ -545,6 +545,233 @@ function renderCoreCards(){
     filtered = filtered.filter(t => t.category.toLowerCase() === active.toLowerCase());
   }
 
+  if(active === "All"){
+    const banner = document.createElement("div");
+    banner.className = "all-banner";
+    banner.innerHTML = `
+      <h2>Notes overview</h2>
+      🧠🐑 Recognise drift as default human condition, not exception<br>
+      “We all, like sheep, have gone astray…” (Isaiah 53:6)<br>
+      “You were like sheep going astray…” (1 Peter 2:25)<br>
+      🧭❌🐑 Pause self-directed certainty when untested by truth<br>
+      🔁🐑 Return mentally to alignment before making decisions<br>
+      ⚠️🐑 Treat independence-from-guidance as high-risk state<br>
+      🧍🐑 Accept correction without resistance when exposed<br>
+      <br>
+      ✝️➡️🐑 Enter through Christ as the true shepherd; choose alignment with Him. “I am the gate; whoever enters through me will be saved.” (John 10:9) “There shall be one flock and one shepherd.” (John 10:16)<br>
+      🚪✝️🐑 Prioritise Christ as entry point for direction and belonging<br>
+      🧭✝️🐑 Evaluate all paths through alignment with Him<br>
+      🔁🐑 Commit to single-source guidance rather than fragmentation<br>
+      🧠🐑 Reject competing “shepherd systems” of authority<br>
+      🤝🐑 Attach identity to one unified flock rather than isolation<br>
+      <br>
+      🐑 Submit to God’s care daily; allow Him to guide and correct your path. “The Lord is my shepherd, I lack nothing.” (Psalm 23:1)<br>
+      🌅🐑 Begin each day under assumed guidance, not self-rule<br>
+      🛠️🐑 Accept correction as care, not punishment<br>
+      🧭🐑 Allow redirection without resistance loops<br>
+      🧘🐑 Rest from over-control of outcomes<br>
+      📍🐑 Stay within defined boundaries of guidance<br>
+      <br>
+      🐑 Trust God to gather and carry you when weak. “He gathers the lambs in his arms…” (Isaiah 40:11)<br>
+      🪶🐑 Permit vulnerability without self-rejection<br>
+      🤲🐑 Receive support instead of isolating under strain<br>
+      🧠🐑 Recognise weakness as eligibility for care, not exclusion<br>
+      🧍🐑 Stop overextending beyond capacity thresholds<br>
+      🔁🐑 Return when depleted rather than pushing alone<br>
+      <br>
+      🐑 Return when lost; expect restoration. “I myself will search for my sheep…” (Ezekiel 34:11)<br>
+      🔍🐑 Admit displacement early rather than delaying correction<br>
+      🔁🐑 Re-enter guidance structure after deviation<br>
+      🧭🐑 Accept being found rather than self-rescuing<br>
+      🧠🐑 Release shame-loop associated with failure<br>
+      🤝🐑 Allow restoration without conditions<br>
+      <br>
+      🐑 Remember your identity as belonging to God. “We are his people, the sheep of his pasture.” (Psalm 100:3)<br>
+      🧍🐑 Anchor identity in belonging rather than autonomy<br>
+      🧠🐑 Resist identity fragmentation from external pressure<br>
+      📍🐑 Operate from “owned-care” rather than isolation-state<br>
+      🔁🐑 Reaffirm belonging when uncertain<br>
+      🧭🐑 Use identity as compass stabiliser<br>
+      <br>
+      🐑 Stay within His care; do not drift. “We are the people of his pasture…” (Psalm 95:7)<br>
+      🧭🐑 Detect early signs of drift in thinking/behaviour<br>
+      🔁🐑 Return quickly when deviation begins<br>
+      🚧🐑 Respect boundaries as protection system<br>
+      🧠🐑 Avoid curiosity loops that detach from guidance<br>
+      🔊🐑 Maintain proximity to corrective input<br>
+      <br>
+      🔊🐑 Learn to recognise the shepherd’s voice. “The sheep listen to his voice…” (John 10:3)<br>
+      👂🐑 Train attention toward consistent truth signals<br>
+      🧠🔊🐑 Differentiate guidance from noise patterns<br>
+      📡🐑 Prioritise familiar corrective signals over novelty<br>
+      🔁🐑 Rehearse recognition through repetition<br>
+      ⚖️🐑 Test signals before following<br>
+      <br>
+      🔊🐑 Follow the true voice; reject false guidance. “My sheep listen to my voice… they follow me.” (John 10:27)<br>
+      🚶‍♂️🐑 Act only after recognition is confirmed<br>
+      ❌🐑 Disengage from misleading or unstable inputs<br>
+      🧭🐑 Align movement with trusted direction source<br>
+      🔁🐑 Maintain consistency in following pattern<br>
+      ⚠️🐑 Treat confusion as stop-signal<br>
+      <br>
+      🔍🐑 Value and seek the lost. “He goes to look for the one that wandered off.” (Matthew 18:12) “There will be more rejoicing…” (Luke 15:7)<br>
+      🔍🐑 Actively notice those outside stability structures<br>
+      🤝🐑 Prioritise restoration over exclusion<br>
+      🧭🐑 Engage recovery-oriented thinking patterns<br>
+      🧠🐑 Value individual re-alignment over group purity<br>
+      🔁🐑 Persist in search until restoration occurs<br>
+      <br>
+      🧭❌🐑 Do not remain without guidance; avoid isolation. “Like sheep without a shepherd.” (Matthew 9:36)<br>
+      🚫🐑 Do not normalise leaderless drift states<br>
+      🧭🐑 Seek structured guidance when uncertain<br>
+      🧠🐑 Avoid prolonged independence loops<br>
+      ⚠️🐑 Treat isolation as vulnerability condition<br>
+      🔁🐑 Reconnect quickly to stabilising input<br>
+      <br>
+      💥🐑 Expect scattering when leadership collapses. “Strike the shepherd, and the sheep will be scattered.” (Zechariah 13:7) “You will all fall away…” (Matthew 26:31)<br>
+      ⚠️🐑 Anticipate instability during leadership disruption<br>
+      🧠🐑 Do not interpret scattering as final state<br>
+      🔁🐑 Plan return pathways in advance<br>
+      🧍🐑 Recognise fragmentation as temporary response<br>
+      🧭🐑 Seek reconnection after disruption<br>
+      <br>
+      🔁🐑 Return quickly after scattering; realign. “Now you have returned to the Shepherd…” (1 Peter 2:25)<br>
+      🔁🐑 Do not remain dispersed after disruption<br>
+      🧭🐑 Re-establish guidance connection immediately<br>
+      🧠🐑 Release residual drift patterns<br>
+      🤝🐑 Rejoin structured belonging system<br>
+      ⚖️🐑 Stabilise through re-alignment<br>
+      <br>
+      ⚖️🐑 Live with awareness of accountability. “He will separate the people…” (Matthew 25:32)<br>
+      ⚖️🐑 Act with awareness of evaluative consequence<br>
+      🧠🐑 Self-monitor behaviour alignment<br>
+      🧭🐑 Maintain integrity under observation principle<br>
+      🔁🐑 Correct deviation when detected<br>
+      🧍🐑 Choose consistency over convenience<br>
+      <br>
+      👤🐑 Lead others toward God, not yourself. “You will shepherd my people Israel.” (2 Samuel 5:2)<br>
+      🧭👤🐑 Redirect attention toward higher authority<br>
+      🚫🐑 Avoid self-centralising leadership patterns<br>
+      🤝🐑 Facilitate dependency on true shepherd<br>
+      🧠🐑 Clarify role as conduit, not source<br>
+      ⚖️🐑 Keep leadership accountable<br>
+      <br>
+      🧭🐑 Establish stabilising structure for others. “Not be like sheep without a shepherd.” (Numbers 27:17)<br>
+      🔁🐑 Intervene early in drift patterns<br>
+      🧠🐑 Provide clarity during uncertainty<br>
+      ⚠️🐑 Prevent fragmentation through guidance<br>
+      🤝🐑 Maintain protective oversight<br>
+      <br>
+      ⚠️🐑 Reject exploitative leadership. “Woe to the shepherds…” (Ezekiel 34:2)<br>
+      ❌🐑 Refuse self-serving authority structures<br>
+      🧠🐑 Detect manipulation disguised as guidance<br>
+      ⚖️🐑 Hold leaders accountable to care principle<br>
+      🧭🐑 Exit harmful systems early<br>
+      🚫🐑 Do not reinforce exploitative patterns<br>
+      <br>
+      ⚠️🐑 Do not scatter others through neglect. “You have scattered my flock…” (Jeremiah 23:2)<br>
+      🧠🐑 Recognise impact of negligence on others<br>
+      ⚠️🐑 Avoid abandonment of responsibility<br>
+      🤝🐑 Maintain presence in leadership role<br>
+      🧭🐑 Repair harm when identified<br>
+      🔁🐑 Reconnect broken trust pathways<br>
+      <br>
+      🛠️🐑 Care for others intentionally. “Take care of my sheep.” (John 21:16)<br>
+      🤲🐑 Provide active support rather than passive intent<br>
+      🧠🐑 Prioritise wellbeing of others<br>
+      🧭🐑 Respond to need signals quickly<br>
+      🔁🐑 Maintain consistent care behaviour<br>
+      ⚖️🐑 Lead through service orientation<br>
+      <br>
+      🛠️🐑 Oversee with responsibility. “Be shepherds of the church of God…” (Acts 20:28)<br>
+      🧭🐑 Maintain vigilance over group wellbeing<br>
+      ⚠️🐑 Monitor internal and external risks<br>
+      🧠🐑 Sustain protective awareness<br>
+      🤝🐑 Coordinate collective stability<br>
+      🔁🐑 Act before breakdown occurs<br>
+      <br>
+      🛠️🐑 Lead ethically and willingly. “Be shepherds of God’s flock…” (1 Peter 5:2)<br>
+      🧠🐑 Lead without coercion or exploitation<br>
+      🤝🐑 Choose voluntary responsibility<br>
+      ⚖️🐑 Maintain transparency in leadership<br>
+      🧭🐑 Prioritise flock wellbeing over status<br>
+      🔁🐑 Sustain consistent ethical conduct<br>
+      <br>
+      ✝️🐑 Centre all leadership on Christ. “I am the good shepherd.” (John 10:11)<br>
+      ✝️🐑 Anchor authority in Christ, not self<br>
+      🧭🐑 Align all decisions to Christ model<br>
+      ⚖️🐑 Measure leadership by sacrificial standard<br>
+      🧠🐑 Avoid replacing central authority<br>
+      🔁🐑 Return focus when drift occurs<br>
+      <br>
+      ✝️🐑 Build unity under one shepherd. “There shall be one flock and one shepherd.” (John 10:16)<br>
+      🤝🐑 Reduce fragmentation between groups<br>
+      🧭🐑 Encourage unity under shared guidance<br>
+      🧠🐑 Resist divisive identity formation<br>
+      🔁🐑 Reconcile divisions when possible<br>
+      ⚖️🐑 Prioritise cohesion over rivalry<br>
+      <br>
+      ✝️🐑 Recognise Christ as ultimate authority. “When the Chief Shepherd appears…” (1 Peter 5:4)<br>
+      👑🐑 Submit all authority structures to Christ<br>
+      🧠🐑 Maintain humility in leadership roles<br>
+      ⚖️🐑 Expect accountability beyond human systems<br>
+      🧭🐑 Align long-term direction accordingly<br>
+      🔁🐑 Recalibrate under higher authority<br>
+      <br>
+      🔮🐑 Align with the promise of one true shepherd. “I will place over them one shepherd…” (Ezekiel 34:23)<br>
+      🔮🐑 Expect unified leadership principle<br>
+      🧠🐑 Reject competing ultimate authorities<br>
+      🧭🐑 Orient toward convergence, not fragmentation<br>
+      🤝🐑 Participate in restoration structure<br>
+      🔁🐑 Realign when divergence appears<br>
+      <br>
+      🐑 Trust God to regather what is scattered. “He who scattered Israel will gather them.” (Jeremiah 31:10)<br>
+      🔁🐑 Expect restoration after dispersion<br>
+      🧭🐑 Maintain hope during fragmentation<br>
+      🧠🐑 Avoid permanence assumptions about loss<br>
+      🤝🐑 Participate in regathering process<br>
+      ⚖️🐑 Trust corrective restoration logic<br>
+      <br>
+      🐑 Invite God’s leadership actively. “Shepherd your people with your staff…” (Micah 7:14)<br>
+      🙏🐑 Request guidance intentionally<br>
+      🧭🐑 Open decisions to correction<br>
+      🧠🐑 Maintain receptive posture<br>
+      🔁🐑 Renew alignment regularly<br>
+      🤝🐑 Engage relational dependence<br>
+      <br>
+      🐑 Depend on God’s sustaining care. “Shepherd your people and carry them forever.” (Psalm 28:9)<br>
+      🪶🐑 Accept sustained dependence model<br>
+      🧠🐑 Release self-sufficiency pressure<br>
+      🤝🐑 Allow ongoing support structure<br>
+      🧭🐑 Trust long-term care stability<br>
+      🔁🐑 Return when overloaded<br>
+      <br>
+      🌾🐑 Protect what is entrusted to you. “I went after it… and rescued the sheep.” (1 Samuel 17:35)<br>
+      🛡️🐑 Actively defend entrusted responsibility<br>
+      🔁🐑 Pursue recovery when loss occurs<br>
+      🧠🐑 Take risk for protection of others<br>
+      🤝🐑 Prioritise rescue over abandonment<br>
+      ⚖️🐑 Value each unit of care equally<br>
+      <br>
+      🌾🐑 Remain faithful in ordinary duties. “His brothers had gone to graze…” (Genesis 37:12)<br>
+      🧠🐑 Maintain consistency in routine tasks<br>
+      🔁🐑 Sustain responsibility in repetition<br>
+      🧭🐑 Treat ordinary work as meaningful<br>
+      🤝🐑 Avoid neglect during mundane states<br>
+      ⚖️🐑 Stay reliable under low visibility<br>
+      <br>
+      🌾🐑 Stay attentive even in quiet moments. “Shepherds living out in the fields nearby…” (Luke 2:8)<br>
+      👀🐑 Maintain vigilance in low activity states<br>
+      🧠🐑 Do not disengage during quiet periods<br>
+      🔁🐑 Stay receptive to unexpected signals<br>
+      🧭🐑 Monitor environment consistently<br>
+      ⚖️🐑 Remain prepared for interruption<br>
+
+      <hr />
+    `;
+    grid.appendChild(banner);
+  }
+
   filtered.forEach(t => {
 
     const query = encodeURIComponent(t.ref + " audio");
@@ -691,222 +918,6 @@ buildDynamicCards();
 
 </script>
 
-🧠🐑 Recognise drift as default human condition, not exception<br>
-“We all, like sheep, have gone astray…” (Isaiah 53:6)<br>
-“You were like sheep going astray…” (1 Peter 2:25)<br>
-🧭❌🐑 Pause self-directed certainty when untested by truth<br>
-🔁🐑 Return mentally to alignment before making decisions<br>
-⚠️🐑 Treat independence-from-guidance as high-risk state<br>
-🧍🐑 Accept correction without resistance when exposed<br>
-<br>
-✝️➡️🐑 Enter through Christ as the true shepherd; choose alignment with Him. “I am the gate; whoever enters through me will be saved.” (John 10:9) “There shall be one flock and one shepherd.” (John 10:16)<br>
-🚪✝️🐑 Prioritise Christ as entry point for direction and belonging<br>
-🧭✝️🐑 Evaluate all paths through alignment with Him<br>
-🔁🐑 Commit to single-source guidance rather than fragmentation<br>
-🧠🐑 Reject competing “shepherd systems” of authority<br>
-🤝🐑 Attach identity to one unified flock rather than isolation<br>
-<br>
-🐑 Submit to God’s care daily; allow Him to guide and correct your path. “The Lord is my shepherd, I lack nothing.” (Psalm 23:1)<br>
-🌅🐑 Begin each day under assumed guidance, not self-rule<br>
-🛠️🐑 Accept correction as care, not punishment<br>
-🧭🐑 Allow redirection without resistance loops<br>
-🧘🐑 Rest from over-control of outcomes<br>
-📍🐑 Stay within defined boundaries of guidance<br>
-<br>
-🐑 Trust God to gather and carry you when weak. “He gathers the lambs in his arms…” (Isaiah 40:11)<br>
-🪶🐑 Permit vulnerability without self-rejection<br>
-🤲🐑 Receive support instead of isolating under strain<br>
-🧠🐑 Recognise weakness as eligibility for care, not exclusion<br>
-🧍🐑 Stop overextending beyond capacity thresholds<br>
-🔁🐑 Return when depleted rather than pushing alone<br>
-<br>
-🐑 Return when lost; expect restoration. “I myself will search for my sheep…” (Ezekiel 34:11)<br>
-🔍🐑 Admit displacement early rather than delaying correction<br>
-🔁🐑 Re-enter guidance structure after deviation<br>
-🧭🐑 Accept being found rather than self-rescuing<br>
-🧠🐑 Release shame-loop associated with failure<br>
-🤝🐑 Allow restoration without conditions<br>
-<br>
-🐑 Remember your identity as belonging to God. “We are his people, the sheep of his pasture.” (Psalm 100:3)<br>
-🧍🐑 Anchor identity in belonging rather than autonomy<br>
-🧠🐑 Resist identity fragmentation from external pressure<br>
-📍🐑 Operate from “owned-care” rather than isolation-state<br>
-🔁🐑 Reaffirm belonging when uncertain<br>
-🧭🐑 Use identity as compass stabiliser<br>
-<br>
-🐑 Stay within His care; do not drift. “We are the people of his pasture…” (Psalm 95:7)<br>
-🧭🐑 Detect early signs of drift in thinking/behaviour<br>
-🔁🐑 Return quickly when deviation begins<br>
-🚧🐑 Respect boundaries as protection system<br>
-🧠🐑 Avoid curiosity loops that detach from guidance<br>
-🔊🐑 Maintain proximity to corrective input<br>
-<br>
-🔊🐑 Learn to recognise the shepherd’s voice. “The sheep listen to his voice…” (John 10:3)<br>
-👂🐑 Train attention toward consistent truth signals<br>
-🧠🔊🐑 Differentiate guidance from noise patterns<br>
-📡🐑 Prioritise familiar corrective signals over novelty<br>
-🔁🐑 Rehearse recognition through repetition<br>
-⚖️🐑 Test signals before following<br>
-<br>
-🔊🐑 Follow the true voice; reject false guidance. “My sheep listen to my voice… they follow me.” (John 10:27)<br>
-🚶‍♂️🐑 Act only after recognition is confirmed<br>
-❌🐑 Disengage from misleading or unstable inputs<br>
-🧭🐑 Align movement with trusted direction source<br>
-🔁🐑 Maintain consistency in following pattern<br>
-⚠️🐑 Treat confusion as stop-signal<br>
-<br>
-🔍🐑 Value and seek the lost. “He goes to look for the one that wandered off.” (Matthew 18:12) “There will be more rejoicing…” (Luke 15:7)<br>
-🔍🐑 Actively notice those outside stability structures<br>
-🤝🐑 Prioritise restoration over exclusion<br>
-🧭🐑 Engage recovery-oriented thinking patterns<br>
-🧠🐑 Value individual re-alignment over group purity<br>
-🔁🐑 Persist in search until restoration occurs<br>
-<br>
-🧭❌🐑 Do not remain without guidance; avoid isolation. “Like sheep without a shepherd.” (Matthew 9:36)<br>
-🚫🐑 Do not normalise leaderless drift states<br>
-🧭🐑 Seek structured guidance when uncertain<br>
-🧠🐑 Avoid prolonged independence loops<br>
-⚠️🐑 Treat isolation as vulnerability condition<br>
-🔁🐑 Reconnect quickly to stabilising input<br>
-<br>
-💥🐑 Expect scattering when leadership collapses. “Strike the shepherd, and the sheep will be scattered.” (Zechariah 13:7) “You will all fall away…” (Matthew 26:31)<br>
-⚠️🐑 Anticipate instability during leadership disruption<br>
-🧠🐑 Do not interpret scattering as final state<br>
-🔁🐑 Plan return pathways in advance<br>
-🧍🐑 Recognise fragmentation as temporary response<br>
-🧭🐑 Seek reconnection after disruption<br>
-<br>
-🔁🐑 Return quickly after scattering; realign. “Now you have returned to the Shepherd…” (1 Peter 2:25)<br>
-🔁🐑 Do not remain dispersed after disruption<br>
-🧭🐑 Re-establish guidance connection immediately<br>
-🧠🐑 Release residual drift patterns<br>
-🤝🐑 Rejoin structured belonging system<br>
-⚖️🐑 Stabilise through re-alignment<br>
-<br>
-⚖️🐑 Live with awareness of accountability. “He will separate the people…” (Matthew 25:32)<br>
-⚖️🐑 Act with awareness of evaluative consequence<br>
-🧠🐑 Self-monitor behaviour alignment<br>
-🧭🐑 Maintain integrity under observation principle<br>
-🔁🐑 Correct deviation when detected<br>
-🧍🐑 Choose consistency over convenience<br>
-<br>
-👤🐑 Lead others toward God, not yourself. “You will shepherd my people Israel.” (2 Samuel 5:2)<br>
-🧭👤🐑 Redirect attention toward higher authority<br>
-🚫🐑 Avoid self-centralising leadership patterns<br>
-🤝🐑 Facilitate dependency on true shepherd<br>
-🧠🐑 Clarify role as conduit, not source<br>
-⚖️🐑 Keep leadership accountable<br>
-<br>
-🧭🐑 Establish stabilising structure for others. “Not be like sheep without a shepherd.” (Numbers 27:17)<br>
-🔁🐑 Intervene early in drift patterns<br>
-🧠🐑 Provide clarity during uncertainty<br>
-⚠️🐑 Prevent fragmentation through guidance<br>
-🤝🐑 Maintain protective oversight<br>
-<br>
-⚠️🐑 Reject exploitative leadership. “Woe to the shepherds…” (Ezekiel 34:2)<br>
-❌🐑 Refuse self-serving authority structures<br>
-🧠🐑 Detect manipulation disguised as guidance<br>
-⚖️🐑 Hold leaders accountable to care principle<br>
-🧭🐑 Exit harmful systems early<br>
-🚫🐑 Do not reinforce exploitative patterns<br>
-<br>
-⚠️🐑 Do not scatter others through neglect. “You have scattered my flock…” (Jeremiah 23:2)<br>
-🧠🐑 Recognise impact of negligence on others<br>
-⚠️🐑 Avoid abandonment of responsibility<br>
-🤝🐑 Maintain presence in leadership role<br>
-🧭🐑 Repair harm when identified<br>
-🔁🐑 Reconnect broken trust pathways<br>
-<br>
-🛠️🐑 Care for others intentionally. “Take care of my sheep.” (John 21:16)<br>
-🤲🐑 Provide active support rather than passive intent<br>
-🧠🐑 Prioritise wellbeing of others<br>
-🧭🐑 Respond to need signals quickly<br>
-🔁🐑 Maintain consistent care behaviour<br>
-⚖️🐑 Lead through service orientation<br>
-<br>
-🛠️🐑 Oversee with responsibility. “Be shepherds of the church of God…” (Acts 20:28)<br>
-🧭🐑 Maintain vigilance over group wellbeing<br>
-⚠️🐑 Monitor internal and external risks<br>
-🧠🐑 Sustain protective awareness<br>
-🤝🐑 Coordinate collective stability<br>
-🔁🐑 Act before breakdown occurs<br>
-<br>
-🛠️🐑 Lead ethically and willingly. “Be shepherds of God’s flock…” (1 Peter 5:2)<br>
-🧠🐑 Lead without coercion or exploitation<br>
-🤝🐑 Choose voluntary responsibility<br>
-⚖️🐑 Maintain transparency in leadership<br>
-🧭🐑 Prioritise flock wellbeing over status<br>
-🔁🐑 Sustain consistent ethical conduct<br>
-<br>
-✝️🐑 Centre all leadership on Christ. “I am the good shepherd.” (John 10:11)<br>
-✝️🐑 Anchor authority in Christ, not self<br>
-🧭🐑 Align all decisions to Christ model<br>
-⚖️🐑 Measure leadership by sacrificial standard<br>
-🧠🐑 Avoid replacing central authority<br>
-🔁🐑 Return focus when drift occurs<br>
-<br>
-✝️🐑 Build unity under one shepherd. “There shall be one flock and one shepherd.” (John 10:16)<br>
-🤝🐑 Reduce fragmentation between groups<br>
-🧭🐑 Encourage unity under shared guidance<br>
-🧠🐑 Resist divisive identity formation<br>
-🔁🐑 Reconcile divisions when possible<br>
-⚖️🐑 Prioritise cohesion over rivalry<br>
-<br>
-✝️🐑 Recognise Christ as ultimate authority. “When the Chief Shepherd appears…” (1 Peter 5:4)<br>
-👑🐑 Submit all authority structures to Christ<br>
-🧠🐑 Maintain humility in leadership roles<br>
-⚖️🐑 Expect accountability beyond human systems<br>
-🧭🐑 Align long-term direction accordingly<br>
-🔁🐑 Recalibrate under higher authority<br>
-<br>
-🔮🐑 Align with the promise of one true shepherd. “I will place over them one shepherd…” (Ezekiel 34:23)<br>
-🔮🐑 Expect unified leadership principle<br>
-🧠🐑 Reject competing ultimate authorities<br>
-🧭🐑 Orient toward convergence, not fragmentation<br>
-🤝🐑 Participate in restoration structure<br>
-🔁🐑 Realign when divergence appears<br>
-<br>
-🐑 Trust God to regather what is scattered. “He who scattered Israel will gather them.” (Jeremiah 31:10)<br>
-🔁🐑 Expect restoration after dispersion<br>
-🧭🐑 Maintain hope during fragmentation<br>
-🧠🐑 Avoid permanence assumptions about loss<br>
-🤝🐑 Participate in regathering process<br>
-⚖️🐑 Trust corrective restoration logic<br>
-<br>
-🐑 Invite God’s leadership actively. “Shepherd your people with your staff…” (Micah 7:14)<br>
-🙏🐑 Request guidance intentionally<br>
-🧭🐑 Open decisions to correction<br>
-🧠🐑 Maintain receptive posture<br>
-🔁🐑 Renew alignment regularly<br>
-🤝🐑 Engage relational dependence<br>
-<br>
-🐑 Depend on God’s sustaining care. “Shepherd your people and carry them forever.” (Psalm 28:9)<br>
-🪶🐑 Accept sustained dependence model<br>
-🧠🐑 Release self-sufficiency pressure<br>
-🤝🐑 Allow ongoing support structure<br>
-🧭🐑 Trust long-term care stability<br>
-🔁🐑 Return when overloaded<br>
-<br>
-🌾🐑 Protect what is entrusted to you. “I went after it… and rescued the sheep.” (1 Samuel 17:35)<br>
-🛡️🐑 Actively defend entrusted responsibility<br>
-🔁🐑 Pursue recovery when loss occurs<br>
-🧠🐑 Take risk for protection of others<br>
-🤝🐑 Prioritise rescue over abandonment<br>
-⚖️🐑 Value each unit of care equally<br>
-<br>
-🌾🐑 Remain faithful in ordinary duties. “His brothers had gone to graze…” (Genesis 37:12)<br>
-🧠🐑 Maintain consistency in routine tasks<br>
-🔁🐑 Sustain responsibility in repetition<br>
-🧭🐑 Treat ordinary work as meaningful<br>
-🤝🐑 Avoid neglect during mundane states<br>
-⚖️🐑 Stay reliable under low visibility<br>
-<br>
-🌾🐑 Stay attentive even in quiet moments. “Shepherds living out in the fields nearby…” (Luke 2:8)<br>
-👀🐑 Maintain vigilance in low activity states<br>
-🧠🐑 Do not disengage during quiet periods<br>
-🔁🐑 Stay receptive to unexpected signals<br>
-🧭🐑 Monitor environment consistently<br>
-⚖️🐑 Remain prepared for interruption<br>
 <br>    
 </body>
 </html>
