@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Web Navigation Tools Directory</title>
+
+<style>
+:root{
+  --bg:#0b0f14;
+  --panel:#111826;
+  --panel2:#0f1622;
+  --text:#e6edf3;
+  --muted:#9fb0c0;
+  --accent:#7dd3fc;
+  --border:#1f2a3a;
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:radial-gradient(circle at 20% 10%, #142033, var(--bg));
+  color:var(--text);
+}
+
+header{
+  padding:28px 20px 10px;
+  text-align:center;
+}
+
+h1{
+  margin:0;
+  font-size:22px;
+  letter-spacing:.5px;
+}
+
+#subtitle{
+  margin-top:6px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+#filterBar{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:8px;
+  padding:14px 20px;
+}
+
+.filter{
+  border:1px solid var(--border);
+  background:var(--panel2);
+  color:var(--text);
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.filter.active{
+  border-color:var(--accent);
+  box-shadow:0 0 0 2px rgba(125,211,252,.15);
+}
+
+#grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:14px;
+  padding:18px;
+  max-width:1200px;
+  margin:0 auto;
+}
+
+.card{
+  display:flex;
+  gap:12px;
+  padding:14px;
+  border:1px solid var(--border);
+  background:linear-gradient(180deg,var(--panel),var(--panel2));
+  border-radius:14px;
+  text-decoration:none;
+  color:inherit;
+  box-shadow:var(--shadow);
+  transition:transform .15s ease, border-color .15s ease;
+}
+
+.card:hover{
+  transform:translateY(-2px);
+  border-color:var(--accent);
+}
+
+.emoji{
+  font-size:24px;
+  width:34px;
+  height:34px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.meta{
+  flex:1;
+}
+
+.name{
+  font-weight:600;
+  font-size:14px;
+}
+
+.desc{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:2px;
+}
+
+.tag{
+  font-size:11px;
+  margin-top:6px;
+  color:var(--accent);
+}
+
+footer{
+  text-align:center;
+  padding:18px;
+  font-size:11px;
+  color:var(--muted);
+}
+</style>
+</head>
+
+<body>
+<header>
+  <h1>Tool Directory</h1>
+  <div id="subtitle"></div>
+</header>
+
+<div id="filterBar"></div>
+<div id="grid"></div>
+<footer id="footer"></footer>
+
+<script>
+const tools = [
+/* ================= SEARCH ENGINES (30) ================= */
+{ id:1, emoji:"🔎", name:"Google Search", description:"Global general-purpose search engine", category:"Search Engines", url:"https://www.google.com" },
+{ id:2, emoji:"🔎", name:"Microsoft Bing", description:"Search with integrated services", category:"Search Engines", url:"https://www.bing.com" },
+{ id:3, emoji:"🦆", name:"DuckDuckGo", description:"Privacy-focused search engine", category:"Search Engines", url:"https://duckduckgo.com" },
+{ id:4, emoji:"📨", name:"Yahoo Search", description:"Legacy web search portal", category:"Search Engines", url:"https://search.yahoo.com" },
+{ id:5, emoji:"🇨🇳", name:"Baidu", description:"Major Chinese search engine", category:"Search Engines", url:"https://www.baidu.com" },
+{ id:6, emoji:"🇷🇺", name:"Yandex Search", description:"Russian search engine platform", category:"Search Engines", url:"https://yandex.com" },
+{ id:7, emoji:"🇰🇷", name:"Naver Search", description:"South Korean search ecosystem", category:"Search Engines", url:"https://www.naver.com" },
+{ id:8, emoji:"🌱", name:"Ecosia", description:"Search engine funding tree planting", category:"Search Engines", url:"https://www.ecosia.org" },
+{ id:9, emoji:"🛡️", name:"Startpage", description:"Privacy-respecting Google results proxy", category:"Search Engines", url:"https://www.startpage.com" },
+{ id:10, emoji:"🦁", name:"Brave Search", description:"Independent index search engine", category:"Search Engines", url:"https://search.brave.com" },
+{ id:11, emoji:"⚡", name:"Kagi Search", description:"Premium privacy search engine", category:"Search Engines", url:"https://kagi.com" },
+{ id:12, emoji:"🧭", name:"Mojeek", description:"Independent crawler-based search engine", category:"Search Engines", url:"https://www.mojeek.com" },
+{ id:13, emoji:"Q", name:"Qwant", description:"European privacy search engine", category:"Search Engines", url:"https://www.qwant.com" },
+{ id:14, emoji:"❓", name:"Ask.com", description:"Question-based search portal", category:"Search Engines", url:"https://www.ask.com" },
+{ id:15, emoji:"A", name:"AOL Search", description:"Legacy web search portal", category:"Search Engines", url:"https://search.aol.com" },
+{ id:16, emoji:"🐄", name:"Swisscows", description:"Privacy search engine with semantic filtering", category:"Search Engines", url:"https://swisscows.com" },
+{ id:17, emoji:"🔗", name:"Presearch", description:"Decentralized search engine", category:"Search Engines", url:"https://presearch.com" },
+{ id:18, emoji:"📊", name:"Yep", description:"Ahrefs search engine", category:"Search Engines", url:"https://yep.com" },
+{ id:19, emoji:"🌐", name:"MetaGer", description:"German metasearch system", category:"Search Engines", url:"https://metager.org" },
+{ id:20, emoji:"🧪", name:"Gigablast", description:"Independent web search index", category:"Search Engines", url:"https://gigablast.com" },
+{ id:21, emoji:"🕵️", name:"Gibiru", description:"Unfiltered private search engine", category:"Search Engines", url:"https://gibiru.com" },
+{ id:22, emoji:"🔐", name:"Search Encrypt", description:"Encrypted search results layer", category:"Search Engines", url:"https://www.searchencrypt.com" },
+{ id:23, emoji:"🧵", name:"Boardreader", description:"Forum-focused search engine", category:"Search Engines", url:"https://boardreader.com" },
+{ id:24, emoji:"🧮", name:"WolframAlpha", description:"Computational knowledge engine", category:"Search Engines", url:"https://www.wolframalpha.com" },
+{ id:25, emoji:"🇨🇿", name:"Seznam", description:"Czech search engine", category:"Search Engines", url:"https://www.seznam.cz" },
+{ id:26, emoji:"🇰🇷", name:"Daum Search", description:"Korean search service", category:"Search Engines", url:"https://www.daum.net" },
+{ id:27, emoji:"🇨🇳", name:"Sogou", description:"Chinese search engine", category:"Search Engines", url:"https://www.sogou.com" },
+{ id:28, emoji:"360", name:"360 Search", description:"Chinese web search service", category:"Search Engines", url:"https://www.so.com" },
+{ id:29, emoji:"📘", name:"Youdao Search", description:"Chinese language search tool", category:"Search Engines", url:"https://www.youdao.com" },
+{ id:30, emoji:"🌍", name:"Yippy", description:"Cluster-based search engine", category:"Search Engines", url:"https://yippy.com" },
+
+/* ================= WEB BROWSERS (30) ================= */
+{ id:31, emoji:"🌐", name:"Google Chrome", description:"Mainstream web browser", category:"Web Browsers", url:"https://www.google.com/chrome" },
+{ id:32, emoji:"🦊", name:"Mozilla Firefox", description:"Open-source browser", category:"Web Browsers", url:"https://www.mozilla.org/firefox" },
+{ id:33, emoji:"🍎", name:"Safari", description:"Apple’s native browser", category:"Web Browsers", url:"https://www.apple.com/safari" },
+{ id:34, emoji:"🪟", name:"Microsoft Edge", description:"Chromium-based browser", category:"Web Browsers", url:"https://www.microsoft.com/edge" },
+{ id:35, emoji:"🎭", name:"Opera", description:"Feature-rich browser", category:"Web Browsers", url:"https://www.opera.com" },
+{ id:36, emoji:"🎮", name:"Opera GX", description:"Gaming-oriented browser", category:"Web Browsers", url:"https://www.opera.com/gx" },
+{ id:37, emoji:"🦁", name:"Brave Browser", description:"Privacy-focused browser", category:"Web Browsers", url:"https://brave.com" },
+{ id:38, emoji:"🎨", name:"Vivaldi", description:"Highly customizable browser", category:"Web Browsers", url:"https://vivaldi.com" },
+{ id:39, emoji:"🧅", name:"Tor Browser", description:"Anonymous browsing network", category:"Web Browsers", url:"https://www.torproject.org" },
+{ id:40, emoji:"⚙️", name:"Chromium", description:"Open-source browser base", category:"Web Browsers", url:"https://www.chromium.org" },
+{ id:41, emoji:"📐", name:"Arc Browser", description:"Modern workspace browser", category:"Web Browsers", url:"https://arc.net" },
+{ id:42, emoji:"📱", name:"Samsung Internet", description:"Android browser by Samsung", category:"Web Browsers", url:"https://www.samsung.com/internet" },
+{ id:43, emoji:"🦆", name:"DuckDuckGo Browser", description:"Privacy mobile browser", category:"Web Browsers", url:"https://duckduckgo.com/app" },
+{ id:44, emoji:"🧭", name:"Firefox Focus", description:"Minimal privacy browser", category:"Web Browsers", url:"https://www.mozilla.org/firefox/focus" },
+{ id:45, emoji:"🚀", name:"Puffin Browser", description:"Cloud-accelerated browsing", category:"Web Browsers", url:"https://www.puffin.com" },
+{ id:46, emoji:"🧊", name:"Maxthon", description:"Cloud browser platform", category:"Web Browsers", url:"https://www.maxthon.com" },
+{ id:47, emoji:"📡", name:"UC Browser", description:"Mobile-first browser", category:"Web Browsers", url:"https://www.ucweb.com" },
+{ id:48, emoji:"📚", name:"SeaMonkey", description:"Internet suite browser", category:"Web Browsers", url:"https://www.seamonkey-project.org" },
+{ id:49, emoji:"🛡️", name:"Epic Browser", description:"Privacy-oriented Chromium fork", category:"Web Browsers", url:"https://www.epicbrowser.com" },
+{ id:50, emoji:"🌫️", name:"Waterfox", description:"Firefox-based performance browser", category:"Web Browsers", url:"https://www.waterfox.net" },
+{ id:51, emoji:"🧪", name:"LibreWolf", description:"Hardened Firefox fork", category:"Web Browsers", url:"https://librewolf.net" },
+{ id:52, emoji:"🌙", name:"Pale Moon", description:"Independent browser fork", category:"Web Browsers", url:"https://www.palemoon.org" },
+{ id:53, emoji:"🧠", name:"Orion Browser", description:"WebKit browser by Kagi", category:"Web Browsers", url:"https://kagi.com/orion" },
+{ id:54, emoji:"🐉", name:"Kiwi Browser", description:"Android Chromium browser", category:"Web Browsers", url:"https://kiwibrowser.com" },
+{ id:55, emoji:"🐬", name:"Dolphin Browser", description:"Gesture-based mobile browser", category:"Web Browsers", url:"https://www.dolphin.com" },
+{ id:56, emoji:"🛡️", name:"Avast Browser", description:"Security-focused browser", category:"Web Browsers", url:"https://www.avast.com/browser" },
+{ id:57, emoji:"🛡️", name:"AVG Secure Browser", description:"Privacy security browser", category:"Web Browsers", url:"https://www.avg.com/secure-browser" },
+{ id:58, emoji:"🇷🇺", name:"Yandex Browser", description:"Russian Chromium browser", category:"Web Browsers", url:"https://browser.yandex.com" },
+{ id:59, emoji:"🧭", name:"Sleipnir", description:"Japanese multi-engine browser", category:"Web Browsers", url:"https://www.fenrir-inc.com" },
+{ id:60, emoji:"🌌", name:"Lunascape", description:"Multi-engine browser", category:"Web Browsers", url:"https://www.lunascape.org" },
+
+/* ================= ANSWER ENGINES (30) ================= */
+{ id:61, emoji:"🤖", name:"Perplexity AI", description:"AI answer search engine", category:"Answer Engines (AI Search Layer)", url:"https://www.perplexity.ai" },
+{ id:62, emoji:"💬", name:"ChatGPT", description:"Conversational AI system", category:"Answer Engines (AI Search Layer)", url:"https://chat.openai.com" },
+{ id:63, emoji:"🧠", name:"Microsoft Copilot", description:"AI search assistant", category:"Answer Engines (AI Search Layer)", url:"https://copilot.microsoft.com" },
+{ id:64, emoji:"✨", name:"Google Gemini", description:"Google AI assistant", category:"Answer Engines (AI Search Layer)", url:"https://gemini.google.com" },
+{ id:65, emoji:"🎯", name:"Claude", description:"Anthropic AI assistant", category:"Answer Engines (AI Search Layer)", url:"https://claude.ai" },
+{ id:66, emoji:"🌐", name:"You.com", description:"AI-enhanced search engine", category:"Answer Engines (AI Search Layer)", url:"https://you.com" },
+{ id:67, emoji:"⚡", name:"Phind", description:"Developer-focused AI search", category:"Answer Engines (AI Search Layer)", url:"https://www.phind.com" },
+{ id:68, emoji:"🔎", name:"Andi", description:"Conversational search assistant", category:"Answer Engines (AI Search Layer)", url:"https://andisearch.com" },
+{ id:69, emoji:"🧩", name:"Komo", description:"AI search explorer", category:"Answer Engines (AI Search Layer)", url:"https://komo.ai" },
+{ id:70, emoji:"🦁", name:"Brave Leo", description:"AI assistant in Brave browser", category:"Answer Engines (AI Search Layer)", url:"https://brave.com/leo" },
+{ id:71, emoji:"⚙️", name:"Kagi Assistant", description:"AI search layer", category:"Answer Engines (AI Search Layer)", url:"https://kagi.com" },
+{ id:72, emoji:"📚", name:"Elicit", description:"Research paper AI assistant", category:"Answer Engines (AI Search Layer)", url:"https://elicit.com" },
+{ id:73, emoji:"🔬", name:"Scite Assistant", description:"Citation-aware AI search", category:"Answer Engines (AI Search Layer)", url:"https://scite.ai" },
+{ id:74, emoji:"📊", name:"Consensus", description:"Scientific AI answer engine", category:"Answer Engines (AI Search Layer)", url:"https://consensus.app" },
+{ id:75, emoji:"🧭", name:"Arc Search", description:"AI mobile search browser", category:"Answer Engines (AI Search Layer)", url:"https://arc.net/search" },
+{ id:76, emoji:"🧵", name:"Poe", description:"Multi-model AI platform", category:"Answer Engines (AI Search Layer)", url:"https://poe.com" },
+{ id:77, emoji:"🧠", name:"Glean", description:"Enterprise AI search", category:"Answer Engines (AI Search Layer)", url:"https://www.glean.com" },
+{ id:78, emoji:"🪄", name:"Neeva AI", description:"AI search assistant (legacy)", category:"Answer Engines (AI Search Layer)", url:"https://neeva.com" },
+{ id:79, emoji:"🧬", name:"Exa", description:"AI semantic search engine", category:"Answer Engines (AI Search Layer)", url:"https://exa.ai" },
+{ id:80, emoji:"🧠", name:"Google AI Overviews", description:"AI generated search summaries", category:"Answer Engines (AI Search Layer)", url:"https://www.google.com" },
+{ id:81, emoji:"🤗", name:"HuggingChat", description:"Open-source AI chat", category:"Answer Engines (AI Search Layer)", url:"https://huggingface.co/chat" },
+{ id:82, emoji:"💡", name:"YouChat", description:"AI search chat", category:"Answer Engines (AI Search Layer)", url:"https://you.com" },
+{ id:83, emoji:"✍️", name:"Jasper Chat", description:"AI writing assistant", category:"Answer Engines (AI Search Layer)", url:"https://www.jasper.ai" },
+{ id:84, emoji:"🧾", name:"ChatSonic", description:"Real-time AI assistant", category:"Answer Engines (AI Search Layer)", url:"https://writesonic.com/chat" },
+{ id:85, emoji:"🌌", name:"DeepSeek Chat", description:"Large language model assistant", category:"Answer Engines (AI Search Layer)", url:"https://chat.deepseek.com" },
+{ id:86, emoji:"🧭", name:"Qwen Chat", description:"Alibaba AI assistant", category:"Answer Engines (AI Search Layer)", url:"https://chat.qwen.ai" },
+{ id:87, emoji:"🔍", name:"Bing Copilot", description:"AI search integrated into Bing", category:"Answer Engines (AI Search Layer)", url:"https://www.bing.com" },
+{ id:88, emoji:"🧠", name:"Perplexity Labs", description:"Advanced AI research layer", category:"Answer Engines (AI Search Layer)", url:"https://www.perplexity.ai" },
+{ id:89, emoji:"🧪", name:"OpenAI Search", description:"AI-assisted web browsing", category:"Answer Engines (AI Search Layer)", url:"https://chat.openai.com" },
+{ id:90, emoji:"🌐", name:"Google Search AI Mode", description:"AI integrated search experience", category:"Answer Engines (AI Search Layer)", url:"https://www.google.com" },
+
+/* ================= META / AGGREGATION (30) ================= */
+{ id:91, emoji:"🧭", name:"Dogpile", description:"Metasearch aggregator", category:"Meta / Aggregation Engines", url:"https://www.dogpile.com" },
+{ id:92, emoji:"🔗", name:"MetaCrawler", description:"Search aggregator engine", category:"Meta / Aggregation Engines", url:"https://www.metacrawler.com" },
+{ id:93, emoji:"🌐", name:"WebCrawler", description:"Aggregated search engine", category:"Meta / Aggregation Engines", url:"https://www.webcrawler.com" },
+{ id:94, emoji:"🧩", name:"ZapMeta", description:"Metasearch platform", category:"Meta / Aggregation Engines", url:"https://www.zapmeta.com" },
+{ id:95, emoji:"🧅", name:"SearxNG", description:"Federated metasearch engine", category:"Meta / Aggregation Engines", url:"https://searxng.org" },
+{ id:96, emoji:"🧅", name:"Searx", description:"Privacy metasearch engine", category:"Meta / Aggregation Engines", url:"https://searx.github.io" },
+{ id:97, emoji:"📰", name:"Feedly", description:"RSS aggregation platform", category:"Meta / Aggregation Engines", url:"https://feedly.com" },
+{ id:98, emoji:"📡", name:"Inoreader", description:"Content aggregation RSS reader", category:"Meta / Aggregation Engines", url:"https://www.inoreader.com" },
+{ id:99, emoji:"🗞️", name:"Flipboard", description:"Magazine-style news aggregation", category:"Meta / Aggregation Engines", url:"https://flipboard.com" },
+{ id:100, emoji:"📰", name:"Google News", description:"News aggregation service", category:"Meta / Aggregation Engines", url:"https://news.google.com" },
+{ id:101, emoji:"🍎", name:"Apple News", description:"Curated news aggregation", category:"Meta / Aggregation Engines", url:"https://www.apple.com/apple-news" },
+{ id:102, emoji:"📨", name:"Yahoo News", description:"News aggregation portal", category:"Meta / Aggregation Engines", url:"https://news.yahoo.com" },
+{ id:103, emoji:"👽", name:"Reddit", description:"Community content aggregation", category:"Meta / Aggregation Engines", url:"https://www.reddit.com" },
+{ id:104, emoji:"💻", name:"Hacker News", description:"Tech community aggregator", category:"Meta / Aggregation Engines", url:"https://news.ycombinator.com" },
+{ id:105, emoji:"🧠", name:"Techmeme", description:"Tech news aggregation system", category:"Meta / Aggregation Engines", url:"https://www.techmeme.com" },
+{ id:106, emoji:"🌍", name:"Ground News", description:"Bias-aware news aggregation", category:"Meta / Aggregation Engines", url:"https://ground.news" },
+{ id:107, emoji:"⚖️", name:"AllSides", description:"Media bias aggregation platform", category:"Meta / Aggregation Engines", url:"https://www.allsides.com" },
+{ id:108, emoji:"📲", name:"SmartNews", description:"Mobile news aggregation app", category:"Meta / Aggregation Engines", url:"https://www.smartnews.com" },
+{ id:109, emoji:"🔖", name:"Pocket", description:"Read-it-later content aggregator", category:"Meta / Aggregation Engines", url:"https://getpocket.com" },
+{ id:110, emoji:"📚", name:"Instapaper", description:"Article saving aggregator", category:"Meta / Aggregation Engines", url:"https://www.instapaper.com" },
+{ id:111, emoji:"📰", name:"NewsNow", description:"UK news aggregation platform", category:"Meta / Aggregation Engines", url:"https://www.newsnow.co.uk" },
+{ id:112, emoji:"🧔", name:"Drudge Report", description:"News aggregation site", category:"Meta / Aggregation Engines", url:"https://www.drudgereport.com" },
+{ id:113, emoji:"🌐", name:"AllTop", description:"Curated topic aggregation", category:"Meta / Aggregation Engines", url:"https://alltop.com" },
+{ id:114, emoji:"🔄", name:"Mix", description:"Content discovery aggregator", category:"Meta / Aggregation Engines", url:"https://mix.com" },
+{ id:115, emoji:"📡", name:"Feedspot", description:"RSS and content aggregation hub", category:"Meta / Aggregation Engines", url:"https://www.feedspot.com" },
+{ id:116, emoji:"📰", name:"NewsBlur", description:"Personal news aggregator", category:"Meta / Aggregation Engines", url:"https://newsblur.com" },
+{ id:117, emoji:"📖", name:"Bloglovin", description:"Blog aggregation platform", category:"Meta / Aggregation Engines", url:"https://www.bloglovin.com" },
+{ id:118, emoji:"🧭", name:"Netvibes", description:"Dashboard aggregation system", category:"Meta / Aggregation Engines", url:"https://www.netvibes.com" },
+{ id:119, emoji:"🧾", name:"Paper.li", description:"Automated content aggregation", category:"Meta / Aggregation Engines", url:"https://paper.li" },
+{ id:120, emoji:"💬", name:"Tapatalk", description:"Forum aggregation platform", category:"Meta / Aggregation Engines", url:"https://www.tapatalk.com" },
+
+/* ================= KNOWLEDGE & INDEX (30) ================= */
+{ id:121, emoji:"📘", name:"Wikipedia", description:"Free encyclopedic knowledge base", category:"Knowledge & Index Platforms", url:"https://www.wikipedia.org" },
+{ id:122, emoji:"🧬", name:"Wikidata", description:"Structured knowledge graph", category:"Knowledge & Index Platforms", url:"https://www.wikidata.org" },
+{ id:123, emoji:"🗄️", name:"Internet Archive", description:"Digital preservation library", category:"Knowledge & Index Platforms", url:"https://archive.org" },
+{ id:124, emoji:"💬", name:"Stack Overflow", description:"Developer Q&A knowledge base", category:"Knowledge & Index Platforms", url:"https://stackoverflow.com" },
+{ id:125, emoji:"🐙", name:"GitHub", description:"Code hosting knowledge platform", category:"Knowledge & Index Platforms", url:"https://github.com" },
+{ id:126, emoji:"📄", name:"arXiv", description:"Scientific preprint repository", category:"Knowledge & Index Platforms", url:"https://arxiv.org" },
+{ id:127, emoji:"🧫", name:"PubMed", description:"Biomedical literature database", category:"Knowledge & Index Platforms", url:"https://pubmed.ncbi.nlm.nih.gov" },
+{ id:128, emoji:"📚", name:"Britannica", description:"Curated encyclopedia", category:"Knowledge & Index Platforms", url:"https://www.britannica.com" },
+{ id:129, emoji:"🧮", name:"WolframAlpha", description:"Computational knowledge system", category:"Knowledge & Index Platforms", url:"https://www.wolframalpha.com" },
+{ id:130, emoji:"🔬", name:"Semantic Scholar", description:"AI research paper index", category:"Knowledge & Index Platforms", url:"https://www.semanticscholar.org" },
+{ id:131, emoji:"🌐", name:"OpenAlex", description:"Research knowledge graph", category:"Knowledge & Index Platforms", url:"https://openalex.org" },
+{ id:132, emoji:"🧾", name:"DBpedia", description:"Structured Wikipedia data", category:"Knowledge & Index Platforms", url:"https://www.dbpedia.org" },
+{ id:133, emoji:"📜", name:"Stanford Encyclopedia of Philosophy", description:"Philosophy reference archive", category:"Knowledge & Index Platforms", url:"https://plato.stanford.edu" },
+{ id:134, emoji:"🎓", name:"Google Scholar", description:"Academic search index", category:"Knowledge & Index Platforms", url:"https://scholar.google.com" },
+{ id:135, emoji:"📊", name:"Microsoft Academic", description:"Retired academic index", category:"Knowledge & Index Platforms", url:"https://academic.microsoft.com" },
+{ id:136, emoji:"🔗", name:"Crossref", description:"DOI metadata registry", category:"Knowledge & Index Platforms", url:"https://www.crossref.org" },
+{ id:137, emoji:"📖", name:"DOAJ", description:"Open access journal index", category:"Knowledge & Index Platforms", url:"https://doaj.org" },
+{ id:138, emoji:"📚", name:"JSTOR", description:"Academic journal archive", category:"Knowledge & Index Platforms", url:"https://www.jstor.org" },
+{ id:139, emoji:"📜", name:"Project Gutenberg", description:"Public domain books library", category:"Knowledge & Index Platforms", url:"https://www.gutenberg.org" },
+{ id:140, emoji:"📕", name:"Open Library", description:"Universal book catalog", category:"Knowledge & Index Platforms", url:"https://openlibrary.org" },
+{ id:141, emoji:"🧫", name:"Europe PMC", description:"Life sciences literature database", category:"Knowledge & Index Platforms", url:"https://europepmc.org" },
+{ id:142, emoji:"📑", name:"SSRN", description:"Social science research network", category:"Knowledge & Index Platforms", url:"https://www.ssrn.com" },
+{ id:143, emoji:"📊", name:"Kaggle", description:"Data science datasets hub", category:"Knowledge & Index Platforms", url:"https://www.kaggle.com" },
+{ id:144, emoji:"🤗", name:"Hugging Face", description:"AI model and dataset hub", category:"Knowledge & Index Platforms", url:"https://huggingface.co" },
+{ id:145, emoji:"🗂️", name:"CKAN", description:"Open data portal platform", category:"Knowledge & Index Platforms", url:"https://ckan.org" },
+{ id:146, emoji:"🌎", name:"CIA World Factbook", description:"Global country intelligence database", category:"Knowledge & Index Platforms", url:"https://www.cia.gov/the-world-factbook" },
+{ id:147, emoji:"🏦", name:"World Bank Data", description:"Global economic dataset platform", category:"Knowledge & Index Platforms", url:"https://data.worldbank.org" },
+{ id:148, emoji:"📈", name:"OECD Data", description:"Economic and social statistics", category:"Knowledge & Index Platforms", url:"https://data.oecd.org" },
+{ id:149, emoji:"🌐", name:"UN Data", description:"United Nations statistics portal", category:"Knowledge & Index Platforms", url:"https://data.un.org" },
+{ id:150, emoji:"🚀", name:"NASA NTRS", description:"NASA technical report server", category:"Knowledge & Index Platforms", url:"https://ntrs.nasa.gov" }
+];
+
+// -------- state --------
+let activeCategory = "All";
+
+// -------- helpers --------
+function normalize(str){
+  return str.toLowerCase().trim();
+}
+
+function getCategories(data){
+  const set = new Set();
+  data.forEach(d => set.add(normalize(d.category)));
+  return Array.from(set);
+}
+
+function sortByName(data){
+  return data.slice().sort((a,b)=>a.name.localeCompare(b.name));
+}
+
+// -------- render --------
+const grid = document.getElementById("grid");
+const filterBar = document.getElementById("filterBar");
+const subtitle = document.getElementById("subtitle");
+const footer = document.getElementById("footer");
+
+function renderSubtitle(filtered){
+  subtitle.textContent = `Total tools: ${tools.length} | Visible: ${filtered.length}`;
+}
+
+function renderFooter(){
+  footer.textContent = "Rendered: " + new Date().toLocaleString();
+}
+
+function renderFilters(){
+  filterBar.innerHTML = "";
+
+  const cats = ["All", ...getCategories(tools)];
+
+  cats.forEach(cat=>{
+    const btn = document.createElement("button");
+    btn.className = "filter" + (activeCategory===cat ? " active" : "");
+    btn.textContent = cat;
+
+    btn.addEventListener("click", ()=>{
+      activeCategory = cat;
+      render();
+    });
+
+    filterBar.appendChild(btn);
+  });
+}
+
+function renderGrid(data){
+  grid.innerHTML = "";
+
+  data.forEach(item=>{
+    const a = document.createElement("a");
+    a.className = "card";
+    a.href = item.url;
+    a.target = "_blank";
+
+    const emoji = document.createElement("div");
+    emoji.className = "emoji";
+    emoji.textContent = item.emoji;
+
+    const meta = document.createElement("div");
+    meta.className = "meta";
+
+    const name = document.createElement("div");
+    name.className = "name";
+    name.textContent = item.name;
+
+    const desc = document.createElement("div");
+    desc.className = "desc";
+    desc.textContent = item.description;
+
+    const tag = document.createElement("div");
+    tag.className = "tag";
+    tag.textContent = item.category;
+
+    meta.appendChild(name);
+    meta.appendChild(desc);
+    meta.appendChild(tag);
+
+    a.appendChild(emoji);
+    a.appendChild(meta);
+
+    grid.appendChild(a);
+  });
+}
+
+function render(){
+  const sorted = sortByName(tools);
+
+  const filtered = activeCategory === "All"
+    ? sorted
+    : sorted.filter(t => normalize(t.category) === normalize(activeCategory));
+
+  renderFilters();
+  renderGrid(filtered);
+  renderSubtitle(filtered);
+  renderFooter();
+}
+
+// deterministic initial render
+window.addEventListener("DOMContentLoaded", render);
+</script>
+
+</body>
+</html>
