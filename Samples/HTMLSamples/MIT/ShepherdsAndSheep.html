@@ -545,7 +545,7 @@ function renderCoreCards(){
     filtered = filtered.filter(t => t.category.toLowerCase() === active.toLowerCase());
   }
 
-  if(active === "All"){
+  if(active == "All"){
     const banner = document.createElement("div");
     banner.className = "all-banner";
     banner.innerHTML = `
