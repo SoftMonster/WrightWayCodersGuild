@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Idle Games Directory</title>
+
+<style>
+:root{
+    --bg:#0b1020;
+    --bg2:#121a33;
+    --surface:rgba(255,255,255,.06);
+    --surface-hover:rgba(255,255,255,.12);
+    --border:rgba(255,255,255,.12);
+    --text:#f3f6ff;
+    --muted:#aeb7d6;
+    --accent:#6ee7ff;
+    --accent-2:#8b5cf6;
+    --radius:18px;
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    color:var(--text);
+    background:
+        radial-gradient(circle at top left, rgba(110,231,255,.12), transparent 40%),
+        radial-gradient(circle at top right, rgba(139,92,246,.12), transparent 40%),
+        linear-gradient(180deg,var(--bg),var(--bg2));
+    min-height:100vh;
+}
+
+.container{
+    width:min(1400px,92vw);
+    margin:0 auto;
+    padding:40px 0 60px;
+}
+
+header{
+    text-align:center;
+    margin-bottom:32px;
+}
+
+h1{
+    margin:0;
+    font-size:clamp(2rem,4vw,3.2rem);
+    letter-spacing:.03em;
+}
+
+.subtitle{
+    margin-top:12px;
+    color:var(--muted);
+    font-size:1rem;
+}
+
+.toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    justify-content:center;
+    margin:28px 0;
+}
+
+.filter-btn{
+    border:none;
+    cursor:pointer;
+    padding:10px 16px;
+    border-radius:999px;
+    background:var(--surface);
+    color:var(--text);
+    transition:.2s ease;
+    backdrop-filter:blur(10px);
+}
+
+.filter-btn:hover{
+    background:var(--surface-hover);
+    transform:translateY(-1px);
+}
+
+.filter-btn.active{
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    color:#06111f;
+    font-weight:700;
+}
+
+.count{
+    text-align:center;
+    color:var(--muted);
+    margin-bottom:24px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:18px;
+}
+
+.card{
+    display:flex;
+    flex-direction:column;
+    text-decoration:none;
+    color:inherit;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:20px;
+    min-height:210px;
+    transition:.22s ease;
+    box-shadow:var(--shadow);
+    backdrop-filter:blur(12px);
+}
+
+.card:hover{
+    transform:translateY(-4px);
+    background:var(--surface-hover);
+    border-color:rgba(110,231,255,.4);
+}
+
+.emoji{
+    font-size:2rem;
+    margin-bottom:12px;
+}
+
+.name{
+    font-size:1.15rem;
+    font-weight:700;
+    margin-bottom:10px;
+}
+
+.description{
+    color:var(--muted);
+    line-height:1.5;
+    flex:1;
+}
+
+.category{
+    margin-top:16px;
+    display:inline-flex;
+    align-self:flex-start;
+    padding:6px 10px;
+    border-radius:999px;
+    font-size:.8rem;
+    background:rgba(110,231,255,.12);
+    border:1px solid rgba(110,231,255,.18);
+}
+
+footer{
+    text-align:center;
+    color:var(--muted);
+    margin-top:40px;
+    font-size:.9rem;
+}
+
+@media (max-width:640px){
+    .card{
+        min-height:auto;
+    }
+}
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script>
+const tools = [
+{
+id:"ngu-idle",
+emoji:"🚀",
+name:"NGU IDLE",
+description:"Massive stat growth, endless upgrades, absurd scaling.",
+category:"Number-Go-Up Addicts",
+url:"https://store.steampowered.com/app/1147690/NGU_IDLE/"
+},
+{
+id:"revolution-idle",
+emoji:"🌈",
+name:"Revolution Idle",
+description:"Clean, elegant progression with satisfying prestige loops.",
+category:"Number-Go-Up Addicts",
+url:"https://store.steampowered.com/app/2763740/Revolution_Idle/"
+},
+{
+id:"realm-grinder",
+emoji:"👑",
+name:"Realm Grinder",
+description:"One of the deepest pure incremental games ever made.",
+category:"Number-Go-Up Addicts",
+url:"https://store.steampowered.com/app/610080/Realm_Grinder/"
+},
+{
+id:"leaf-blower-revolution",
+emoji:"🍃",
+name:"Leaf Blower Revolution",
+description:"Ridiculous premise, enormous progression tree.",
+category:"Number-Go-Up Addicts",
+url:"https://store.steampowered.com/app/1468260/Leaf_Blower_Revolution__Idle_Game/"
+},
+{
+id:"idle-research",
+emoji:"🔬",
+name:"Idle Research",
+description:"Research-focused optimization and exponential growth.",
+category:"Number-Go-Up Addicts",
+url:"https://store.steampowered.com/app/1482860/Idle_Research/"
+},
+{
+id:"antimatter-dimensions",
+emoji:"🔢",
+name:"Antimatter Dimensions",
+description:"A genre-defining incremental experience.",
+category:"Number-Go-Up Addicts",
+url:"https://store.steampowered.com/app/1399720/Antimatter_Dimensions/"
+},
+{
+id:"idleon",
+emoji:"🧙",
+name:"Legends of IdleOn",
+description:"Multi-character idle MMO with crafting, combat, and skills.",
+category:"Idle RPGs",
+url:"https://store.steampowered.com/app/1476970/IdleOn__The_Idle_MMO/"
+},
+{
+id:"idle-slayer",
+emoji:"⚔️",
+name:"Idle Slayer",
+description:"Active platforming mixed with idle progression.",
+category:"Idle RPGs",
+url:"https://store.steampowered.com/app/1353300/Idle_Slayer/"
+},
+{
+id:"your-chronicle",
+emoji:"📖",
+name:"Your Chronicle",
+description:"Story-heavy RPG with huge branching progression.",
+category:"Idle RPGs",
+url:"https://store.steampowered.com/app/1546320/Your_Chronicle/"
+},
+{
+id:"farmers-against-potatoes",
+emoji:"🥔",
+name:"Farmers Against Potatoes Idle",
+description:"Surprisingly deep RPG systems and equipment progression.",
+category:"Idle RPGs",
+url:"https://store.steampowered.com/app/1535560/Farmers_Against_Potatoes_Idle/"
+},
+{
+id:"idle-skilling",
+emoji:"🎓",
+name:"Idle Skilling",
+description:"Multiple interconnected skills and progression paths.",
+category:"Idle RPGs",
+url:"https://store.steampowered.com/app/1048370/Idle_Skilling/"
+},
+{
+id:"idle-champions",
+emoji:"🐉",
+name:"Idle Champions of the Forgotten Realms",
+description:"D&D heroes, formations, and automation.",
+category:"Idle RPGs",
+url:"https://store.steampowered.com/app/627690/Idle_Champions_of_the_Forgotten_Realms/"
+},
+{
+id:"trimps",
+emoji:"⚙️",
+name:"Trimps",
+description:"Resource management, automation, and strategic resets.",
+category:"Factory / Automation Idlers",
+url:"https://store.steampowered.com/app/1877960/Trimps/"
+},
+{
+id:"incremental-epic-hero",
+emoji:"🏗️",
+name:"Incremental Epic Hero",
+description:"Layers of automation and resource systems.",
+category:"Factory / Automation Idlers",
+url:"https://store.steampowered.com/app/1690710/Incremental_Epic_Hero/"
+},
+{
+id:"perfect-tower-ii",
+emoji:"🧪",
+name:"The Perfect Tower II",
+description:"Tower defense merged with automation and factory mechanics.",
+category:"Factory / Automation Idlers",
+url:"https://store.steampowered.com/app/1197260/The_Perfect_Tower_II/"
+},
+{
+id:"bongo-cat",
+emoji:"😺",
+name:"Bongo Cat",
+description:"Collect hats while simply using your computer.",
+category:"Relaxing Background Idlers",
+url:"https://store.steampowered.com/app/3419430/Bongo_Cat/"
+},
+{
+id:"taskbar-hero",
+emoji:"🖥️",
+name:"TBH: Task Bar Hero",
+description:"Tiny RPG that quietly lives in your taskbar.",
+category:"Relaxing Background Idlers",
+url:"https://store.steampowered.com/app/3629640/TBH_Task_Bar_Hero/"
+},
+{
+id:"rustys-retirement",
+emoji:"🎣",
+name:"Rusty's Retirement",
+description:"Desktop companion-style farming idle game.",
+category:"Relaxing Background Idlers",
+url:"https://store.steampowered.com/app/2666510/Rustys_Retirement/"
+}
+];
+
+document.addEventListener("DOMContentLoaded", () => {
+
+const app = document.getElementById("app");
+
+const sortedTools = [...tools].sort((a,b)=>
+    a.name.localeCompare(b.name,undefined,{sensitivity:"base"})
+);
+
+const categoryMap = new Map();
+
+sortedTools.forEach(tool=>{
+    const key = tool.category.trim().toLowerCase();
+    if(!categoryMap.has(key)){
+        categoryMap.set(key, tool.category.trim());
+    }
+});
+
+const categories = [
+    "All",
+    ...Array.from(categoryMap.values()).sort((a,b)=>
+        a.localeCompare(b,undefined,{sensitivity:"base"})
+    )
+];
+
+let activeCategory = "All";
+
+const container = document.createElement("div");
+container.className = "container";
+
+const header = document.createElement("header");
+
+const title = document.createElement("h1");
+title.textContent = "🎮 Idle Games Directory";
+
+const subtitle = document.createElement("div");
+subtitle.className = "subtitle";
+subtitle.textContent = `${sortedTools.length} resources available`;
+
+header.appendChild(title);
+header.appendChild(subtitle);
+
+const toolbar = document.createElement("div");
+toolbar.className = "toolbar";
+
+const count = document.createElement("div");
+count.className = "count";
+
+const grid = document.createElement("div");
+grid.className = "grid";
+
+const footer = document.createElement("footer");
+footer.textContent =
+    `Generated: ${new Date().toLocaleString()}`;
+
+function renderCards(){
+
+    grid.innerHTML = "";
+
+    const filtered = sortedTools.filter(item => {
+        if(activeCategory === "All") return true;
+        return item.category.toLowerCase() === activeCategory.toLowerCase();
+    });
+
+    count.textContent =
+        `${filtered.length} item${filtered.length===1?"":"s"} displayed`;
+
+    filtered.forEach(item => {
+
+        const card = document.createElement("a");
+        card.className = "card";
+        card.href = item.url;
+        card.target = "_blank";
+        card.rel = "noopener noreferrer";
+
+        const emoji = document.createElement("div");
+        emoji.className = "emoji";
+        emoji.textContent = item.emoji;
+
+        const name = document.createElement("div");
+        name.className = "name";
+        name.textContent = item.name;
+
+        const desc = document.createElement("div");
+        desc.className = "description";
+        desc.textContent = item.description;
+
+        const category = document.createElement("div");
+        category.className = "category";
+        category.textContent = item.category;
+
+        card.appendChild(emoji);
+        card.appendChild(name);
+        card.appendChild(desc);
+        card.appendChild(category);
+
+        grid.appendChild(card);
+    });
+}
+
+function renderFilters(){
+
+    toolbar.innerHTML = "";
+
+    categories.forEach(cat => {
+
+        const btn = document.createElement("button");
+        btn.className = "filter-btn";
+        btn.textContent = cat;
+
+        if(cat === activeCategory){
+            btn.classList.add("active");
+        }
+
+        btn.addEventListener("click", () => {
+            activeCategory = cat;
+            renderFilters();
+            renderCards();
+        });
+
+        toolbar.appendChild(btn);
+    });
+}
+
+container.appendChild(header);
+container.appendChild(toolbar);
+container.appendChild(count);
+container.appendChild(grid);
+container.appendChild(footer);
+
+app.appendChild(container);
+
+renderFilters();
+renderCards();
+
+});
+</script>
+
+</body>
+</html>
