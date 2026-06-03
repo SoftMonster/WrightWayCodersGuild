@@ -543,9 +543,24 @@ function renderCoreCards(){
 
   if(active !== "All"){
     filtered = filtered.filter(t => t.category.toLowerCase() === active.toLowerCase());
+    .all-banner-section {
+       display: none;
+      }
   }
 
   if(active == "All"){
+  const container = grid.parentElement;
+
+  // ✅ guard: already exists
+  if (container.querySelector('[data-all-banner="true"]')) {
+   .all-banner-section {
+       display: blcok;
+      }
+    return;
+  }
+  const banner = document.createElement("div");
+  banner.className = "all-banner";
+  banner.setAttribute("data-all-banner", "true");
 
   const section = document.createElement("section");
   section.className = "all-banner-section";
@@ -776,8 +791,7 @@ function renderCoreCards(){
       <hr />
     `;
   section.appendChild(banner);
-  const container = grid.parentElement;
-
+    
   // insert ABOVE the grid for guaranteed separation
   container.insertBefore(banner, grid);
   }
