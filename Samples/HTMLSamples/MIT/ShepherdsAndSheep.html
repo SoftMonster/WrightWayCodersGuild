@@ -776,7 +776,10 @@ function renderCoreCards(){
       <hr />
     `;
   section.appendChild(banner);
-  grid.appendChild(section);
+  const container = grid.parentElement;
+
+  // insert ABOVE the grid for guaranteed separation
+  container.insertBefore(banner, grid);
   }
 
   filtered.forEach(t => {
