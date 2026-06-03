@@ -546,8 +546,12 @@ function renderCoreCards(){
   }
 
   if(active == "All"){
-    const banner = document.createElement("div");
-    banner.className = "all-banner";
+
+  const section = document.createElement("section");
+  section.className = "all-banner-section";
+
+  const banner = document.createElement("div");
+  banner.className = "all-banner";
     banner.style.width = "300%";    
     banner.innerHTML = `
       <h2>Notes overview</h2>
@@ -771,7 +775,8 @@ function renderCoreCards(){
       <div>
       <hr />
     `;
-    grid.appendChild(banner);
+  section.appendChild(banner);
+  grid.appendChild(section);
   }
 
   filtered.forEach(t => {
