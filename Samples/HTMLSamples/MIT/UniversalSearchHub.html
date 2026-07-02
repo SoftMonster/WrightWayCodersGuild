@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Universal Search Hub</title>
+
+<style>
+  body { font-family: system-ui, sans-serif; margin: 40px; background:#0f1115; color:#eaeaea; }
+  .box { max-width: 900px; margin: auto; }
+  h1 { font-weight: 600; }
+  input, select, button {
+    padding: 12px;
+    margin: 6px 0;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background:#151923;
+    color:#fff;
+  }
+  button { cursor: pointer; background:#2b6cff; border:none; }
+  button:hover { background:#1f4fd1; }
+  .grid { display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+  .small { font-size: 12px; opacity: 0.8; }
+</style>
+</head>
+
+<body>
+<div class="box">
+
+<h1>🔎Universal Search Hub🔎</h1>
+<p class="small">Route queries across search engines, answer engines, meta engines, and knowledge platforms.</p>
+
+<input id="query" placeholder="Enter search query..." />
+
+<div class="grid">
+  <select id="category" onchange="renderEngines()">
+    <option value="all">All</option>
+    <option value="search">Search Engines</option>
+    <option value="answer">Answer Engines</option>
+    <option value="meta">Meta / Aggregators</option>
+    <option value="knowledge">Knowledge / Index</option>
+  </select>
+
+  <select id="engine"></select>
+</div>
+
+<button onclick="go()">Search</button>
+
+</div>
+
+<script>
+const engines = [
+  // 🔎 Major Search Engines
+  { name: "Google Search", cat: "search", url: q => `https://www.google.com/search?q=${encodeURIComponent(q)}` },
+  { name: "Microsoft Bing", cat: "search", url: q => `https://www.bing.com/search?q=${encodeURIComponent(q)}` },
+  { name: "DuckDuckGo", cat: "search", url: q => `https://duckduckgo.com/?q=${encodeURIComponent(q)}` },
+  { name: "Brave Search", cat: "search", url: q => `https://search.brave.com/search?q=${encodeURIComponent(q)}` },
+  { name: "Ecosia", cat: "search", url: q => `https://www.ecosia.org/search?q=${encodeURIComponent(q)}` },
+  { name: "Yahoo Search", cat: "search", url: q => `https://search.yahoo.com/search?p=${encodeURIComponent(q)}` },
+  { name: "Yandex Search", cat: "search", url: q => `https://yandex.com/search/?text=${encodeURIComponent(q)}` },
+  { name: "Baidu", cat: "search", url: q => `https://www.baidu.com/s?wd=${encodeURIComponent(q)}` },
+  { name: "Naver Search", cat: "search", url: q => `https://search.naver.com/search.naver?query=${encodeURIComponent(q)}` },
+  { name: "Daum Search", cat: "search", url: q => `https://search.daum.net/search?q=${encodeURIComponent(q)}` },
+  { name: "Sogou", cat: "search", url: q => `https://www.sogou.com/web?query=${encodeURIComponent(q)}` },
+  { name: "Seznam", cat: "search", url: q => `https://search.seznam.cz/?q=${encodeURIComponent(q)}` },
+
+  // 🧠 Answer Engines
+  { name: "WolframAlpha", cat: "answer", url: q => `https://www.wolframalpha.com/input?i=${encodeURIComponent(q)}` },
+
+  // 🧭 Meta / Aggregators
+  { name: "Startpage", cat: "meta", url: q => `https://www.startpage.com/sp/search?q=${encodeURIComponent(q)}` },
+  { name: "MetaGer", cat: "meta", url: q => `https://metager.org/meta/meta.ger3?eingabe=${encodeURIComponent(q)}` },
+  { name: "Presearch", cat: "meta", url: q => `https://presearch.com/search?q=${encodeURIComponent(q)}` },
+  { name: "Qwant", cat: "meta", url: q => `https://www.qwant.com/?q=${encodeURIComponent(q)}` },
+  { name: "Swisscows", cat: "meta", url: q => `https://swisscows.com/web?query=${encodeURIComponent(q)}` },
+
+  // 📚 Knowledge / Index
+  { name: "Wikipedia", cat: "knowledge", url: q => `https://en.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(q)}` },
+  { name: "Stack Overflow", cat: "knowledge", url: q => `https://stackoverflow.com/search?q=${encodeURIComponent(q)}` },
+  { name: "GitHub Search", cat: "knowledge", url: q => `https://github.com/search?q=${encodeURIComponent(q)}` },
+  { name: "Internet Archive", cat: "knowledge", url: q => `https://archive.org/search.php?query=${encodeURIComponent(q)}` },
+  { name: "Boardreader", cat: "knowledge", url: q => `https://boardreader.com/s/${encodeURIComponent(q)}.html` },
+
+  // 🔬 Special / AI / Computation
+  { name: "Kagi Search", cat: "search", url: q => `https://kagi.com/search?q=${encodeURIComponent(q)}` },
+];
+
+function renderEngines() {
+  const cat = document.getElementById("category").value;
+  const select = document.getElementById("engine");
+
+  select.innerHTML = "";
+
+  const filtered = engines.filter(e => cat === "all" || e.cat === cat);
+
+  filtered.forEach((e, i) => {
+    const opt = document.createElement("option");
+    opt.value = i;
+    opt.textContent = e.name;
+    select.appendChild(opt);
+  });
+
+  window.filtered = filtered;
+}
+
+function go() {
+  const q = document.getElementById("query").value;
+  const idx = document.getElementById("engine").value;
+  const engine = window.filtered[idx];
+  if (!engine || !q) return;
+  window.location.href = engine.url(q);
+}
+
+renderEngines();
+</script>
+
+</body>
+</html>
