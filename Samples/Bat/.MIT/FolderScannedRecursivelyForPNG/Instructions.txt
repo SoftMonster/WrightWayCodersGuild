@@ -1,0 +1,1 @@
+Copy folders and sub folders with png files into here. Each png will appear in the icon set.
