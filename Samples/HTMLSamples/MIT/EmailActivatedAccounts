@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Email activated accounts</title>
+
+<style>
+:root{
+  --bg:#0b0f14;
+  --panel:#111826;
+  --panel2:#0f1622;
+  --text:#e6edf3;
+  --muted:#9fb0c0;
+  --accent:#7dd3fc;
+  --border:#1f2a3a;
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:radial-gradient(circle at 20% 10%, #142033, var(--bg));
+  color:var(--text);
+}
+
+header{
+  padding:28px 20px 10px;
+  text-align:center;
+}
+
+h1{
+  margin:0;
+  font-size:22px;
+  letter-spacing:.5px;
+}
+
+#subtitle{
+  margin-top:6px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+#filterBar{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:8px;
+  padding:14px 20px;
+}
+
+.filter{
+  border:1px solid var(--border);
+  background:var(--panel2);
+  color:var(--text);
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.filter.active{
+  border-color:var(--accent);
+  box-shadow:0 0 0 2px rgba(125,211,252,.15);
+}
+
+#grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:14px;
+  padding:18px;
+  max-width:1200px;
+  margin:0 auto;
+}
+
+.card{
+  display:flex;
+  gap:12px;
+  padding:14px;
+  border:1px solid var(--border);
+  background:linear-gradient(180deg,var(--panel),var(--panel2));
+  border-radius:14px;
+  text-decoration:none;
+  color:inherit;
+  box-shadow:var(--shadow);
+  transition:transform .15s ease, border-color .15s ease;
+}
+
+.card:hover{
+  transform:translateY(-2px);
+  border-color:var(--accent);
+}
+
+.emoji{
+  font-size:24px;
+  width:34px;
+  height:34px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.meta{
+  flex:1;
+}
+
+.name{
+  font-weight:600;
+  font-size:14px;
+}
+
+.desc{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:2px;
+}
+
+.tag{
+  font-size:11px;
+  margin-top:6px;
+  color:var(--accent);
+}
+
+footer{
+  text-align:center;
+  padding:18px;
+  font-size:11px;
+  color:var(--muted);
+}
+</style>
+</head>
+
+<body>
+<header>
+  <h1>Tool Directory</h1>
+  <div id="subtitle"></div>
+</header>
+
+<div id="filterBar"></div>
+<div id="grid"></div>
+<footer id="footer"></footer>
+
+<script>
+const tools = [
+{ id: 1, emoji: ‘🪟’, name: ‘Microsoft’, desc: ‘Microsoft account’,
+category: ‘Consumer Ecosystem’, url: ‘https://signup.live.com/’ }, { id:
+2, emoji: ‘🍎’, name: ‘Apple’, desc: ‘Apple ID’, category: ‘Consumer
+Ecosystem’, url: ‘https://appleid.apple.com/account?page=create’ }, {
+id: 3, emoji: ‘🔍’, name: ‘Google’, desc: ‘Google Account’, category:
+‘Consumer Ecosystem’, url:
+‘https://accounts.google.com/signup/v2/webcreateaccount?flowName=GlifWebSignIn&flowEntry=SignUp&hl=en-GB’
+}, { id: 4, emoji: ‘📦’, name: ‘Amazon’, desc: ‘Amazon account’,
+category: ‘Consumer Ecosystem’, url:
+‘https://www.amazon.com/ap/register’ }, { id: 5, emoji: ‘☁️’, name:
+‘AWS’, desc: ‘AWS root account’, category: ‘Cloud & Infrastructure’,
+url: ‘https://portal.aws.amazon.com/billing/signup#/start’ }, { id: 6,
+emoji: ‘👥’, name: ‘Facebook’, desc: ‘Meta account’, category: ‘Social
+Media’, url: ‘https://www.facebook.com/reg/’ }, { id: 7, emoji: ‘📸’,
+name: ‘Instagram’, desc: ‘Instagram account’, category: ‘Social Media’,
+url: ‘https://www.instagram.com/accounts/emailsignup/’ }, { id: 8,
+emoji: ‘💬’, name: ‘WhatsApp’, desc: ‘WhatsApp account’, category:
+‘Messaging’, url: ‘https://www.whatsapp.com/’ }, { id: 9, emoji: ‘🐦’,
+name: ‘X’, desc: ‘X account’, category: ‘Social Media’, url:
+‘https://twitter.com/i/flow/signup’ }, { id: 10, emoji: ‘▶️’, name:
+‘YouTube’, desc: ‘YouTube account’, category: ‘Media’, url:
+‘https://accounts.google.com/signup/v2/webcreateaccount’ }, { id: 11,
+emoji: ‘🎨’, name: ‘Adobe’, desc: ‘Adobe account’, category: ‘Creative’,
+url: ‘https://account.adobe.com/’ }, { id: 12, emoji: ‘🟢’, name:
+‘NVIDIA’, desc: ‘NVIDIA account’, category: ‘Technology’, url:
+‘https://www.nvidia.com/en-us/account/’ }, { id: 13, emoji: ‘🔴’, name:
+‘AMD’, desc: ‘AMD account’, category: ‘Technology’, url:
+‘https://my.amd.com/en/auth/register’ }, { id: 14, emoji: ‘💻’, name:
+‘Intel Developer Zone’, desc: ‘Intel developer’, category: ‘Technology’,
+url:
+‘https://www.intel.com/content/www/us/en/developer/account/signup.html’
+}, { id: 15, emoji: ‘🏢’, name: ‘IBMid’, desc: ‘IBMid’, category:
+‘Enterprise’, url: ‘https://myibm.ibm.com/’ }, { id: 16, emoji: ‘🗄️’,
+name: ‘Oracle’, desc: ‘Oracle account’, category: ‘Enterprise’, url:
+‘https://profile.oracle.com/myprofile/account/create-account.jspx’ }, {
+id: 17, emoji: ‘📡’, name: ‘Cisco’, desc: ‘Cisco account’, category:
+‘Enterprise’, url:
+‘https://id.cisco.com/ui/tenants/global/v1.0/enrollment-ui’ }, { id: 18,
+emoji: ‘🏭’, name: ‘SAP’, desc: ‘SAP ID’, category: ‘Enterprise’, url:
+‘https://accounts.sap.com/ui/#createAccount’ }, { id: 19, emoji: ‘☁️’,
+name: ‘Salesforce Developer’, desc: ‘Developer Edition’, category:
+‘Developer’, url: ‘https://developer.salesforce.com/signup’ }, { id: 20,
+emoji: ‘⚙️’, name: ‘ServiceNow Developer’, desc: ‘Developer account’,
+category: ‘Developer’, url: ‘https://developer.servicenow.com/’ }, { id:
+21, emoji: ‘❄️’, name: ‘Snowflake’, desc: ‘Trial account’, category:
+‘Cloud’, url: ‘https://signup.snowflake.com/’ }, { id: 22, emoji: ‘💼’,
+name: ‘Workday Community’, desc: ‘Community’, category: ‘Enterprise’,
+url: ‘https://www.workday.com/en-us/pages/workday-community.html’ }, {
+id: 23, emoji: ‘🧩’, name: ‘Atlassian’, desc: ‘Atlassian account’,
+category: ‘Developer’, url: ‘https://id.atlassian.com/signup’ }, { id:
+24, emoji: ‘🐙’, name: ‘GitHub’, desc: ‘GitHub’, category: ‘Developer’,
+url: ‘https://github.com/signup’ }, { id: 25, emoji: ‘🦊’, name:
+‘GitLab’, desc: ‘GitLab’, category: ‘Developer’, url:
+‘https://gitlab.com/users/sign_up’ }, { id: 26, emoji: ‘🪣’, name:
+‘Bitbucket’, desc: ‘Bitbucket’, category: ‘Developer’, url:
+‘https://bitbucket.org/account/signup/’ }, { id: 27, emoji: ‘💬’, name:
+‘Slack’, desc: ‘Slack’, category: ‘Productivity’, url:
+‘https://slack.com/get-started#/createnew’ }, { id: 28, emoji: ‘🎥’,
+name: ‘Zoom’, desc: ‘Zoom’, category: ‘Productivity’, url:
+‘https://zoom.us/signup’ }, { id: 29, emoji: ‘📦’, name: ‘Dropbox’,
+desc: ‘Dropbox’, category: ‘Productivity’, url:
+‘https://www.dropbox.com/register’ }, { id: 30, emoji: ‘📁’, name:
+‘Box’, desc: ‘Box’, category: ‘Productivity’, url:
+‘https://account.box.com/signup/personal’ }, { id: 31, emoji: ‘📝’,
+name: ‘Notion’, desc: ‘Notion’, category: ‘Productivity’, url:
+‘https://www.notion.so/signup’ }, { id: 32, emoji: ‘🎨’, name: ‘Figma’,
+desc: ‘Figma’, category: ‘Creative’, url: ‘https://www.figma.com/signup’
+}, { id: 33, emoji: ‘🖌️’, name: ‘Canva’, desc: ‘Canva’, category:
+‘Creative’, url: ‘https://www.canva.com/signup’ }, { id: 34, emoji:
+‘☁️’, name: ‘Cloudflare’, desc: ‘Cloudflare’, category: ‘Cloud’, url:
+‘https://dash.cloudflare.com/sign-up’ }, { id: 35, emoji: ‘🌐’, name:
+‘Akamai’, desc: ‘Akamai’, category: ‘Cloud’, url:
+‘https://control.akamai.com/apps/registration/’ }, { id: 36, emoji:
+‘🔐’, name: ‘Okta Developer’, desc: ‘Okta’, category: ‘Developer’, url:
+‘https://developer.okta.com/signup/’ }, { id: 37, emoji: ‘🛡️’, name:
+‘Auth0’, desc: ‘Auth0’, category: ‘Developer’, url:
+‘https://auth0.com/signup’ }, { id: 38, emoji: ‘📊’, name: ‘Datadog’,
+desc: ‘Datadog’, category: ‘Cloud’, url:
+‘https://www.datadoghq.com/free-datadog-trial/’ }, { id: 39, emoji:
+‘📈’, name: ‘New Relic’, desc: ‘New Relic’, category: ‘Cloud’, url:
+‘https://newrelic.com/signup’ }, { id: 40, emoji: ‘🔎’, name: ‘Splunk’,
+desc: ‘Splunk’, category: ‘Cloud’, url:
+‘https://www.splunk.com/en_us/download/splunk-cloud-trial.html’ }, { id:
+41, emoji: ‘🏗️’, name: ‘HashiCorp’, desc: ‘HashiCorp’, category:
+‘Cloud’, url: ‘https://portal.cloud.hashicorp.com/sign-up’ }, { id: 42,
+emoji: ‘🎩’, name: ‘Red Hat’, desc: ‘Red Hat’, category: ‘Developer’,
+url:
+‘https://sso.redhat.com/auth/realms/redhat-external/login-actions/registration’
+}, { id: 43, emoji: ‘🐧’, name: ‘Ubuntu One’, desc: ‘Ubuntu One’,
+category: ‘Developer’, url: ‘https://login.ubuntu.com/+new_account’ }, {
+id: 44, emoji: ‘🤖’, name: ‘OpenAI’, desc: ‘OpenAI’, category: ‘AI’,
+url: ‘https://platform.openai.com/signup’ }, { id: 45, emoji: ‘📦’,
+name: ‘Cloudsmith’, desc: ‘Cloudsmith’, category: ‘Developer’, url:
+‘https://cloudsmith.com/signup/’ }, { id: 46, emoji: ‘🦑’, name:
+‘GitKraken’, desc: ‘GitKraken’, category: ‘Developer’, url:
+‘https://app.gitkraken.com/register’ }, { id: 47, emoji: ‘📱’, name:
+‘Samsung’, desc: ‘Samsung’, category: ‘Consumer’, url:
+‘https://account.samsung.com/accounts/v1/MBR/signUp’ }, { id: 48, emoji:
+‘🎮’, name: ‘PlayStation Network’, desc: ‘PSN’, category: ‘Gaming’, url:
+‘https://www.playstation.com/en-gb/support/account/create-account-psn/’
+}, { id: 49, emoji: ‘🖥️’, name: ‘Dell’, desc: ‘Dell’, category:
+‘Technology’, url: ‘https://www.dell.com/identity/global/Signup’ }, {
+id: 50, emoji: ‘🖨️’, name: ‘HP’, desc: ‘HP’, category: ‘Technology’,
+url: ‘https://www.hpsmart.com/uk/en/register’ }, { id: 51, emoji: ‘💻’,
+name: ‘Lenovo’, desc: ‘Lenovo ID’, category: ‘Technology’, url:
+‘https://passport.lenovo.com/wauthen2/register’ }, { id: 52, emoji:
+‘📺’, name: ‘LG’, desc: ‘LG Account’, category: ‘Technology’, url:
+‘https://id.lg.com/uk/signup’ }, { id: 53, emoji: ‘📲’, name: ‘Huawei’,
+desc: ‘Huawei ID’, category: ‘Technology’, url:
+‘https://id1.cloud.huawei.com/CAS/portal/userRegister/regbyemail.html’
+}, { id: 54, emoji: ‘💚’, name: ‘WeChat’, desc: ‘WeChat’, category:
+‘Messaging’, url: ‘https://www.wechat.com/’ }, { id: 55, emoji: ‘🛒’,
+name: ‘Alibaba’, desc: ‘Alibaba’, category: ‘Commerce’, url:
+‘https://passport.alibaba.com/member/reg/fast_reg.htm’ }, { id: 56,
+emoji: ‘🐧’, name: ‘Tencent QQ’, desc: ‘QQ’, category: ‘Messaging’, url:
+‘https://ssl.zc.qq.com/v3/index-en.html’ }, { id: 57, emoji: ‘🏭’, name:
+‘TSMC’, desc: ‘TSMC’, category: ‘Technology’, url:
+‘https://member.tsmc.com/eds/’ }, { id: 58, emoji: ‘🔌’, name:
+‘Broadcom’, desc: ‘Broadcom’, category: ‘Technology’, url:
+‘https://support.broadcom.com/web/ecx/emobile/get-started’ }, { id: 59,
+emoji: ‘📡’, name: ‘Qualcomm’, desc: ‘Qualcomm’, category: ‘Technology’,
+url: ‘https://createpoint.qti.qualcomm.com/registration’ }, { id: 60,
+emoji: ‘💻’, name: ‘ASUS’, desc: ‘ASUS’, category: ‘Technology’, url:
+‘https://account.asus.com/us/signUp.aspx’ }, { id: 61, emoji: ‘💻’,
+name: ‘Acer’, desc: ‘Acer’, category: ‘Technology’, url:
+‘https://account.acer.com/ssoCreate’ }, { id: 62, emoji: ‘📱’, name:
+‘Xiaomi’, desc: ‘Mi Account’, category: ‘Consumer’, url:
+‘https://account.xiaomi.com/pass/register’ }, { id: 63, emoji: ‘🎵’,
+name: ‘Spotify’, desc: ‘Spotify’, category: ‘Media’, url:
+‘https://www.spotify.com/signup’ }, { id: 64, emoji: ‘💳’, name:
+‘PayPal’, desc: ‘PayPal’, category: ‘Finance’, url:
+‘https://www.paypal.com/signup/account’ }, { id: 65, emoji: ‘🛍️’, name:
+‘Shopify’, desc: ‘Shopify’, category: ‘Commerce’, url:
+‘https://www.shopify.com/signup’ }, { id: 66, emoji: ‘💸’, name:
+‘Stripe’, desc: ‘Stripe’, category: ‘Finance’, url:
+‘https://dashboard.stripe.com/register’ }, { id: 67, emoji: ‘⬜’, name:
+‘Square’, desc: ‘Square’, category: ‘Finance’, url:
+‘https://squareup.com/signup’ }, { id: 68, emoji: ‘🚕’, name: ‘Uber’,
+desc: ‘Uber’, category: ‘Transport’, url:
+‘https://auth.uber.com/v2/sign-up’ }, { id: 69, emoji: ‘🏨’, name:
+‘Booking.com’, desc: ‘Booking.com’, category: ‘Travel’, url:
+‘https://account.booking.com/register’ }, { id: 70, emoji: ‘💼’, name:
+‘LinkedIn’, desc: ‘LinkedIn’, category: ‘Social’, url:
+‘https://www.linkedin.com/signup’ }, { id: 71, emoji: ‘🎶’, name:
+‘TikTok’, desc: ‘TikTok’, category: ‘Social’, url:
+‘https://www.tiktok.com/signup’ }, { id: 72, emoji: ‘👻’, name:
+‘Snapchat’, desc: ‘Snapchat’, category: ‘Social’, url:
+‘https://accounts.snapchat.com/accounts/signup’ }, { id: 73, emoji:
+‘🎧’, name: ‘Discord’, desc: ‘Discord’, category: ‘Communication’, url:
+‘https://discord.com/register’ }, { id: 74, emoji: ‘♨️’, name: ‘Steam’,
+desc: ‘Steam’, category: ‘Gaming’, url:
+‘https://store.steampowered.com/join/’ }, { id: 75, emoji: ‘🕹️’, name:
+‘Epic Games’, desc: ‘Epic Games’, category: ‘Gaming’, url:
+‘https://www.epicgames.com/id/register’ }, { id: 76, emoji: ‘🎮’, name:
+‘EA Account’, desc: ‘EA Account’, category: ‘Gaming’, url:
+‘https://my.ea.com/cp-ui/aboutme/index’ },
+];
+
+// -------- state --------
+let activeCategory = "All";
+
+// -------- helpers --------
+function normalize(str){
+  return str.toLowerCase().trim();
+}
+
+function getCategories(data){
+  const set = new Set();
+  data.forEach(d => set.add(normalize(d.category)));
+  return Array.from(set);
+}
+
+function sortByName(data){
+  return data.slice().sort((a,b)=>a.name.localeCompare(b.name));
+}
+
+// -------- render --------
+const grid = document.getElementById("grid");
+const filterBar = document.getElementById("filterBar");
+const subtitle = document.getElementById("subtitle");
+const footer = document.getElementById("footer");
+
+function renderSubtitle(filtered){
+  subtitle.textContent = `Total tools: ${tools.length} | Visible: ${filtered.length}`;
+}
+
+function renderFooter(){
+  footer.textContent = "Rendered: " + new Date().toLocaleString();
+}
+
+function renderFilters(){
+  filterBar.innerHTML = "";
+
+  const cats = ["All", ...getCategories(tools)];
+
+  cats.forEach(cat=>{
+    const btn = document.createElement("button");
+    btn.className = "filter" + (activeCategory===cat ? " active" : "");
+    btn.textContent = cat;
+
+    btn.addEventListener("click", ()=>{
+      activeCategory = cat;
+      render();
+    });
+
+    filterBar.appendChild(btn);
+  });
+}
+
+function renderGrid(data){
+  grid.innerHTML = "";
+
+  data.forEach(item=>{
+    const a = document.createElement("a");
+    a.className = "card";
+    a.href = item.url;
+    a.target = "_blank";
+
+    const emoji = document.createElement("div");
+    emoji.className = "emoji";
+    emoji.textContent = item.emoji;
+
+    const meta = document.createElement("div");
+    meta.className = "meta";
+
+    const name = document.createElement("div");
+    name.className = "name";
+    name.textContent = item.name;
+
+    const desc = document.createElement("div");
+    desc.className = "desc";
+    desc.textContent = item.description;
+
+    const tag = document.createElement("div");
+    tag.className = "tag";
+    tag.textContent = item.category;
+
+    meta.appendChild(name);
+    meta.appendChild(desc);
+    meta.appendChild(tag);
+
+    a.appendChild(emoji);
+    a.appendChild(meta);
+
+    grid.appendChild(a);
+  });
+}
+
+function render(){
+  const sorted = sortByName(tools);
+
+  const filtered = activeCategory === "All"
+    ? sorted
+    : sorted.filter(t => normalize(t.category) === normalize(activeCategory));
+
+  renderFilters();
+  renderGrid(filtered);
+  renderSubtitle(filtered);
+  renderFooter();
+}
+
+// deterministic initial render
+window.addEventListener("DOMContentLoaded", render);
+</script>
+
+</body>
+</html>
