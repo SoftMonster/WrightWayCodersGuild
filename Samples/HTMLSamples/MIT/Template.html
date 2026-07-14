@@ -705,51 +705,24 @@ function renderFooter(){
 
 function generate(){
 
+    const status =
+        document.getElementById("status");
 
-    const status=
-    document.getElementById("status");
+    try {
+
+        let source =
+            document
+            .getElementById("dataInput")
+            .value
+            .trim();
 
 
-    try{
-
-
-        let data=
-        JSON.parse(
-            cleanInput(
-                document
-                .getElementById("dataInput")
-                .value
-            )
+        // Convert desc field automatically
+        source =
+        source.replace(
+            /\bdesc\s*:/g,
+            "description:"
         );
-
-
-        validate(data);
-
-
-        tools=data;
-
-
-        activeCategory="All";
-
-
-        render();
-
-
-        status.textContent=
-        `Loaded ${tools.length} items`;
-
-
-    }
-
-    catch(e){
-
-        status.textContent=
-        "Error: "+e.message;
-
-    }
-
-
-}
 
 
 
