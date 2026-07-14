@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Offline URL Directory Generator</title>
+
+<style>
+
+:root {
+
+    --background: #101114;
+    --surface: #181b21;
+    --surface-hover: #222733;
+    --accent: #00d9ff;
+    --text: #f5f7fa;
+    --muted: #9aa4b2;
+    --border: rgba(255,255,255,.1);
+
+    --radius: 18px;
+    --motion: .25s;
+
+}
+
+
+* {
+    box-sizing:border-box;
+}
+
+
+body {
+
+    margin:0;
+    min-height:100vh;
+
+    background:
+        radial-gradient(
+            circle at top,
+            #182033,
+            var(--background)
+        );
+
+    color:var(--text);
+
+    font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+}
+
+
+.container {
+
+    width:min(1200px, 95%);
+    margin:auto;
+    padding:30px 0 50px;
+
+}
+
+
+header {
+
+    text-align:center;
+    margin-bottom:30px;
+
+}
+
+
+header h1 {
+
+    margin-bottom:8px;
+
+}
+
+
+header p {
+
+    color:var(--muted);
+
+}
+
+
+
+.generator {
+
+    background:var(--surface);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:var(--radius);
+
+    padding:25px;
+
+    margin-bottom:30px;
+
+}
+
+
+
+textarea {
+
+    width:100%;
+
+    min-height:260px;
+
+    resize:vertical;
+
+    padding:15px;
+
+    border-radius:14px;
+
+    border:
+        1px solid var(--border);
+
+    background:#090b0f;
+
+    color:white;
+
+    font-family:
+        monospace;
+
+    font-size:14px;
+
+}
+
+
+
+button {
+
+    margin-top:15px;
+
+    padding:
+        12px 22px;
+
+    border:none;
+
+    border-radius:999px;
+
+    cursor:pointer;
+
+    background:var(--accent);
+
+    color:#001018;
+
+    font-weight:700;
+
+}
+
+
+
+button:hover {
+
+    opacity:.85;
+
+}
+
+
+
+.status {
+
+    color:var(--muted);
+
+    margin-top:12px;
+
+}
+
+
+
+.filters {
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+    gap:10px;
+
+    margin:25px 0;
+
+}
+
+
+
+.filter {
+
+    background:var(--surface);
+
+    color:var(--text);
+
+    border:
+        1px solid var(--border);
+
+}
+
+
+
+.filter.active {
+
+    background:var(--accent);
+
+    color:#001018;
+
+}
+
+
+
+.grid {
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(280px,1fr)
+        );
+
+    gap:20px;
+
+}
+
+
+
+.card {
+
+    display:block;
+
+    text-decoration:none;
+
+    color:inherit;
+
+    background:var(--surface);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:var(--radius);
+
+    padding:22px;
+
+    transition:
+        transform var(--motion),
+        background var(--motion);
+
+}
+
+
+
+.card:hover {
+
+    transform:translateY(-5px);
+
+    background:var(--surface-hover);
+
+}
+
+
+
+.card .emoji {
+
+    font-size:40px;
+
+}
+
+
+
+.card h2 {
+
+    margin:
+        12px 0 8px;
+
+}
+
+
+
+.card p {
+
+    color:var(--muted);
+
+    line-height:1.5;
+
+}
+
+
+
+.category {
+
+    display:inline-block;
+
+    margin-top:15px;
+
+    color:var(--accent);
+
+    font-size:.85rem;
+
+}
+
+
+
+footer {
+
+    margin-top:40px;
+
+    text-align:center;
+
+    color:var(--muted);
+
+}
+
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<section class="generator">
+
+<h2>Directory Generator</h2>
+
+<p>
+Paste a JSON tools array and press Generate.
+</p>
+
+
+<textarea id="dataInput">
+
+[
+ {
+  "id":"1",
+  "emoji":"🌐",
+  "name":"Example Website",
+  "description":"Example resource entry",
+  "category":"General",
+  "url":"https://example.com"
+ }
+]
+
+</textarea>
+
+
+<button id="generateBtn">
+Generate Directory
+</button>
+
+
+<div class="status" id="status"></div>
+
+
+</section>
+
+
+
+<header id="header">
+
+</header>
+
+
+
+<div id="filters" class="filters">
+
+</div>
+
+
+
+<div id="grid" class="grid">
+
+</div>
+
+
+
+<footer id="footer">
+
+</footer>
+
+
+</div>
+
+
+
+<script>
+
+
+let tools = [];
+
+let activeCategory = "All";
+
+
+
+function normalize(value) {
+
+    return String(value)
+        .trim()
+        .toLowerCase();
+
+}
+
+
+
+function sortTools() {
+
+    return [...tools].sort(
+        (a,b)=>
+        a.name.localeCompare(
+            b.name
+        )
+    );
+
+}
+
+
+
+function getCategories() {
+
+
+    const categories =
+        tools.map(
+            item =>
+            normalize(item.category)
+        );
+
+
+    const unique =
+        [
+            ...new Set(categories)
+        ];
+
+
+    return [
+        "All",
+        ...unique
+    ];
+
+}
+
+
+
+function validateTools(data) {
+
+
+    if(!Array.isArray(data)) {
+
+        throw new Error(
+            "Dataset must be an array"
+        );
+
+    }
+
+
+
+    const required = [
+
+        "id",
+        "emoji",
+        "name",
+        "description",
+        "category",
+        "url"
+
+    ];
+
+
+
+    data.forEach(item=>{
+
+
+        required.forEach(field=>{
+
+
+            if(!(field in item)) {
+
+                throw new Error(
+                    "Missing field: "
+                    + field
+                );
+
+            }
+
+
+        });
+
+
+    });
+
+
+
+}
+
+
+
+function render() {
+
+    renderHeader();
+
+    renderFilters();
+
+    renderCards();
+
+    renderFooter();
+
+}
+
+
+
+function renderHeader() {
+
+
+    const header =
+        document.getElementById(
+            "header"
+        );
+
+
+    header.replaceChildren();
+
+
+
+    const title =
+        document.createElement(
+            "h1"
+        );
+
+
+    title.textContent =
+        "URL Resource Directory";
+
+
+
+    const subtitle =
+        document.createElement(
+            "p"
+        );
+
+
+    subtitle.textContent =
+        `${tools.length} resources available`;
+
+
+
+    header.appendChild(title);
+
+    header.appendChild(subtitle);
+
+
+}
+
+
+
+function renderFilters() {
+
+
+    const container =
+        document.getElementById(
+            "filters"
+        );
+
+
+    container.replaceChildren();
+
+
+
+    getCategories()
+    .forEach(category=>{
+
+
+        const button =
+            document.createElement(
+                "button"
+            );
+
+
+        button.className =
+            "filter";
+
+
+
+        button.textContent =
+            category;
+
+
+
+        if(
+            normalize(category)
+            ===
+            normalize(activeCategory)
+        ){
+
+            button.classList.add(
+                "active"
+            );
+
+        }
+
+
+
+        button.onclick = ()=>{
+
+            activeCategory =
+                category;
+
+            render();
+
+        };
+
+
+
+        container.appendChild(
+            button
+        );
+
+
+    });
+
+
+}
+
+
+
+function renderCards() {
+
+
+    const grid =
+        document.getElementById(
+            "grid"
+        );
+
+
+    grid.replaceChildren();
+
+
+
+    const visible =
+        sortTools()
+        .filter(item=>{
+
+
+            if(
+                activeCategory === "All"
+            ){
+
+                return true;
+
+            }
+
+
+            return normalize(
+                item.category
+            )
+            ===
+            normalize(
+                activeCategory
+            );
+
+
+        });
+
+
+
+    visible.forEach(item=>{
+
+
+        const card =
+            document.createElement(
+                "a"
+            );
+
+
+        card.className =
+            "card";
+
+
+        card.href =
+            item.url;
+
+
+        card.target =
+            "_blank";
+
+
+
+        const emoji =
+            document.createElement(
+                "div"
+            );
+
+
+        emoji.className =
+            "emoji";
+
+
+        emoji.textContent =
+            item.emoji;
+
+
+
+        const name =
+            document.createElement(
+                "h2"
+            );
+
+
+        name.textContent =
+            item.name;
+
+
+
+        const description =
+            document.createElement(
+                "p"
+            );
+
+
+        description.textContent =
+            item.description;
+
+
+
+        const category =
+            document.createElement(
+                "span"
+            );
+
+
+        category.className =
+            "category";
+
+
+        category.textContent =
+            item.category;
+
+
+
+        card.appendChild(
+            emoji
+        );
+
+        card.appendChild(
+            name
+        );
+
+        card.appendChild(
+            description
+        );
+
+        card.appendChild(
+            category
+        );
+
+
+
+        grid.appendChild(
+            card
+        );
+
+
+    });
+
+
+
+    const count =
+        document.createElement(
+            "p"
+        );
+
+
+    count.textContent =
+        `${visible.length} items displayed`;
+
+
+
+    document
+    .getElementById("header")
+    .appendChild(count);
+
+
+}
+
+
+
+function renderFooter() {
+
+
+    document
+    .getElementById("footer")
+    .textContent =
+
+        "Generated at "
+        +
+        new Date()
+        .toLocaleString();
+
+
+}
+
+
+
+function generate() {
+
+
+    const input =
+        document
+        .getElementById(
+            "dataInput"
+        )
+        .value;
+
+
+
+    const status =
+        document
+        .getElementById(
+            "status"
+        );
+
+
+
+    try {
+
+
+        const parsed =
+            JSON.parse(
+                input
+            );
+
+
+
+        validateTools(
+            parsed
+        );
+
+
+
+        tools =
+            parsed;
+
+
+
+        activeCategory =
+            "All";
+
+
+
+        render();
+
+
+
+        status.textContent =
+            `Loaded ${tools.length} tools successfully`;
+
+
+    }
+
+    catch(error) {
+
+
+        status.textContent =
+            "Error: "
+            +
+            error.message;
+
+
+    }
+
+
+}
+
+
+
+document
+.getElementById(
+    "generateBtn"
+)
+.onclick =
+generate;
+
+
+
+render();
+
+
+</script>
+
+
+</body>
+</html>
