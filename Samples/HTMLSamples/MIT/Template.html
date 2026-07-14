@@ -9,18 +9,15 @@
 <style>
 
 :root {
-
-    --background: #101114;
-    --surface: #181b21;
-    --surface-hover: #222733;
-    --accent: #00d9ff;
-    --text: #f5f7fa;
-    --muted: #9aa4b2;
-    --border: rgba(255,255,255,.1);
-
-    --radius: 18px;
-    --motion: .25s;
-
+    --background:#101216;
+    --surface:#191d24;
+    --surface-hover:#242b35;
+    --accent:#00d9ff;
+    --text:#f5f7fa;
+    --muted:#9da7b5;
+    --border:rgba(255,255,255,.12);
+    --radius:18px;
+    --motion:.25s;
 }
 
 
@@ -32,54 +29,33 @@
 body {
 
     margin:0;
-    min-height:100vh;
 
     background:
-        radial-gradient(
-            circle at top,
-            #182033,
-            var(--background)
-        );
+    radial-gradient(
+        circle at top,
+        #1b2538,
+        var(--background)
+    );
 
     color:var(--text);
 
     font-family:
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 
 }
 
 
 .container {
 
-    width:min(1200px, 95%);
+    width:min(1200px,95%);
+
     margin:auto;
+
     padding:30px 0 50px;
-
-}
-
-
-header {
-
-    text-align:center;
-    margin-bottom:30px;
-
-}
-
-
-header h1 {
-
-    margin-bottom:8px;
-
-}
-
-
-header p {
-
-    color:var(--muted);
 
 }
 
@@ -89,14 +65,13 @@ header p {
 
     background:var(--surface);
 
-    border:
-        1px solid var(--border);
+    border:1px solid var(--border);
 
     border-radius:var(--radius);
 
     padding:25px;
 
-    margin-bottom:30px;
+    margin-bottom:35px;
 
 }
 
@@ -106,23 +81,21 @@ textarea {
 
     width:100%;
 
-    min-height:260px;
-
-    resize:vertical;
+    min-height:280px;
 
     padding:15px;
 
+    resize:vertical;
+
     border-radius:14px;
 
-    border:
-        1px solid var(--border);
-
-    background:#090b0f;
+    background:#080a0d;
 
     color:white;
 
-    font-family:
-        monospace;
+    border:1px solid var(--border);
+
+    font-family:monospace;
 
     font-size:14px;
 
@@ -134,28 +107,19 @@ button {
 
     margin-top:15px;
 
-    padding:
-        12px 22px;
+    padding:12px 24px;
 
-    border:none;
+    border:0;
 
     border-radius:999px;
-
-    cursor:pointer;
 
     background:var(--accent);
 
     color:#001018;
 
-    font-weight:700;
+    cursor:pointer;
 
-}
-
-
-
-button:hover {
-
-    opacity:.85;
+    font-weight:bold;
 
 }
 
@@ -171,15 +135,23 @@ button:hover {
 
 
 
+header {
+
+    text-align:center;
+
+}
+
+
+
 .filters {
 
     display:flex;
 
     flex-wrap:wrap;
 
-    justify-content:center;
-
     gap:10px;
+
+    justify-content:center;
 
     margin:25px 0;
 
@@ -193,8 +165,7 @@ button:hover {
 
     color:var(--text);
 
-    border:
-        1px solid var(--border);
+    border:1px solid var(--border);
 
 }
 
@@ -215,10 +186,10 @@ button:hover {
     display:grid;
 
     grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(280px,1fr)
-        );
+    repeat(
+        auto-fit,
+        minmax(280px,1fr)
+    );
 
     gap:20px;
 
@@ -228,24 +199,21 @@ button:hover {
 
 .card {
 
-    display:block;
-
-    text-decoration:none;
+    background:var(--surface);
 
     color:inherit;
 
-    background:var(--surface);
-
-    border:
-        1px solid var(--border);
-
-    border-radius:var(--radius);
+    text-decoration:none;
 
     padding:22px;
 
+    border-radius:var(--radius);
+
+    border:1px solid var(--border);
+
     transition:
-        transform var(--motion),
-        background var(--motion);
+    transform var(--motion),
+    background var(--motion);
 
 }
 
@@ -261,18 +229,9 @@ button:hover {
 
 
 
-.card .emoji {
+.emoji {
 
     font-size:40px;
-
-}
-
-
-
-.card h2 {
-
-    margin:
-        12px 0 8px;
 
 }
 
@@ -282,17 +241,11 @@ button:hover {
 
     color:var(--muted);
 
-    line-height:1.5;
-
 }
 
 
 
 .category {
-
-    display:inline-block;
-
-    margin-top:15px;
 
     color:var(--accent);
 
@@ -304,15 +257,13 @@ button:hover {
 
 footer {
 
-    margin-top:40px;
-
     text-align:center;
+
+    margin-top:40px;
 
     color:var(--muted);
 
 }
-
-
 
 </style>
 
@@ -327,31 +278,34 @@ footer {
 
 <section class="generator">
 
-<h2>Directory Generator</h2>
+
+<h2>
+Offline Directory Generator
+</h2>
+
 
 <p>
-Paste a JSON tools array and press Generate.
+Paste your tools array below.
 </p>
 
 
-<textarea id="dataInput">
-
+<textarea id="dataInput"
+placeholder="
 [
  {
-  "id":"1",
-  "emoji":"🌐",
-  "name":"Example Website",
-  "description":"Example resource entry",
-  "category":"General",
-  "url":"https://example.com"
+  id:1,
+  emoji:'🔧',
+  name:'Example',
+  desc:'Example description',
+  category:'Tools',
+  url:'https://example.com'
  }
 ]
-
-</textarea>
+"></textarea>
 
 
 <button id="generateBtn">
-Generate Directory
+Generate
 </button>
 
 
@@ -362,27 +316,17 @@ Generate Directory
 
 
 
-<header id="header">
-
-</header>
+<header id="header"></header>
 
 
-
-<div id="filters" class="filters">
-
-</div>
+<div id="filters" class="filters"></div>
 
 
-
-<div id="grid" class="grid">
-
-</div>
+<div id="grid" class="grid"></div>
 
 
+<footer id="footer"></footer>
 
-<footer id="footer">
-
-</footer>
 
 
 </div>
@@ -398,108 +342,127 @@ let activeCategory = "All";
 
 
 
-function normalize(value) {
+function normalize(value){
 
     return String(value)
-        .trim()
-        .toLowerCase();
+    .trim()
+    .toLowerCase();
 
 }
 
 
 
-function sortTools() {
+function cleanInput(input){
 
-    return [...tools].sort(
-        (a,b)=>
-        a.name.localeCompare(
-            b.name
-        )
+
+    input=input
+    .replace(/[‘’]/g,"'")
+    .replace(/[“”]/g,'"');
+
+
+    input=input.replace(
+        /\bdesc\s*:/g,
+        "description:"
     );
 
-}
+
+    input=input.replace(
+        /([{,]\s*)([a-zA-Z0-9_]+)\s*:/g,
+        '$1"$2":'
+    );
 
 
-
-function getCategories() {
-
-
-    const categories =
-        tools.map(
-            item =>
-            normalize(item.category)
-        );
+    input=input.replace(
+        /'/g,
+        '"'
+    );
 
 
-    const unique =
-        [
-            ...new Set(categories)
-        ];
+    input=input.trim();
 
 
-    return [
-        "All",
-        ...unique
-    ];
+    if(
+        !input.startsWith("[")
+    ){
 
-}
-
-
-
-function validateTools(data) {
-
-
-    if(!Array.isArray(data)) {
-
-        throw new Error(
-            "Dataset must be an array"
-        );
+        input="["+input+"]";
 
     }
 
 
+    return input;
 
-    const required = [
+}
 
+
+
+function validate(data){
+
+
+    if(!Array.isArray(data))
+        throw Error("Dataset must be an array");
+
+
+    const fields=[
         "id",
         "emoji",
         "name",
         "description",
         "category",
         "url"
-
     ];
-
 
 
     data.forEach(item=>{
 
+        fields.forEach(field=>{
 
-        required.forEach(field=>{
+            if(!(field in item)){
 
-
-            if(!(field in item)) {
-
-                throw new Error(
-                    "Missing field: "
-                    + field
+                throw Error(
+                    "Missing field: "+field
                 );
 
             }
 
-
         });
 
-
     });
-
-
 
 }
 
 
 
-function render() {
+function categories(){
+
+
+    return [
+        "All",
+        ...new Set(
+            tools.map(
+                x=>normalize(x.category)
+            )
+        )
+    ];
+
+}
+
+
+
+function sorted(){
+
+
+    return [...tools].sort(
+        (a,b)=>
+        a.name.localeCompare(b.name)
+    );
+
+}
+
+
+
+function render(){
+
 
     renderHeader();
 
@@ -513,85 +476,69 @@ function render() {
 
 
 
-function renderHeader() {
+function renderHeader(){
 
 
-    const header =
-        document.getElementById(
-            "header"
-        );
+    const h=
+    document.getElementById("header");
 
 
-    header.replaceChildren();
+    h.replaceChildren();
 
 
-
-    const title =
-        document.createElement(
-            "h1"
-        );
+    let title=
+    document.createElement("h1");
 
 
-    title.textContent =
-        "URL Resource Directory";
+    title.textContent=
+    "URL Directory";
 
 
-
-    const subtitle =
-        document.createElement(
-            "p"
-        );
+    let count=
+    document.createElement("p");
 
 
-    subtitle.textContent =
-        `${tools.length} resources available`;
+    count.textContent=
+    `${tools.length} resources loaded`;
 
 
-
-    header.appendChild(title);
-
-    header.appendChild(subtitle);
-
+    h.append(
+        title,
+        count
+    );
 
 }
 
 
 
-function renderFilters() {
+function renderFilters(){
 
 
-    const container =
-        document.getElementById(
-            "filters"
-        );
+    const box=
+    document.getElementById("filters");
 
 
-    container.replaceChildren();
-
-
-
-    getCategories()
-    .forEach(category=>{
-
-
-        const button =
-            document.createElement(
-                "button"
-            );
-
-
-        button.className =
-            "filter";
+    box.replaceChildren();
 
 
 
-        button.textContent =
-            category;
+    categories()
+    .forEach(cat=>{
+
+
+        let button=
+        document.createElement("button");
+
+
+        button.className="filter";
+
+
+        button.textContent=cat;
 
 
 
         if(
-            normalize(category)
+            normalize(cat)
             ===
             normalize(activeCategory)
         ){
@@ -604,271 +551,180 @@ function renderFilters() {
 
 
 
-        button.onclick = ()=>{
+        button.onclick=()=>{
 
-            activeCategory =
-                category;
+            activeCategory=cat;
 
             render();
 
         };
 
 
-
-        container.appendChild(
-            button
-        );
+        box.appendChild(button);
 
 
     });
-
 
 }
 
 
 
-function renderCards() {
+function renderCards(){
 
 
-    const grid =
-        document.getElementById(
-            "grid"
-        );
+    const grid=
+    document.getElementById("grid");
 
 
     grid.replaceChildren();
 
 
 
-    const visible =
-        sortTools()
-        .filter(item=>{
+    let visible=
+    sorted()
+    .filter(item=>{
 
 
-            if(
-                activeCategory === "All"
-            ){
-
-                return true;
-
-            }
+        if(activeCategory==="All")
+            return true;
 
 
-            return normalize(
-                item.category
-            )
-            ===
-            normalize(
-                activeCategory
-            );
-
-
-        });
-
-
-
-    visible.forEach(item=>{
-
-
-        const card =
-            document.createElement(
-                "a"
-            );
-
-
-        card.className =
-            "card";
-
-
-        card.href =
-            item.url;
-
-
-        card.target =
-            "_blank";
-
-
-
-        const emoji =
-            document.createElement(
-                "div"
-            );
-
-
-        emoji.className =
-            "emoji";
-
-
-        emoji.textContent =
-            item.emoji;
-
-
-
-        const name =
-            document.createElement(
-                "h2"
-            );
-
-
-        name.textContent =
-            item.name;
-
-
-
-        const description =
-            document.createElement(
-                "p"
-            );
-
-
-        description.textContent =
-            item.description;
-
-
-
-        const category =
-            document.createElement(
-                "span"
-            );
-
-
-        category.className =
-            "category";
-
-
-        category.textContent =
-            item.category;
-
-
-
-        card.appendChild(
-            emoji
-        );
-
-        card.appendChild(
-            name
-        );
-
-        card.appendChild(
-            description
-        );
-
-        card.appendChild(
-            category
-        );
-
-
-
-        grid.appendChild(
-            card
-        );
+        return normalize(item.category)
+        ===
+        normalize(activeCategory);
 
 
     });
 
 
 
-    const count =
-        document.createElement(
-            "p"
+    visible.forEach(item=>{
+
+
+        let card=
+        document.createElement("a");
+
+
+        card.className="card";
+
+        card.href=item.url;
+
+        card.target="_blank";
+
+
+
+        let emoji=
+        document.createElement("div");
+
+
+        emoji.className="emoji";
+
+        emoji.textContent=item.emoji;
+
+
+
+        let name=
+        document.createElement("h2");
+
+
+        name.textContent=item.name;
+
+
+
+        let desc=
+        document.createElement("p");
+
+
+        desc.textContent=item.description;
+
+
+
+        let category=
+        document.createElement("span");
+
+
+        category.className="category";
+
+        category.textContent=item.category;
+
+
+
+        card.append(
+            emoji,
+            name,
+            desc,
+            category
         );
 
 
-    count.textContent =
-        `${visible.length} items displayed`;
+        grid.appendChild(card);
 
 
+    });
 
-    document
-    .getElementById("header")
-    .appendChild(count);
 
 
 }
 
 
 
-function renderFooter() {
+function renderFooter(){
 
 
     document
     .getElementById("footer")
-    .textContent =
-
-        "Generated at "
-        +
-        new Date()
-        .toLocaleString();
-
+    .textContent=
+    "Generated: "
+    +
+    new Date()
+    .toLocaleString();
 
 }
 
 
 
-function generate() {
+function generate(){
 
 
-    const input =
-        document
-        .getElementById(
-            "dataInput"
-        )
-        .value;
+    const status=
+    document.getElementById("status");
 
 
+    try{
 
-    const status =
-        document
-        .getElementById(
-            "status"
+
+        let data=
+        JSON.parse(
+            cleanInput(
+                document
+                .getElementById("dataInput")
+                .value
+            )
         );
 
 
-
-    try {
-
-
-        const parsed =
-            JSON.parse(
-                input
-            );
+        validate(data);
 
 
-
-        validateTools(
-            parsed
-        );
+        tools=data;
 
 
-
-        tools =
-            parsed;
-
-
-
-        activeCategory =
-            "All";
-
+        activeCategory="All";
 
 
         render();
 
 
-
-        status.textContent =
-            `Loaded ${tools.length} tools successfully`;
+        status.textContent=
+        `Loaded ${tools.length} items`;
 
 
     }
 
-    catch(error) {
+    catch(e){
 
-
-        status.textContent =
-            "Error: "
-            +
-            error.message;
-
+        status.textContent=
+        "Error: "+e.message;
 
     }
 
@@ -878,10 +734,8 @@ function generate() {
 
 
 document
-.getElementById(
-    "generateBtn"
-)
-.onclick =
+.getElementById("generateBtn")
+.onclick=
 generate;
 
 
