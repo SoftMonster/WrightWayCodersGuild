@@ -352,40 +352,60 @@ function normalize(value){
 
 
 
-function cleanInput(input){
+function cleanInput(input) {
+
+    // normalize quotation marks
+    input = input
+        .replace(/[‘’]/g, "'")
+        .replace(/[“”]/g, '"')
+        .trim();
 
 
-    input=input
-    .replace(/[‘’]/g,"'")
-    .replace(/[“”]/g,'"');
+    // remove trailing commas
+    input = input.replace(
+        /,\s*([}\]])/g,
+        "$1"
+    );
 
 
-    input=input.replace(
+    // convert desc key
+    input = input.replace(
         /\bdesc\s*:/g,
         "description:"
     );
 
 
-    input=input.replace(
-        /([{,]\s*)([a-zA-Z0-9_]+)\s*:/g,
+    // quote object keys
+    input = input.replace(
+        /([{,]\s*)([A-Za-z_$][\w$]*)\s*:/g,
         '$1"$2":'
     );
 
 
-    input=input.replace(
-        /'/g,
-        '"'
+    // convert single quoted strings safely
+    input = input.replace(
+        /'([^']*)'/g,
+        function(match, value){
+
+            return '"' +
+            value
+            .replace(/"/g,'\\"')
+            +
+            '"';
+
+        }
     );
 
 
-    input=input.trim();
-
-
+    // add array wrapper if missing
     if(
         !input.startsWith("[")
     ){
 
-        input="["+input+"]";
+        input =
+        "[" +
+        input +
+        "]";
 
     }
 
