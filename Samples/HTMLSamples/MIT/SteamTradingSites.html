@@ -1,123 +1,442 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Top Steam Trading Websites</title>
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Steam trading directory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-body{
-    font-family: Arial, sans-serif;
-    background:#121212;
-    color:#e6e6e6;
-    margin:40px;
+:root{
+  --bg:#e6eaef; --panel:#f6f8fa; --slot:#ffffff; --slot-hover:#eef3f9; --line:#c3ccd7;
+  --ink:#16202c; --muted:#566373; --accent:#0b6bcb; --focus:#0b6bcb;
+  --official:#b8860b; --auth:#3355e0; --info:#6f8296; --p2p:#7a3df0; --bot:#c21fd4; --grey:#d23c3c; --comm:#0f8a7a;
+  --display:"Barlow Condensed","Arial Narrow","Helvetica Neue",Arial,sans-serif;
+  --body:"Barlow","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#141a22; --panel:#1b232e; --slot:#222c39; --slot-hover:#2b3747; --line:#34414f;
+    --ink:#e7edf3; --muted:#9aa8b8; --accent:#66b8ff; --focus:#8fcbff;
+    --official:#e4ae39; --auth:#6b86ff; --info:#b0c3d9; --p2p:#a87bff; --bot:#e760f2; --grey:#f06a6a; --comm:#4fd0bd;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141a22; --panel:#1b232e; --slot:#222c39; --slot-hover:#2b3747; --line:#34414f;
+  --ink:#e7edf3; --muted:#9aa8b8; --accent:#66b8ff; --focus:#8fcbff;
+  --official:#e4ae39; --auth:#6b86ff; --info:#b0c3d9; --p2p:#a87bff; --bot:#e760f2; --grey:#f06a6a; --comm:#4fd0bd;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:1rem;line-height:1.45}
+.wrap{max-width:76rem;margin:0 auto;padding:0 1rem}
 
-h1{
-    text-align:center;
-}
+header.top{padding:2rem 0 1.25rem}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(2.6rem,9vw,5rem);line-height:.92;letter-spacing:-.01em;margin:0;text-transform:uppercase}
+.lede{max-width:38rem;margin:.9rem 0 1.25rem;color:var(--muted);font-size:1.05rem}
+.search{display:flex;gap:.5rem;max-width:30rem}
+.search input{flex:1;min-width:0;font:inherit;color:var(--ink);background:var(--slot);border:1px solid var(--line);border-radius:3px;padding:.65rem .8rem}
+.search button{font:inherit;font-weight:600;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:.65rem .9rem;cursor:pointer}
+.search button[hidden]{display:none}
 
-table{
-    width:80%;
-    margin:auto;
-    border-collapse:collapse;
-}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:2px solid var(--line)}
+.tablist{display:flex;gap:.25rem;overflow-x:auto;scrollbar-width:thin;padding-top:.4rem}
+.tab{flex:none;font-family:var(--display);font-weight:600;font-size:1.2rem;letter-spacing:.01em;color:var(--muted);background:transparent;border:0;border-bottom:4px solid transparent;margin-bottom:-2px;padding:.55rem .8rem .5rem;cursor:pointer;white-space:nowrap}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.tab .n{font-family:var(--body);font-weight:500;font-size:.8rem;color:var(--muted);margin-left:.35rem}
+nav.tabs.searching .tab{opacity:.45}
 
-th, td{
-    padding:12px;
-    border:1px solid #333;
-}
+main{padding:1.5rem 0 2rem}
+.panel-note{color:var(--muted);max-width:44rem;margin:0 0 1.25rem}
+h2{font-family:var(--display);font-weight:600;font-size:1.6rem;line-height:1.1;margin:1.75rem 0 .2rem}
+h2:first-child{margin-top:0}
+.sub{color:var(--muted);margin:0 0 .8rem;max-width:44rem;font-size:.95rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(10.5rem,1fr));gap:.6rem;list-style:none;margin:0;padding:0}
+.slot{display:flex;flex-direction:column;height:100%;min-height:9.5rem;text-decoration:none;color:var(--ink);background:var(--slot);border:1px solid var(--line);border-bottom:5px solid var(--k);border-radius:3px;padding:.7rem .75rem .55rem;transition:background-color .12s,transform .12s}
+.slot:hover{background:var(--slot-hover);transform:translateY(-2px)}
+.slot:active{transform:translateY(0)}
+.slot .e{font-size:2rem;line-height:1.1}
+.slot .nm{font-family:var(--display);font-weight:600;font-size:1.3rem;line-height:1.1;margin-top:.35rem;overflow-wrap:anywhere}
+.slot .d{font-size:.84rem;color:var(--muted);line-height:1.3;margin-top:.25rem;flex:1}
+.slot .k{font-size:.78rem;font-weight:600;color:var(--k);margin-top:.5rem}
+.k-official{--k:var(--official)} .k-auth{--k:var(--auth)} .k-info{--k:var(--info)} .k-p2p{--k:var(--p2p)} .k-bot{--k:var(--bot)} .k-grey{--k:var(--grey)} .k-comm{--k:var(--comm)}
 
-th{
-    background:#1f1f1f;
-}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.empty{background:var(--panel);border:1px dashed var(--line);border-radius:3px;padding:1.5rem;max-width:34rem}
+.empty p{margin:0 0 .8rem}
+.empty button{font:inherit;font-weight:600;color:var(--ink);background:var(--slot);border:1px solid var(--line);border-radius:3px;padding:.5rem .8rem;cursor:pointer}
 
-tr:nth-child(even){
-    background:#181818;
-}
-
-a{
-    color:#4db3ff;
-    text-decoration:none;
-}
-
-a:hover{
-    text-decoration:underline;
-}
+footer{border-top:2px solid var(--line);padding:1.5rem 0 3rem;color:var(--muted);font-size:.92rem}
+footer h2{color:var(--ink);font-size:1.3rem;margin:0 0 .6rem}
+.legend{display:grid;grid-template-columns:repeat(auto-fill,minmax(16rem,1fr));gap:.5rem 1.5rem;list-style:none;margin:0 0 1.5rem;padding:0}
+.legend li{display:flex;gap:.6rem;align-items:baseline}
+.legend i{flex:none;width:1.6rem;height:.4rem;background:var(--k);border-radius:1px;transform:translateY(-.15rem)}
+.legend b{color:var(--ink);font-weight:600}
+footer p{max-width:46rem;margin:0 0 .7rem}
+@media (max-width:30rem){.grid{grid-template-columns:repeat(2,1fr)}.slot{min-height:9rem}}
+@media (prefers-reduced-motion:reduce){.slot{transition:none}.slot:hover{transform:none}}
 </style>
 </head>
-
 <body>
+<div class="wrap">
+  <header class="top">
+    <h1>Steam trading directory</h1>
+    <p class="lede"><span id="total"></span> sites for swapping skins, levelling up a profile, and buying game keys and bundles. Every tile opens the site in a new tab. Checked October 2026.</p>
+    <div class="search" role="search">
+      <input id="q" type="search" placeholder="Search all sites, e.g. skinport or tf2" aria-label="Search all sites" autocomplete="off">
+      <button id="clear" type="button" hidden>Clear search</button>
+    </div>
+  </header>
+</div>
 
-<h1>Top 10 Steam Trading Websites</h1>
+<nav class="tabs" id="tabsnav" aria-label="Categories">
+  <div class="wrap"><div class="tablist" role="tablist" id="tablist"></div></div>
+</nav>
 
-<table>
-<tr>
-<th>#</th>
-<th>Website</th>
-<th>Description</th>
-</tr>
+<div class="wrap">
+  <main id="panel" role="tabpanel" tabindex="-1"></main>
 
-<tr>
-<td>1</td>
-<td><a href="https://www.steamtrades.com">SteamTrades</a></td>
-<td>Community trading forum for cards, keys, and items.</td>
-</tr>
+  <footer>
+    <h2>What the coloured edge means</h2>
+    <ul class="legend">
+      <li class="k-official"><i></i><span><b>Official Steam</b> – run by Valve.</span></li>
+      <li class="k-auth"><i></i><span><b>Authorised store</b> – keys bought direct from publishers.</span></li>
+      <li class="k-p2p"><i></i><span><b>Marketplace</b> – you buy from and sell to other users.</span></li>
+      <li class="k-bot"><i></i><span><b>Bot trade</b> – you trade with the site's own Steam accounts.</span></li>
+      <li class="k-grey"><i></i><span><b>Reseller</b> – keys from unverified sources, cheaper but riskier.</span></li>
+      <li class="k-info"><i></i><span><b>Tool</b> – prices, stats or directories. No trading.</span></li>
+      <li class="k-comm"><i></i><span><b>Community</b> – forums and person-to-person swaps.</span></li>
+    </ul>
+    <p>None of the third-party sites here are affiliated with Valve, and a listing is not an endorsement. Before you sign in through Steam, check the address bar matches the real domain, keep the Steam Guard mobile authenticator on, and never hand anyone your Web API key.</p>
+    <p>Fees quoted on skin sites are from CSDB's August 2026 comparison and change often. Left out on purpose: gambling and case-opening sites, Marketplace.tf and SteamRep (current status not confirmed), plus GamerPay, LootBear and SkinBid (closed) and BitSkins (withdrawals offline since June 2026).</p>
+  </footer>
+</div>
 
-<tr>
-<td>2</td>
-<td><a href="https://steamtradebots.com">SteamTradeBots</a></td>
-<td>Directory listing automated trading bots and rates.</td>
-</tr>
+<script>
+const TABS = [
+{id:"bots", name:"Trade bots", note:"Instant skin-for-skin swaps against a site's own inventory. Fast, but the price spread is where the fee hides, so compare a quote against a marketplace first.", groups:[
+ {h:"Skin swap sites", items:[
+  ["🔁","Tradeit.gg","https://tradeit.gg","Biggest bot trader. CS2, Rust and TF2. Spread roughly 5–13%.","bot","Bot trade"],
+  ["💵","CS.Money","https://cs.money","Largest bot inventory, plus a market with 5% fee. 3D skin viewer.","bot","Bot + marketplace"],
+  ["🐒","SkinsMonkey","https://skinsmonkey.com","Instant swaps with a 5–10% spread. No cash-out.","bot","Bot trade"],
+  ["🔄","SkinSwap","https://skinswap.com","CS2 and Rust. Advertised 0% fee, margin sits in the prices.","bot","Bot trade"],
+  ["🔃","Swap.gg","https://swap.gg","8% base fee, more on scarce items. SEPA instant sell.","bot","Bot trade"],
+  ["🌾","Loot.Farm","https://loot.farm","CS2, Dota 2, TF2 and Rust. 5% commission, no cash-out.","bot","Bot trade"],
+  ["🤝","CS.TRADE","https://cs.trade","Multi-game bot trader. 6–8% deposit commission.","bot","Bot trade"],
+  ["🏴‍☠️","PirateSwap","https://pirateswap.com","Bot swaps plus instant sell. Fees not published.","bot","Bot trade"],
+  ["🌊","Skinflow","https://skinflow.gg","Trade at 4–7% or sell instantly. PayPal and crypto payouts.","bot","Bot + marketplace"],
+  ["🎯","DMarket","https://dmarket.com","Hybrid bot and peer market across several games. 2% base seller fee.","bot","Bot + marketplace"],
+  ["♻️","iTrade.gg","https://itrade.gg","Bot swaps for CS2 and Rust. Commission from about 4%.","bot","Bot trade"],
+  ["🏰","Skinvault","https://skinvault.gg","Bot trading with buy and instant-sell options.","bot","Bot trade"],
+  ["🏎️","RapidSkins","https://rapidskins.com","Smaller bot trader for CS2 and Rust skins.","bot","Bot trade"]
+ ]},
+ {h:"Instant cash-out", sub:"These buy your skins outright. Quick money, well below market value.", items:[
+  ["💸","SkinCashier","https://skincashier.com","Buys CS2 and Rust skins. PayPal and crypto payouts.","bot","Cash-out"],
+  ["💰","Skins.Cash","https://skins.cash","Long-running instant-sell site for several Steam games.","bot","Cash-out"],
+  ["🏝️","Skin.Land","https://skin.land","Buys at about 60% of Steam Market price. Card and SEPA payouts.","bot","Cash-out"],
+  ["🏧","SkinSell","https://skinsell.gg","Instant sell for CS2 and Rust skins, cash or site balance.","bot","Cash-out"]
+ ]}
+]},
+{id:"markets", name:"Marketplaces", note:"Cash marketplaces where you list at your own price and other players buy. Slower than a bot, usually better value.", groups:[
+ {h:"Skin marketplaces", items:[
+  ["🛟","CSFloat","https://csfloat.com","2% seller fee, none for buyers. Strong float and pattern search.","p2p","Marketplace"],
+  ["⚓","Skinport","https://skinport.com","Largest Western cash market. 8% seller fee, bank payouts.","p2p","Marketplace"],
+  ["🐃","BUFF Market","https://buff.market","Global version of BUFF. 2.5% seller fee.","p2p","Marketplace"],
+  ["🏮","BUFF163","https://buff.163.com","Biggest Chinese market. Alipay and WeChat Pay. 2.5% fee.","p2p","Marketplace"],
+  ["👑","SkinBaron","https://skinbaron.de","German, SEPA payouts. 15% standard seller fee.","p2p","Marketplace"],
+  ["🏷️","CS.Deals","https://cs.deals","2% seller fee. Item-for-item trades at 0%.","p2p","Marketplace"],
+  ["📦","LIS-SKINS","https://lis-skins.com","5–6% seller fee. Crypto and local payment methods.","p2p","Marketplace"],
+  ["🚐","Avan.Market","https://avan.market","Card, PayPal and SEPA. No published seller commission.","p2p","Marketplace"],
+  ["⬜","White.Market","https://white.market","Crypto-first peer market. 5% seller fee.","p2p","Marketplace"],
+  ["🌑","ShadowPay","https://shadowpay.com","About 10% all-in once the withdrawal fee is counted.","p2p","Marketplace"],
+  ["🕯️","Waxpeer","https://waxpeer.com","6% seller fee. Low Trustpilot score over payout delays.","p2p","Marketplace"],
+  ["😇","HaloSkins","https://haloskins.com","3% seller fee. Crypto payouts only.","p2p","Marketplace"],
+  ["🛒","Market.CSGO","https://market.csgo.com","Long-running TM market. Around 10% all-in.","p2p","Marketplace"],
+  ["🧱","SkinPlace","https://skin.place","Advertised 0% fee, margin is inside the quoted price.","p2p","Marketplace"],
+  ["🪙","Skins.com","https://skins.com","0% marketplace commission. Card and crypto.","p2p","Marketplace"],
+  ["🧭","Aim.Market","https://aim.market","Regional market with card and SBP payouts. Fees not published.","p2p","Marketplace"],
+  ["🌩️","SkinThunder","https://skinthunder.com","Peer-to-peer market advertising 1% commission.","p2p","Marketplace"],
+  ["🖐️","C5Game","https://www.c5game.com","Large Chinese marketplace for CS2 and Dota 2 items.","p2p","Marketplace"],
+  ["🀄","YouPin898","https://www.youpin898.com","Chinese market with skin rental. Needs a mainland payment method.","p2p","Marketplace"],
+  ["🕹️","Gamerall","https://gamerall.com","Marketplace for CS2, Rust and Dota 2 skins plus game keys.","p2p","Marketplace"]
+ ]}
+]},
+{id:"levels", name:"Levels and cards", note:"Level-up services sell you full trading-card sets for keys, gems, skins or cash. You still craft the badges yourself.", groups:[
+ {h:"Level-up sites", items:[
+  ["⬆️","SteamLevelU","https://steamlevelu.com","Trades keys for card sets and back again, fully automated.","bot","Level-up bots"],
+  ["🆙","SteamLvlUp","https://steamlvlup.com","Deposit cards, keys or backgrounds, then buy sets with site gems.","bot","Level-up bots"],
+  ["📶","SteamLevels","https://steamlevels.com","Pick a target level and pay by card, PayPal, crypto or items.","bot","Level-up bots"],
+  ["🚀","SteamLevelUp","https://steamlevelup.com","Level calculator with card, crypto, skin and gem payment.","bot","Level-up bots"],
+  ["🎚️","LVLUPSteam","https://lvlupsteam.com","Buy sets with CS2 skins and keys. Also buys spare cards and emoticons.","bot","Level-up bots"],
+  ["🪜","ShLvlUp","https://shlvlup.com","Second site from the SteamLevelU bot network.","bot","Level-up bots"],
+  ["👯","Duobot","https://duobot.com","Portuguese level-up service since 2018. Card sets by level tier, plus gem and event-card bots.","bot","Level-up bots"]
+ ]},
+ {h:"Bot directories", sub:"Compare the level-up bots that live on Steam itself by sets per key and stock.", items:[
+  ["📋","Steam.Supply","https://steam.supply/CardBots","Live list of card bots ranked by sets per key and gem rate.","info","Directory"],
+  ["📊","SteamLvlUp.net","https://steamlvlup.net","Compares card bots, set prices and gem rates. Level calculator.","info","Directory"]
+ ]},
+ {h:"Trading cards and badges", items:[
+  ["🃏","Steam Card Exchange","https://www.steamcardexchange.net","Card-for-card bot with a points system. Badge and showcase database.","bot","Card bot"],
+  ["🧩","SteamTradeMatcher","https://www.steamtradematcher.com","Finds same-set duplicate swaps to finish your badges.","info","Tool"],
+  ["🚜","ArchiSteamFarm","https://github.com/JustArchiNET/ArchiSteamFarm","Open-source card farmer that can auto-accept fair card swaps.","info","Tool"]
+ ]}
+]},
+{id:"games", name:"TF2, Dota 2 and Rust", note:"Tradeit.gg, Loot.Farm, DMarket, CS.Deals and Skinport on the other tabs also carry items for these games.", groups:[
+ {h:"Team Fortress 2", items:[
+  ["🎒","backpack.tf","https://backpack.tf","The TF2 price guide. Buy and sell listings from players and bots.","p2p","Listings + prices"],
+  ["🔩","Scrap.tf","https://scrap.tf","Bot banking for weapons, hats and keys. Raffles and auctions.","bot","Bot trade"],
+  ["🚉","STN Trading","https://stntrading.eu","Bot shop for TF2 items, paid in keys and metal.","bot","Bot trade"],
+  ["🏬","Mannco.store","https://mannco.store","Cash market for TF2 and other Steam items. 5% seller fee.","p2p","Marketplace"],
+  ["🧢","Mannco.trade","https://mannco.trade","Item-for-item bot trading from the Mannco team.","bot","Bot trade"],
+  ["⚡","Quicksell.store","https://quicksell.store","Bot shop focused on unusuals.","bot","Bot trade"],
+  ["📌","posts.tf","https://posts.tf","Classified-style trade posts, in the spirit of TF2 Outpost.","comm","Community"],
+  ["🏟️","Gladiator.tf","https://gladiator.tf","Hosting and pricing for TF2 trade bots.","info","Tool"],
+  ["🛠️","TF2Autobot","https://github.com/TF2Autobot/tf2autobot","Open-source bot for running your own TF2 trading account.","info","Tool"],
+  ["🎩","TF2.TM","https://tf2.tm","TF2 branch of the TM market network.","p2p","Marketplace"]
+ ]},
+ {h:"Dota 2 and Rust", items:[
+  ["🛡️","Dota 2 Market","https://market.dota2.net","Dota 2 branch of the TM market network.","p2p","Marketplace"],
+  ["🏚️","Rust.TM","https://rust.tm","Rust branch of the TM market network.","p2p","Marketplace"],
+  ["🔧","SCMM","https://rust.scmm.app","Rust skin prices, store history and inventory value.","info","Price tracker"],
+  ["🧙","Dota 2 trading forum","https://steamcommunity.com/app/570/tradingforum/","Valve's own trading board for Dota 2.","official","Official Steam"],
+  ["⛺","Rust trading forum","https://steamcommunity.com/app/252490/tradingforum/","Valve's own trading board for Rust.","official","Official Steam"]
+ ]}
+]},
+{id:"keys", name:"Game keys", note:"Authorised stores pay the publisher for every key. Resellers are cheaper, but keys can come from unknown sources and Valve offers no help if one is revoked.", groups:[
+ {h:"Authorised stores", items:[
+  ["🎁","Humble Bundle","https://www.humblebundle.com","Pay-what-you-want bundles, a store and the Humble Choice subscription.","auth","Authorised store"],
+  ["🔥","Fanatical","https://www.fanatical.com","Bundle specialist with a large store of publisher-direct keys.","auth","Authorised store"],
+  ["🟢","Green Man Gaming","https://www.greenmangaming.com","Big catalogue and good launch-day discounts.","auth","Authorised store"],
+  ["🪐","Gamesplanet","https://www.gamesplanet.com","UK, French and German storefronts. Shows key region clearly.","auth","Authorised store"],
+  ["🚪","GamersGate","https://www.gamersgate.com","Long-running Swedish store with frequent sales.","auth","Authorised store"],
+  ["🎪","IndieGala","https://www.indiegala.com","Indie bundles, a store and regular giveaways.","auth","Authorised store"],
+  ["🎟️","GameBillet","https://www.gamebillet.com","Small store that often has the lowest authorised price.","auth","Authorised store"],
+  ["✌️","2Game","https://2game.com","Authorised store with regional pricing.","auth","Authorised store"],
+  ["📥","DLGamer","https://www.dlgamer.com","French store selling official Steam keys worldwide.","auth","Authorised store"],
+  ["🏆","WinGameStore","https://www.wingamestore.com","US store, sister site to MacGameStore.","auth","Authorised store"],
+  ["☁️","Nuuvem","https://www.nuuvem.com","Brazilian store. Check region locks before you buy.","auth","Authorised store"],
+  ["🌌","Voidu","https://www.voidu.com","Dutch store with regular voucher codes.","auth","Authorised store"],
+  ["🐞","JoyBuggy","https://www.joybuggy.com","Smaller authorised store, strong on older titles.","auth","Authorised store"],
+  ["▶️","Allyouplay","https://www.allyouplay.com","Authorised store run by a Hungarian publisher-distributor.","auth","Authorised store"],
+  ["🌙","Noctre","https://www.noctre.com","Newer authorised store with coupon-driven pricing.","auth","Authorised store"],
+  ["🧃","Gamesload","https://www.gamesload.com","German authorised store.","auth","Authorised store"],
+  ["🍎","MacGameStore","https://www.macgamestore.com","Mac-focused sister store to WinGameStore.","auth","Authorised store"]
+ ]},
+ {h:"Resellers and key marketplaces", sub:"Not publisher-authorised. Pay with something that allows a chargeback and redeem the key straight away.", items:[
+  ["🅶","G2A","https://www.g2a.com","Largest open marketplace. Watch the fees added at checkout.","grey","Key marketplace"],
+  ["🐧","Kinguin","https://www.kinguin.net","Open marketplace with optional buyer protection.","grey","Key marketplace"],
+  ["🟣","Eneba","https://www.eneba.com","Marketplace with the strongest reputation of the big three.","grey","Key marketplace"],
+  ["🎲","Gamivo","https://www.gamivo.com","Marketplace with a subscription for lower prices.","grey","Key marketplace"],
+  ["🔋","Loaded","https://www.loaded.com","Formerly CDKeys. Sells from its own stock, no checkout fees.","grey","Reseller"],
+  ["⏱️","Instant Gaming","https://www.instant-gaming.com","Direct reseller, popular in Europe. No marketplace sellers.","grey","Reseller"],
+  ["🔑","K4G","https://k4g.com","Marketplace for keys and gift cards.","grey","Key marketplace"],
+  ["🌀","Driffle","https://driffle.com","Newer marketplace with aggressive pricing.","grey","Key marketplace"],
+  ["🗝️","HRK Game","https://www.hrkgame.com","Reseller with low prices and patchy stock.","grey","Reseller"],
+  ["🦭","GameSeal","https://gameseal.com","Reseller for keys and gift cards.","grey","Reseller"],
+  ["🏪","Difmark","https://difmark.com","Marketplace where sellers compete on each listing.","grey","Key marketplace"],
+  ["🎮","MMOGA","https://www.mmoga.com","German reseller for keys, currency and gift cards.","grey","Reseller"],
+  ["🔀","Gameflip","https://gameflip.com","Peer marketplace for keys, items and gift cards.","grey","Key marketplace"],
+  ["🎰","G2Play","https://www.g2play.net","Reseller from the Kinguin group.","grey","Reseller"],
+  ["🧷","SCDKey","https://www.scdkey.com","Reseller for game and software keys.","grey","Reseller"],
+  ["📀","CJS CD Keys","https://www.cjs-cdkeys.com","Long-running UK key reseller.","grey","Reseller"],
+  ["🎏","Play-Asia","https://www.play-asia.com","Import retailer selling digital codes, often region-specific.","grey","Reseller"]
+ ]},
+ {h:"Price comparison", sub:"Start here. These sell nothing and show every store's price side by side.", items:[
+  ["🔍","IsThereAnyDeal","https://isthereanydeal.com","Authorised stores only. Price history, waitlist and alerts.","info","Price tracker"],
+  ["📉","GG.deals","https://gg.deals","Official stores and keyshops in separate columns. Alerts.","info","Price tracker"],
+  ["🧾","AllKeyShop","https://www.allkeyshop.com","Widest keyshop coverage, with fees shown per payment method.","info","Price tracker"],
+  ["🦈","CheapShark","https://www.cheapshark.com","Simple deal list across official stores.","info","Price tracker"],
+  ["🗓️","SteamDB sales","https://steamdb.info/sales/","Every current Steam discount with lowest-ever price.","info","Price tracker"],
+  ["🐊","GameGator","https://gamegator.net","Keyshop comparison with store reviews.","info","Price tracker"],
+  ["🧮","Nexarda","https://www.nexarda.com","Price comparison across PC and console stores.","info","Price tracker"],
+  ["⚖️","DLCompare","https://www.dlcompare.com","Comparison site with official and keyshop prices.","info","Price tracker"]
+ ]}
+]},
+{id:"bundles", name:"Bundles and freebies", note:"Bundles are the cheapest legitimate way to pick up Steam keys in bulk, and the usual source of spare keys for trading.", groups:[
+ {h:"Bundle sites", items:[
+  ["📅","DailyIndieGame","https://www.dailyindiegame.com","Very cheap indie bundles and a user key marketplace. Barter.vg lists it with a caution mark.","grey","Bundles + key marketplace"],
+  ["🫶","Humble bundles","https://www.humblebundle.com/bundles","Pay-what-you-want tiers with a charity split.","auth","Bundles"],
+  ["🗳️","Humble Choice","https://www.humblebundle.com/membership","Monthly subscription that hands you a set of keys to keep.","auth","Subscription"],
+  ["🎆","Fanatical bundles","https://www.fanatical.com/en/bundle","Themed, mystery and build-your-own bundles.","auth","Bundles"],
+  ["🎡","IndieGala bundles","https://www.indiegala.com/bundles","Frequent low-price indie bundles of mixed quality.","auth","Bundles"],
+  ["💿","Digiphile","https://www.digiphile.co","Newer curated bundle site with themed collections.","auth","Bundles"],
+  ["🎸","Groupees","https://groupees.com","Build-a-bundle site for games and music. Check prices against Steam first.","auth","Bundles"],
+  ["🥬","Green Man Gaming bundles","https://www.greenmangamingbundles.com","GMG's separate bundle storefront.","auth","Bundles"],
+  ["🎄","Jingle Jam","https://www.jinglejam.co.uk","Yearly December charity collection of Steam keys.","auth","Charity bundle"]
+ ]},
+ {h:"Bundle trackers", items:[
+  ["🗒️","Barter.vg bundles","https://barter.vg/bundles/","Nearly every Steam key bundle since 2010, with what is live now.","info","Tracker"],
+  ["📰","Indie Game Bundles","https://www.indiegamebundles.com","News site covering new bundles and free keys since 2012.","info","Tracker"],
+  ["🛎️","Indie Bundle Tracker","https://steamcommunity.com/groups/IndieBundleTracker","Steam group that announces new bundles.","comm","Community"],
+  ["🏴","r/GameDeals","https://www.reddit.com/r/GameDeals/","Deals subreddit for bundles and store sales.","comm","Community"]
+ ]},
+ {h:"Free games and giveaways", sub:"Anyone can host a giveaway on platforms like Gleam, so trust the company running it, not the platform.", items:[
+  ["🎈","GamerPower","https://www.gamerpower.com","Tracks live giveaways for games, beta keys and in-game loot.","info","Tracker"],
+  ["🫳","GrabFreeGames","https://grabfreegames.com","Lists current free-to-keep games and key giveaways.","info","Tracker"],
+  ["🆓","FreeSteamKeys","https://www.freesteamkeys.com","Community-submitted links to ongoing Steam key giveaways.","info","Tracker"],
+  ["🎊","IndieGala freebies","https://freebies.indiegala.com","IndieGala's own free game giveaways.","auth","Giveaways"],
+  ["👽","Alienware Arena","https://www.alienwarearena.com","Key giveaways for members, limited by stock.","auth","Giveaways"],
+  ["🕰️","SteamDB free promotions","https://steamdb.info/upcoming/free/","Games currently free to keep or free for a weekend on Steam.","info","Tracker"],
+  ["🔦","r/FreeGameFindings","https://www.reddit.com/r/FreeGameFindings/","Subreddit for free-to-keep game offers.","comm","Community"],
+  ["🌟","Gleam","https://gleam.io","Giveaway platform used by stores and developers. Check who the host is.","info","Giveaway platform"]
+ ]}
+]},
+{id:"tools", name:"Tools and trackers", note:"Reference sites. None of them need your items, and most work without signing in.", groups:[
+ {h:"Skin prices and inspection", items:[
+  ["🏛️","Pricempire","https://pricempire.com","Compares skin prices across 40+ markets. Portfolio tracking.","info","Price tracker"],
+  ["🔫","CSGOSKINS.GG","https://csgoskins.gg","Skin database with live prices from many marketplaces.","info","Price tracker"],
+  ["📈","SteamAnalyst","https://www.steamanalyst.com","Price history since 2013. Inventory value and trade-up tools.","info","Price tracker"],
+  ["🗃️","Skinbase","https://skinbase.io","Marketplace comparison table with fees included in the gap.","info","Price tracker"],
+  ["🗄️","CS2 Stash","https://stash.clash.gg","Every skin, case and collection with Steam Market prices.","info","Database"],
+  ["📚","CSDB.gg","https://csdb.gg","Skin database, float checker and reviews of trading sites.","info","Database"],
+  ["🔬","CSFloat Checker","https://csfloat.com/checker","Paste an inspect link to get float, pattern and stickers.","info","Tool"],
+  ["🧰","Steam Inventory Helper","https://sih.app","Browser extension for prices, floats and quick selling.","info","Extension"],
+  ["🧿","FloatDB","https://csfloat.com/db","Search every indexed CS2 skin by float, pattern or owner.","info","Database"],
+  ["🧪","TradeUpSpy","https://www.tradeupspy.com","Trade-up contract calculator and profitable recipe finder.","info","Tool"],
+  ["📐","CSMarketCap","https://csmarketcap.com","Market-wide price index and marketplace profiles.","info","Price tracker"],
+  ["🦅","SkinSniper","https://skinsniper.com","Price comparison, alerts and trade-up tools.","info","Price tracker"],
+  ["🧑‍💻","Steam Economy Enhancer","https://github.com/Nuklon/Steam-Economy-Enhancer","Userscript for bulk-selling inventory items on the Community Market.","info","Extension"]
+ ]},
+ {h:"Accounts, stats and library", items:[
+  ["💾","SteamDB","https://steamdb.info","Apps, packages, price history, player counts and patch tracking.","info","Database"],
+  ["💲","SteamDB Calculator","https://steamdb.info/calculator/","What your account and library are worth.","info","Tool"],
+  ["🥇","Steam Ladder","https://steamladder.com","Rankings by level, playtime, games and badges.","info","Stats"],
+  ["🆔","SteamID.io","https://steamid.io","Convert between SteamID formats and look up profiles.","info","Tool"],
+  ["🏹","Steam Hunters","https://steamhunters.com","Achievement tracking and leaderboards.","info","Stats"],
+  ["⭐","AStats","https://astats.astats.nl","Achievement stats and completion rankings.","info","Stats"],
+  ["✅","completionist.me","https://completionist.me","Library completion tracking and achievement guides.","info","Stats"],
+  ["🕵️","SteamSpy","https://steamspy.com","Ownership and playtime estimates for Steam games.","info","Stats"],
+  ["👥","Steam Charts","https://steamcharts.com","Concurrent player counts over time.","info","Stats"],
+  ["🚦","Steam Status","https://steamstat.us","Whether Steam, the store and game coordinators are up.","info","Status"],
+  ["✨","Augmented Steam","https://augmentedsteam.com","Extension adding price history and extra info to store pages.","info","Extension"],
+  ["⚛️","ProtonDB","https://www.protondb.com","How well each game runs on Linux and Steam Deck.","info","Database"],
+  ["🖼️","SteamGridDB","https://www.steamgriddb.com","Custom covers, icons and hero art for your library.","info","Database"],
+  ["⏳","HowLongToBeat","https://howlongtobeat.com","How long games take to finish.","info","Database"],
+  ["🪪","SteamID.uk","https://steamid.uk","Profile lookup with ban status and ID conversion.","info","Tool"],
+  ["📜","SteamHistory","https://steamhistory.net","Name, avatar and ban history for Steam profiles.","info","Tool"],
+  ["🎨","Steam.Design","https://steam.design","Crops profile backgrounds into artwork showcase images.","info","Tool"],
+  ["🏅","Steam 250","https://steam250.com","Rankings of the best-reviewed games on Steam.","info","Stats"],
+  ["👀","SteamPeek","https://steampeek.hu","Finds games similar to one you like.","info","Tool"]
+ ]}
+]},
+{id:"community", name:"Community swaps", note:"Person-to-person trading. No bots or escrow, so check reputation before you send anything first.", groups:[
+ {h:"Game and key swapping", items:[
+  ["🔂","SteamTrades","https://www.steamtrades.com","Forum for swapping keys and gifts, with a reputation system.","comm","Community"],
+  ["🎉","SteamGifts","https://www.steamgifts.com","Community giveaways entered with points.","comm","Giveaways"],
+  ["🧺","Barter.vg","https://barter.vg","Matches your tradables against other people's wishlists. Bundle tracker.","comm","Community"],
+  ["🤲","Lestrades","https://lestrades.com","Similar matching to Barter.vg with a simpler interface.","comm","Community"],
+  ["🗣️","r/SteamGameSwap","https://www.reddit.com/r/SteamGameSwap/","Moderated subreddit for game and key trades.","comm","Community"],
+  ["🌱","r/indiegameswap","https://www.reddit.com/r/indiegameswap/","Subreddit for swapping bundle leftovers.","comm","Community"]
+ ]},
+ {h:"Item trading boards", items:[
+  ["🧨","r/GlobalOffensiveTrade","https://www.reddit.com/r/GlobalOffensiveTrade/","Largest subreddit for CS2 skin trades.","comm","Community"],
+  ["🐉","r/Dota2Trade","https://www.reddit.com/r/Dota2Trade/","Subreddit for Dota 2 item trades.","comm","Community"],
+  ["🧤","r/tf2trade","https://www.reddit.com/r/tf2trade/","Subreddit for TF2 item trades.","comm","Community"],
+  ["🎴","Steam Trading Cards Group","https://steamcommunity.com/groups/tradingcards","Large Steam group for person-to-person card swaps.","comm","Community"],
+  ["🗂️","CardTrades group","https://steamcommunity.com/groups/card-trading-card-trades","Steam Card Exchange's official group and forum.","comm","Community"],
+  ["💬","CS2 trading forum","https://steamcommunity.com/app/730/tradingforum/","Valve's own trading board for Counter-Strike 2.","official","Official Steam"],
+  ["📣","TF2 trading forum","https://steamcommunity.com/app/440/tradingforum/","Valve's own trading board for Team Fortress 2.","official","Official Steam"]
+ ]}
+]},
+{id:"official", name:"Official Steam", note:"Valve's own pages. Use these to check what a third-party site has access to.", groups:[
+ {h:"Trading and market", items:[
+  ["🏦","Community Market","https://steamcommunity.com/market/","Steam's own market. 15% total fee on CS2 items, wallet funds only.","official","Official Steam"],
+  ["📨","Trade offers","https://steamcommunity.com/my/tradeoffers/","Your incoming and sent offers. Check the recipient every time.","official","Official Steam"],
+  ["🔗","Trade URL","https://steamcommunity.com/my/tradeoffers/privacy","Find or reset the link trading sites ask for.","official","Official Steam"],
+  ["🛂","Web API key","https://steamcommunity.com/dev/apikey","If a key is listed that you didn't create, revoke it and change your password.","official","Official Steam"],
+  ["🎖️","Badges","https://steamcommunity.com/my/badges/","Craft card sets into badges and see your level progress.","official","Official Steam"],
+  ["🛍️","Points Shop","https://store.steampowered.com/points/shop","Spend Steam Points on profile items.","official","Official Steam"],
+  ["📇","Trading cards FAQ","https://steamcommunity.com/tradingcards","Valve's explanation of cards, badges and levels.","official","Official Steam"],
+  ["💎","Booster pack creator","https://steamcommunity.com/tradingcards/boostercreator/","Turn gems into booster packs for games you own.","official","Official Steam"]
+ ]},
+ {h:"Keys and help", items:[
+  ["⌨️","Activate a key","https://store.steampowered.com/account/registerkey","Redeem a product key on your account.","official","Official Steam"],
+  ["🆘","Steam Support","https://help.steampowered.com","Account recovery, refunds and trade problems.","official","Official Steam"]
+ ]}
+]}
+];
 
-<tr>
-<td>3</td>
-<td><a href="https://www.steamcardexchange.net">SteamCardExchange</a></td>
-<td>Automated card and badge-set trading.</td>
-</tr>
+const $ = s => document.querySelector(s);
+const tablist = $("#tablist"), panel = $("#panel"), q = $("#q"), clearBtn = $("#clear"), nav = $("#tabsnav");
+const count = t => t.groups.reduce((n,g)=>n+g.items.length,0);
+$("#total").textContent = TABS.reduce((n,t)=>n+count(t),0);
 
-<tr>
-<td>4</td>
-<td><a href="https://steamlevelup.com">SteamLevelUp</a></td>
-<td>Steam level boosting through card sets.</td>
-</tr>
+function el(tag, cls, text){const e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e;}
+function tile(it){
+  const li = el("li");
+  const a = el("a","slot k-"+it[4]);
+  a.href = it[2]; a.target = "_blank"; a.rel = "noopener noreferrer";
+  const e = el("span","e",it[0]); e.setAttribute("aria-hidden","true");
+  a.append(e, el("span","nm",it[1]), el("span","d",it[3]), el("span","k",it[5]));
+  li.append(a); return li;
+}
+function group(h, sub, items){
+  const f = document.createDocumentFragment();
+  f.append(el("h2",null,h));
+  if(sub) f.append(el("p","sub",sub));
+  const ul = el("ul","grid"); items.forEach(i=>ul.append(tile(i))); f.append(ul);
+  return f;
+}
 
-<tr>
-<td>5</td>
-<td><a href="https://steamlevels.com">SteamLevels</a></td>
-<td>Steam badge and level trading service.</td>
-</tr>
+let current = TABS[0].id;
+function selectTab(id, focus){
+  current = id;
+  try{ localStorage.setItem("steamdir-tab", id); }catch(e){}
+  [...tablist.children].forEach(b=>{
+    const on = b.dataset.id===id;
+    b.setAttribute("aria-selected", on); b.tabIndex = on ? 0 : -1;
+    if(on){ if(focus) b.focus(); b.scrollIntoView({block:"nearest",inline:"nearest"}); panel.setAttribute("aria-labelledby", b.id); }
+  });
+  render();
+}
+function render(){
+  const term = q.value.trim().toLowerCase();
+  clearBtn.hidden = !term;
+  nav.classList.toggle("searching", !!term);
+  panel.textContent = "";
+  if(!term){
+    const t = TABS.find(t=>t.id===current);
+    panel.append(el("p","panel-note",t.note));
+    t.groups.forEach(g=>panel.append(group(g.h,g.sub,g.items)));
+    return;
+  }
+  let found = 0;
+  TABS.forEach(t=>{
+    const hits = t.groups.flatMap(g=>g.items).filter(i=>(i[1]+" "+i[3]+" "+i[5]+" "+i[2]).toLowerCase().includes(term));
+    if(hits.length){ found += hits.length; panel.append(group(t.name, null, hits)); }
+  });
+  if(!found){
+    const box = el("div","empty");
+    box.append(el("p",null,"No site matches \u201C"+q.value.trim()+"\u201D. Try a shorter name, or clear the search to browse by tab."));
+    const b = el("button",null,"Clear search"); b.type="button"; b.onclick = clearSearch; box.append(b);
+    panel.append(box);
+  }
+}
+function clearSearch(){ q.value=""; render(); q.focus(); }
 
-<tr>
-<td>6</td>
-<td><a href="https://barter.vg">Barter.vg</a></td>
-<td>Game-key trading platform.</td>
-</tr>
+TABS.forEach(t=>{
+  const b = el("button","tab"); b.type="button"; b.id="tab-"+t.id; b.dataset.id=t.id; b.setAttribute("role","tab"); b.setAttribute("aria-controls","panel");
+  b.append(document.createTextNode(t.name), el("span","n",count(t)));
+  b.onclick = ()=>{ if(q.value){ q.value=""; } selectTab(t.id); };
+  tablist.append(b);
+});
+tablist.addEventListener("keydown", e=>{
+  const i = TABS.findIndex(t=>t.id===current); let n = null;
+  if(e.key==="ArrowRight") n=(i+1)%TABS.length;
+  else if(e.key==="ArrowLeft") n=(i-1+TABS.length)%TABS.length;
+  else if(e.key==="Home") n=0; else if(e.key==="End") n=TABS.length-1;
+  if(n!==null){ e.preventDefault(); q.value=""; selectTab(TABS[n].id, true); }
+});
+q.addEventListener("input", render);
+clearBtn.onclick = clearSearch;
 
-<tr>
-<td>7</td>
-<td><a href="https://scrap.tf">Scrap.tf</a></td>
-<td>Automated item trading bots.</td>
-</tr>
-
-<tr>
-<td>8</td>
-<td><a href="https://dispenser.tf">Dispenser.tf</a></td>
-<td>Marketplace for automated Steam trading.</td>
-</tr>
-
-<tr>
-<td>9</td>
-<td><a href="https://dmarket.com">DMarket</a></td>
-<td>Multi‑game digital item marketplace.</td>
-</tr>
-
-<tr>
-<td>10</td>
-<td><a href="https://skinport.com">Skinport</a></td>
-<td>Trusted marketplace for skins and Steam items.</td>
-</tr>
-
-</table>
-
+let start = TABS[0].id;
+try{ const s = localStorage.getItem("steamdir-tab"); if(s && TABS.some(t=>t.id===s)) start = s; }catch(e){}
+selectTab(start);
+</script>
 </body>
 </html>
